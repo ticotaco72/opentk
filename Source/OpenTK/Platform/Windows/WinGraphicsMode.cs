@@ -71,9 +71,24 @@ namespace OpenTK.Platform.Windows
 
             // If ChoosePixelFormatARB failed, iterate through all acceleration types in turn (ICD, MCD, None)
             // This should fix issue #2224, which causes OpenTK to fail on VMs without hardware acceleration.
-            created_mode = created_mode ?? ChoosePixelFormatPFD(Device, mode, AccelerationType.ICD);
-            created_mode = created_mode ?? ChoosePixelFormatPFD(Device, mode, AccelerationType.MCD);
-            created_mode = created_mode ?? ChoosePixelFormatPFD(Device, mode, AccelerationType.None);
+            
+            if (created_mode == null)
+            {
+                created_mode = created_mode ?? ChoosePixelFormatPFD(Device, mode, AccelerationType.ICD);
+                Debug.WriteLine("Attempting ICD acceleration... " + (created_mode == null ? "failed!" : "ok!"));
+            }
+            
+            if (created_mode == null)
+            {
+                created_mode = created_mode ?? ChoosePixelFormatPFD(Device, mode, AccelerationType.MCD);
+                Debug.WriteLine("Attempting MCD acceleration... " + (created_mode == null ? "failed!" : "ok!"));
+            }
+            
+            if (created_mode == null)
+            {
+                created_mode = created_mode ?? ChoosePixelFormatPFD(Device, mode, AccelerationType.None);
+                Debug.WriteLine("Attempting None acceleration... " + (created_mode == null ? "failed!" : "ok!"));
+            }
 
             if (created_mode == null)
             {
@@ -297,34 +312,72 @@ namespace OpenTK.Platform.Windows
             }
 
             int count = Functions.DescribePixelFormat(device, 1, API.PixelFormatDescriptorSize, ref pfd);
+            Debug.WriteLine("Pixel format: " + count);
+            Debug.WriteLine("Required flags: " + flags.ToString());
 
             int best = 0;
             int best_dist = int.MaxValue;
             for (int index = 1; index <= count; index++)
             {
+                Debug.WriteLine("Trying #" + index);
+
                 int dist = 0;
-                bool valid = Functions.DescribePixelFormat(device, index, API.PixelFormatDescriptorSize, ref pfd) != 0;
+                bool valid = true;
+                valid &= Functions.DescribePixelFormat(device, index, API.PixelFormatDescriptorSize, ref pfd) != 0;
+                Debug.WriteLine("    valid &= Functions.DescribePixelFormat(device, index, API.PixelFormatDescriptorSize, ref pfd) != 0; //" + valid.ToString());
+
                 valid &= GetAccelerationType(ref pfd) == requested_acceleration_type;
+                Debug.WriteLine("    valid &= GetAccelerationType(ref pfd) == requested_acceleration_type; //" + valid.ToString());
+
                 valid &= (pfd.Flags & flags) == flags;
+                Debug.WriteLine("    valid &= (pfd.Flags & flags) == flags; //" + valid.ToString());
+
                 valid &= pfd.PixelType == PixelType.RGBA; // indexed modes not currently supported
+                Debug.WriteLine("    valid &= pfd.PixelType == PixelType.RGBA; // indexed modes not currently supported //" + valid.ToString());
+
                 // heavily penalize single-buffered modes when the user requests double buffering
                 if ((pfd.Flags & PixelFormatDescriptorFlags.DOUBLEBUFFER) == 0 && mode.Buffers > 1)
                     dist += 1000;
                 valid &= Compare(pfd.ColorBits, mode.ColorFormat.BitsPerPixel, ref dist);
+                Debug.WriteLine("    valid &= Compare(pfd.ColorBits, mode.ColorFormat.BitsPerPixel, ref dist); //" + valid.ToString());
+
                 valid &= Compare(pfd.RedBits, mode.ColorFormat.Red, ref dist);
+                Debug.WriteLine("    valid &= Compare(pfd.RedBits, mode.ColorFormat.Red, ref dist); //" + valid.ToString());
+
                 valid &= Compare(pfd.GreenBits, mode.ColorFormat.Green, ref dist);
+                Debug.WriteLine("    valid &= Compare(pfd.GreenBits, mode.ColorFormat.Green, ref dist); //" + valid.ToString());
+
                 valid &= Compare(pfd.BlueBits, mode.ColorFormat.Blue, ref dist);
+                Debug.WriteLine("    valid &= Compare(pfd.BlueBits, mode.ColorFormat.Blue, ref dist); //" + valid.ToString());
+
                 valid &= Compare(pfd.AlphaBits, mode.ColorFormat.Alpha, ref dist);
+                Debug.WriteLine("    valid &= Compare(pfd.AlphaBits, mode.ColorFormat.Alpha, ref dist); //" + valid.ToString());
+
                 valid &= Compare(pfd.AccumBits, mode.AccumulatorFormat.BitsPerPixel, ref dist);
+                Debug.WriteLine("    valid &= Compare(pfd.AccumBits, mode.AccumulatorFormat.BitsPerPixel, ref dist); //" + valid.ToString());
+
                 valid &= Compare(pfd.AccumRedBits, mode.AccumulatorFormat.Red, ref dist);
+                Debug.WriteLine("    valid &= Compare(pfd.AccumRedBits, mode.AccumulatorFormat.Red, ref dist); //" + valid.ToString());
+
                 valid &= Compare(pfd.AccumGreenBits, mode.AccumulatorFormat.Green, ref dist);
+                Debug.WriteLine("    valid &= Compare(pfd.AccumGreenBits, mode.AccumulatorFormat.Green, ref dist); //" + valid.ToString());
+
                 valid &= Compare(pfd.AccumBlueBits, mode.AccumulatorFormat.Blue, ref dist);
+                Debug.WriteLine("    valid &= Compare(pfd.AccumBlueBits, mode.AccumulatorFormat.Blue, ref dist); //" + valid.ToString());
+
                 valid &= Compare(pfd.AccumAlphaBits, mode.AccumulatorFormat.Alpha, ref dist);
+                Debug.WriteLine("    valid &= Compare(pfd.AccumAlphaBits, mode.AccumulatorFormat.Alpha, ref dist); //" + valid.ToString());
+
                 valid &= Compare(pfd.DepthBits, mode.Depth, ref dist);
+                Debug.WriteLine("    valid &= Compare(pfd.DepthBits, mode.Depth, ref dist); //" + valid.ToString());
+
                 valid &= Compare(pfd.StencilBits, mode.Stencil, ref dist);
+                Debug.WriteLine("    valid &= Compare(pfd.StencilBits, mode.Stencil, ref dist); //" + valid.ToString());
+
 
                 if (valid && dist < best_dist)
                 {
+                    Debug.WriteLine("!! Found new best!");
                     best = index;
                     best_dist = dist;
                 }
@@ -352,6 +405,7 @@ namespace OpenTK.Platform.Windows
                     new ColorFormat(pfd.AccumRedBits, pfd.AccumGreenBits, pfd.AccumBlueBits, pfd.AccumAlphaBits),
                     (pfd.Flags & PixelFormatDescriptorFlags.DOUBLEBUFFER) != 0 ? 2 : 1,
                     (pfd.Flags & PixelFormatDescriptorFlags.STEREO) != 0);
+                Debug.WriteLine("Describing Pixel Format as " + created_mode.ToString());
             }
             return created_mode;
         }

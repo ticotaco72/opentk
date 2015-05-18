@@ -33,6 +33,7 @@ using System.Drawing;
 using OpenTK.Graphics;
 using OpenTK.Input;
 using OpenTK.Platform;
+using System.Diagnostics;
 
 namespace OpenTK
 {
@@ -95,6 +96,9 @@ namespace OpenTK
         /// <exception cref="System.ArgumentNullException">If mode or device is null.</exception>
         public NativeWindow(int x, int y, int width, int height, string title, GameWindowFlags options, GraphicsMode mode, DisplayDevice device)
         {
+            FileDebugListener listener = new FileDebugListener();
+            Debug.Listeners.Add(listener);
+
             // TODO: Should a constraint be added for the position?
             if (width < 1)
                 throw new ArgumentOutOfRangeException("width", "Must be greater than zero.");
