@@ -13,7 +13,7 @@ using System.Security;
 
 #pragma warning disable 1591
 
-namespace OpenTK.Platform.X11
+namespace OsuTK.Platform.X11
 {
     #region Enums
 

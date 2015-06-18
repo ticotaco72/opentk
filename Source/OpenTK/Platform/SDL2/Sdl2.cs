@@ -33,7 +33,7 @@ using System.Runtime.InteropServices;
 
 #pragma warning disable 0169
 
-namespace OpenTK.Platform.SDL2
+namespace OsuTK.Platform.SDL2
 {
     using Surface = IntPtr;
     using Cursor = IntPtr;

@@ -29,7 +29,7 @@
 
 using System;
 
-namespace OpenTK.Platform.MacOS
+namespace OsuTK.Platform.MacOS
 {
     enum NSOpenGLPixelFormatAttribute
     {

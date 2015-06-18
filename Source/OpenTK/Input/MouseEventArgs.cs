@@ -30,7 +30,7 @@
 using System;
 using System.Drawing;
 
-namespace OpenTK.Input
+namespace OsuTK.Input
 {
     /// <summary>
     /// Defines the event data for <see cref="MouseDevice"/> events.
@@ -140,7 +140,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets the current <see cref="OpenTK.Input.MouseState"/>.
+        /// Gets the current <see cref="OsuTK.Input.MouseState"/>.
         /// </summary>
         public MouseState Mouse
         {

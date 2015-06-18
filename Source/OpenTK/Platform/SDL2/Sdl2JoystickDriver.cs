@@ -28,9 +28,9 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using OpenTK.Input;
+using OsuTK.Input;
 
-namespace OpenTK.Platform.SDL2
+namespace OsuTK.Platform.SDL2
 {
     class Sdl2JoystickDriver : IJoystickDriver2, IGamePadDriver, IDisposable
     {
@@ -125,33 +125,33 @@ namespace OpenTK.Platform.SDL2
             return sdl_instanceid_to_joysticks.ContainsKey(instance_id);
         }
 
-        OpenTK.Input.HatPosition TranslateHat(HatPosition value)
+        OsuTK.Input.HatPosition TranslateHat(HatPosition value)
         {
             if ((value & HatPosition.LeftUp) == HatPosition.LeftUp)
-                return OpenTK.Input.HatPosition.UpLeft;
+                return OsuTK.Input.HatPosition.UpLeft;
 
             if ((value & HatPosition.RightUp) == HatPosition.RightUp)
-                return OpenTK.Input.HatPosition.UpRight;
+                return OsuTK.Input.HatPosition.UpRight;
 
             if ((value & HatPosition.LeftDown) == HatPosition.LeftDown)
-                return OpenTK.Input.HatPosition.DownLeft;
+                return OsuTK.Input.HatPosition.DownLeft;
 
             if ((value & HatPosition.RightDown) == HatPosition.RightDown)
-                return OpenTK.Input.HatPosition.DownRight;
+                return OsuTK.Input.HatPosition.DownRight;
 
             if ((value & HatPosition.Up) == HatPosition.Up)
-                return OpenTK.Input.HatPosition.Up;
+                return OsuTK.Input.HatPosition.Up;
 
             if ((value & HatPosition.Right) == HatPosition.Right)
-                return OpenTK.Input.HatPosition.Right;
+                return OsuTK.Input.HatPosition.Right;
 
             if ((value & HatPosition.Down) == HatPosition.Down)
-                return OpenTK.Input.HatPosition.Down;
+                return OsuTK.Input.HatPosition.Down;
 
             if ((value & HatPosition.Left) == HatPosition.Left)
-                return OpenTK.Input.HatPosition.Left;
+                return OsuTK.Input.HatPosition.Left;
 
-            return OpenTK.Input.HatPosition.Centered;
+            return OsuTK.Input.HatPosition.Centered;
         }
 
 #if USE_SDL2_GAMECONTROLLER

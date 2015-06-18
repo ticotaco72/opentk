@@ -29,9 +29,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using OpenTK.Graphics;
+using OsuTK.Graphics;
 
-namespace OpenTK.Platform
+namespace OsuTK.Platform
 {
     interface IPlatformFactory : IDisposable
     {
@@ -45,11 +45,11 @@ namespace OpenTK.Platform
 
         GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext();
 
-        OpenTK.Input.IKeyboardDriver2 CreateKeyboardDriver();
+        OsuTK.Input.IKeyboardDriver2 CreateKeyboardDriver();
 
-        OpenTK.Input.IMouseDriver2 CreateMouseDriver();
+        OsuTK.Input.IMouseDriver2 CreateMouseDriver();
 
-        OpenTK.Input.IGamePadDriver CreateGamePadDriver();
+        OsuTK.Input.IGamePadDriver CreateGamePadDriver();
 
         Input.IJoystickDriver2 CreateJoystickDriver();
 

@@ -33,11 +33,11 @@ using System.Diagnostics;
 using System.Drawing;
 #endif
 using System.Threading;
-using OpenTK.Graphics;
-using OpenTK.Input;
-using OpenTK.Platform;
+using OsuTK.Graphics;
+using OsuTK.Input;
+using OsuTK.Platform;
 
-namespace OpenTK
+namespace OsuTK
 {
     /// <summary>
     /// The GameWindow class contains cross-platform methods to create and render on an OpenGL
@@ -1043,7 +1043,7 @@ namespace OpenTK
         /// <remarks>
         /// You will typically wish to update your viewport whenever
         /// the window is resized. See the
-        /// <see cref="OpenTK.Graphics.OpenGL.GL.Viewport(int, int, int, int)"/> method.
+        /// <see cref="OsuTK.Graphics.OpenGL.GL.Viewport(int, int, int, int)"/> method.
         /// </remarks>
         protected override void OnResize(EventArgs e)
         {

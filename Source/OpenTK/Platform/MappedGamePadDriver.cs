@@ -30,9 +30,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using OpenTK.Input;
+using OsuTK.Input;
 
-namespace OpenTK.Platform
+namespace OsuTK.Platform
 {
     /// \internal
     /// <summary>

@@ -30,7 +30,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace OpenTK.Platform.MacOS
+namespace OsuTK.Platform.MacOS
 {
     using CGEventTapProxy = IntPtr;
     using CGEventRef = IntPtr;

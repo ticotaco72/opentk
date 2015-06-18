@@ -35,11 +35,11 @@ using OpenTK.Minimal;
 using System.Drawing.Imaging;
 #endif
 using System.Runtime.InteropServices;
-using OpenTK;
-using OpenTK.Input;
+using OsuTK;
+using OsuTK.Input;
 using System.Text;
 
-namespace OpenTK.Platform.SDL2
+namespace OsuTK.Platform.SDL2
 {
     class Sdl2NativeWindow : NativeWindowBase
     {

@@ -17,7 +17,7 @@ using System.Drawing.Imaging;
 using System.Text;
 using System.Runtime.InteropServices;
 
-namespace OpenTK.Platform.X11
+namespace OsuTK.Platform.X11
 {
     #region Types
 

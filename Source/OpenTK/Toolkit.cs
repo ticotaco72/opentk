@@ -28,10 +28,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using OpenTK.Platform;
+using OsuTK.Platform;
 using System.Diagnostics;
 
-namespace OpenTK
+namespace OsuTK
 {
     /// <summary>
     /// Provides static methods to manage an OpenTK application.

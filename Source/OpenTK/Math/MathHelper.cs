@@ -12,7 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenTK
+namespace OsuTK
 {
     /// <summary>
     /// Contains common mathematical functions and constants.

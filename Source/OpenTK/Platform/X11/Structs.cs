@@ -39,7 +39,7 @@ using System.Runtime.InteropServices;
 #pragma warning disable 0649
 
 // X11 Version
-namespace OpenTK.Platform.X11
+namespace OsuTK.Platform.X11
 {
     using Bool = System.Boolean;
     using Time = System.IntPtr;

@@ -32,7 +32,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 
-namespace OpenTK
+namespace OsuTK
 {
     /// <summary>
     /// Provides a common foundation for all flat API bindings and implements the extension loading interface.

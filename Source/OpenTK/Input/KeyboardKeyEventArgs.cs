@@ -29,7 +29,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenTK.Input
+namespace OsuTK.Input
 {
     /// <summary>
     /// Defines the event data for <see cref="KeyboardDevice"/> events.
@@ -90,7 +90,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a value indicating whether <see cref="OpenTK.Input.KeyModifiers.Alt"/> is pressed.
+        /// Gets a value indicating whether <see cref="OsuTK.Input.KeyModifiers.Alt"/> is pressed.
         /// </summary>
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
         public bool Alt
@@ -99,7 +99,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a value indicating whether <see cref="OpenTK.Input.KeyModifiers.Control"/> is pressed.
+        /// Gets a value indicating whether <see cref="OsuTK.Input.KeyModifiers.Control"/> is pressed.
         /// </summary>
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
         public bool Control
@@ -108,7 +108,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a value indicating whether <see cref="OpenTK.Input.KeyModifiers.Shift"/> is pressed.
+        /// Gets a value indicating whether <see cref="OsuTK.Input.KeyModifiers.Shift"/> is pressed.
         /// </summary>
         /// <value><c>true</c> if pressed; otherwise, <c>false</c>.</value>
         public bool Shift
@@ -117,7 +117,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets a bitwise combination representing the <see cref="OpenTK.Input.KeyModifiers"/>
+        /// Gets a bitwise combination representing the <see cref="OsuTK.Input.KeyModifiers"/>
         /// that are currently pressed.
         /// </summary>
         /// <value>The modifiers.</value>
@@ -134,7 +134,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Gets the current <see cref="OpenTK.Input.KeyboardState"/>.
+        /// Gets the current <see cref="OsuTK.Input.KeyboardState"/>.
         /// </summary>
         /// <value>The keyboard.</value>
         public KeyboardState Keyboard

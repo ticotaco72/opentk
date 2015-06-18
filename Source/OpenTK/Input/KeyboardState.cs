@@ -29,7 +29,7 @@ using System;
 using System.Collections.Specialized;
 using System.Text;
 
-namespace OpenTK.Input
+namespace OsuTK.Input
 {
     /// <summary>
     /// Encapsulates the state of a Keyboard device.
@@ -51,9 +51,9 @@ namespace OpenTK.Input
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether the specified
-        /// <see cref="OpenTK.Input.Key"/> is pressed.
+        /// <see cref="OsuTK.Input.Key"/> is pressed.
         /// </summary>
-        /// <param name="key">The <see cref="OpenTK.Input.Key"/> to check.</param>
+        /// <param name="key">The <see cref="OsuTK.Input.Key"/> to check.</param>
         /// <returns>True if key is pressed; false otherwise.</returns>
         public bool this[Key key]
         {
@@ -63,7 +63,7 @@ namespace OpenTK.Input
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether the specified
-        /// <see cref="OpenTK.Input.Key"/> is pressed.
+        /// <see cref="OsuTK.Input.Key"/> is pressed.
         /// </summary>
         /// <param name="code">The scancode to check.</param>
         /// <returns>True if code is pressed; false otherwise.</returns>
@@ -75,7 +75,7 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether this key is down.
         /// </summary>
-        /// <param name="key">The <see cref="OpenTK.Input.Key"/> to check.</param>
+        /// <param name="key">The <see cref="OsuTK.Input.Key"/> to check.</param>
         public bool IsKeyDown(Key key)
         {
             return ReadBit((int)key);
@@ -93,7 +93,7 @@ namespace OpenTK.Input
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether this key is up.
         /// </summary>
-        /// <param name="key">The <see cref="OpenTK.Input.Key"/> to check.</param>
+        /// <param name="key">The <see cref="OsuTK.Input.Key"/> to check.</param>
         public bool IsKeyUp(Key key)
         {
             return !ReadBit((int)key);

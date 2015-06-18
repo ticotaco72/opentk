@@ -30,7 +30,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
-namespace OpenTK.Platform
+namespace OsuTK.Platform
 {
     using Graphics;
     using Input;

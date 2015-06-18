@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenTK
+namespace OsuTK
 {
     /// <summary>
     /// Enumerates available window borders.

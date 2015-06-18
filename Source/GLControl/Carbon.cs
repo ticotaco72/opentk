@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Runtime.InteropServices;
 
-namespace OpenTK.Platform.MacOS.Carbon
+namespace OsuTK.Platform.MacOS.Carbon
 {
     internal enum OSStatus
     {

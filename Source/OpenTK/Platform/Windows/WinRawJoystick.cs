@@ -32,10 +32,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
-using OpenTK.Input;
-using OpenTK.Platform.Common;
+using OsuTK.Input;
+using OsuTK.Platform.Common;
 
-namespace OpenTK.Platform.Windows
+namespace OsuTK.Platform.Windows
 {
     class WinRawJoystick : IJoystickDriver2
     {

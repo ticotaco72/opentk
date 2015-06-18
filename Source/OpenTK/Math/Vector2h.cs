@@ -28,7 +28,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Xml.Serialization;
 
-namespace OpenTK
+namespace OsuTK
 {
 
     /// <summary>2-component Vector of the Half type. Occupies 4 Byte total.</summary>

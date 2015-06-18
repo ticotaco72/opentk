@@ -12,11 +12,11 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Reflection;
 using System.Diagnostics;
-using OpenTK.Graphics;
+using OsuTK.Graphics;
 
 #endregion
 
-namespace OpenTK.Platform
+namespace OsuTK.Platform
 {
     namespace MacOS
     {
@@ -243,7 +243,7 @@ namespace OpenTK.Platform
         /// <returns>A new IWindowInfo instance.</returns>
         public static IWindowInfo CreateX11WindowInfo(IntPtr display, int screen, IntPtr windowHandle, IntPtr rootWindow, IntPtr visualInfo)
         {
-            Platform.X11.X11WindowInfo window = new OpenTK.Platform.X11.X11WindowInfo();
+            Platform.X11.X11WindowInfo window = new OsuTK.Platform.X11.X11WindowInfo();
             window.Display = display;
             window.Screen = screen;
             window.Handle = windowHandle;
@@ -263,7 +263,7 @@ namespace OpenTK.Platform
         /// <returns>A new IWindowInfo instance.</returns>
         public static IWindowInfo CreateWindowsWindowInfo(IntPtr windowHandle)
         {
-            return new OpenTK.Platform.Windows.WinWindowInfo(windowHandle, null);
+            return new OsuTK.Platform.Windows.WinWindowInfo(windowHandle, null);
         }
 
         #endregion
@@ -292,9 +292,9 @@ namespace OpenTK.Platform
         /// <param name="yOffset">The Y offset for the GL viewport</param>
         /// <returns>A new IWindowInfo instance.</returns>
         public static IWindowInfo CreateMacOSCarbonWindowInfo(IntPtr windowHandle, bool ownHandle, bool isControl, 
-            OpenTK.Platform.MacOS.GetInt xOffset, OpenTK.Platform.MacOS.GetInt yOffset)
+            OsuTK.Platform.MacOS.GetInt xOffset, OsuTK.Platform.MacOS.GetInt yOffset)
         {
-            return new OpenTK.Platform.MacOS.CarbonWindowInfo(windowHandle, false, isControl, xOffset, yOffset);
+            return new OsuTK.Platform.MacOS.CarbonWindowInfo(windowHandle, false, isControl, xOffset, yOffset);
         }
 
         #endregion
@@ -309,7 +309,7 @@ namespace OpenTK.Platform
         /// <returns>A new IWindowInfo instance.</returns>
         public static IWindowInfo CreateMacOSWindowInfo(IntPtr windowHandle)
         {
-            return new OpenTK.Platform.MacOS.CocoaWindowInfo(windowHandle);
+            return new OsuTK.Platform.MacOS.CocoaWindowInfo(windowHandle);
         }
 
         /// <summary>
@@ -320,7 +320,7 @@ namespace OpenTK.Platform
         /// <returns>A new IWindowInfo instance.</returns>
         public static IWindowInfo CreateMacOSWindowInfo(IntPtr windowHandle, IntPtr viewHandle)
         {
-            return new OpenTK.Platform.MacOS.CocoaWindowInfo(windowHandle, viewHandle);
+            return new OsuTK.Platform.MacOS.CocoaWindowInfo(windowHandle, viewHandle);
         }
 
         #endregion
@@ -347,7 +347,7 @@ namespace OpenTK.Platform
         /// <returns>A new IWindowInfo instance.</returns>
         public static IWindowInfo CreateSdl2WindowInfo(IntPtr windowHandle)
         {
-            return new OpenTK.Platform.SDL2.Sdl2WindowInfo(
+            return new OsuTK.Platform.SDL2.Sdl2WindowInfo(
                 windowHandle, null);
         }
 

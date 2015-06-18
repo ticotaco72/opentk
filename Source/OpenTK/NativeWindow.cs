@@ -30,15 +30,15 @@ using System.ComponentModel;
 #if !MINIMAL
 using System.Drawing;
 #endif
-using OpenTK.Graphics;
-using OpenTK.Input;
-using OpenTK.Platform;
+using OsuTK.Graphics;
+using OsuTK.Input;
+using OsuTK.Platform;
 
-namespace OpenTK
+namespace OsuTK
 {
 
     /// <summary>
-    /// Instances of this class implement the <see cref="OpenTK.INativeWindow"/> interface on the current platform.
+    /// Instances of this class implement the <see cref="OsuTK.INativeWindow"/> interface on the current platform.
     /// </summary>
     public class NativeWindow : INativeWindow
     {
@@ -55,7 +55,7 @@ namespace OpenTK
         private bool previous_cursor_visible = true;
 
         /// <summary>
-        /// System.Threading.Thread.CurrentThread.ManagedThreadId of the thread that created this <see cref="OpenTK.NativeWindow"/>.
+        /// System.Threading.Thread.CurrentThread.ManagedThreadId of the thread that created this <see cref="OsuTK.NativeWindow"/>.
         /// </summary>
         private int thread_id;
         #endregion
@@ -271,7 +271,7 @@ namespace OpenTK
         #region Cursor
 
         /// <summary>
-        /// Gets or sets the <see cref="OpenTK.MouseCursor"/> for this window.
+        /// Gets or sets the <see cref="OsuTK.MouseCursor"/> for this window.
         /// </summary>
         public MouseCursor Cursor
         {
@@ -512,7 +512,7 @@ namespace OpenTK
         #region WindowInfo
 
         /// <summary>
-        /// Gets the <see cref="OpenTK.Platform.IWindowInfo"/> of this window.
+        /// Gets the <see cref="OsuTK.Platform.IWindowInfo"/> of this window.
         /// </summary>
         public IWindowInfo WindowInfo
         {
@@ -637,7 +637,7 @@ namespace OpenTK
         /// <summary>
         /// Occurs whenever a keybord key is pressed.
         /// </summary>
-        public event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> KeyDown = delegate { };
+        public event EventHandler<OsuTK.Input.KeyboardKeyEventArgs> KeyDown = delegate { };
 
         /// <summary>
         /// Occurs whenever a character is typed.
@@ -647,7 +647,7 @@ namespace OpenTK
         /// <summary>
         /// Occurs whenever a keyboard key is released.
         /// </summary>
-        public event EventHandler<OpenTK.Input.KeyboardKeyEventArgs> KeyUp = delegate { };
+        public event EventHandler<OsuTK.Input.KeyboardKeyEventArgs> KeyUp = delegate { };
 
         /// <summary>
         /// Occurs whenever the window is moved.
@@ -819,7 +819,7 @@ namespace OpenTK
         #region OnFocusedChanged
 
         /// <summary>
-        /// Called when the <see cref="OpenTK.INativeWindow.Focused"/> property of the NativeWindow has changed.
+        /// Called when the <see cref="OsuTK.INativeWindow.Focused"/> property of the NativeWindow has changed.
         /// </summary>
         /// <param name="e">Not used.</param>
         protected virtual void OnFocusedChanged(EventArgs e)
@@ -846,7 +846,7 @@ namespace OpenTK
         #region OnIconChanged
 
         /// <summary>
-        /// Called when the <see cref="OpenTK.INativeWindow.Icon"/> property of the NativeWindow has changed.
+        /// Called when the <see cref="OsuTK.INativeWindow.Icon"/> property of the NativeWindow has changed.
         /// </summary>
         /// <param name="e">Not used.</param>
         protected virtual void OnIconChanged(EventArgs e)
@@ -873,7 +873,7 @@ namespace OpenTK
         /// <summary>
         /// Called when a character is typed.
         /// </summary>
-        /// <param name="e">The <see cref="OpenTK.KeyPressEventArgs"/> for this event.</param>
+        /// <param name="e">The <see cref="OsuTK.KeyPressEventArgs"/> for this event.</param>
         protected virtual void OnKeyPress(KeyPressEventArgs e)
         {
             KeyPress(this, e);
@@ -886,7 +886,7 @@ namespace OpenTK
         /// <summary>
         /// Called when a keybord key is released.
         /// </summary>
-        /// <param name="e">The <see cref="OpenTK.Input.KeyboardKeyEventArgs"/> for this event.</param>
+        /// <param name="e">The <see cref="OsuTK.Input.KeyboardKeyEventArgs"/> for this event.</param>
         protected virtual void OnKeyUp(KeyboardKeyEventArgs e)
         {
             KeyUp(this, e);
@@ -997,7 +997,7 @@ namespace OpenTK
         #region OnTitleChanged
 
         /// <summary>
-        /// Called when the <see cref="OpenTK.INativeWindow.Title"/> property of the NativeWindow has changed.
+        /// Called when the <see cref="OsuTK.INativeWindow.Title"/> property of the NativeWindow has changed.
         /// </summary>
         /// <param name="e">Not used.</param>
         protected virtual void OnTitleChanged(EventArgs e)
@@ -1010,7 +1010,7 @@ namespace OpenTK
         #region OnVisibleChanged
 
         /// <summary>
-        /// Called when the <see cref="OpenTK.INativeWindow.Visible"/> property of the NativeWindow has changed.
+        /// Called when the <see cref="OsuTK.INativeWindow.Visible"/> property of the NativeWindow has changed.
         /// </summary>
         /// <param name="e">Not used.</param>
         protected virtual void OnVisibleChanged(EventArgs e)

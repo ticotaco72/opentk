@@ -31,9 +31,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
 
-using OpenTK.Audio.OpenAL;
+using OsuTK.Audio.OpenAL;
 
-namespace OpenTK.Audio
+namespace OsuTK.Audio
 {
     /// <summary>
     /// Provides methods to instantiate, use and destroy an audio context for playback.

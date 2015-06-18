@@ -29,7 +29,7 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-namespace OpenTK.Graphics
+namespace OsuTK.Graphics
 {
     /// <summary>
     /// Implements BindingsBase for the OpenTK.Graphics namespace (OpenGL and OpenGL|ES).

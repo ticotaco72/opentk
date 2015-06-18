@@ -29,15 +29,15 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
-using OpenTK.Graphics;
-using OpenTK.Input;
+using OsuTK.Graphics;
+using OsuTK.Input;
 using System.Collections.Generic;
 using System.IO;
 #if !MINIMAL
 using System.Drawing;
 #endif
 
-namespace OpenTK.Platform.Windows
+namespace OsuTK.Platform.Windows
 {
     /// \internal
     /// <summary>

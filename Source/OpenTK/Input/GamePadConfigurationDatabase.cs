@@ -30,7 +30,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenTK.Input
+namespace OsuTK.Input
 {
     class GamePadConfigurationDatabase
     {

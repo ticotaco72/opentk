@@ -29,7 +29,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenTK.Input
+namespace OsuTK.Input
 {
     /// <summary>
     /// Provides access to keyboard devices. Note: this API is not implemented yet.
@@ -47,9 +47,9 @@ namespace OpenTK.Input
         #region Public Members
 
         /// <summary>
-        /// Retrieves the combined <see cref="OpenTK.Input.KeyboardState"/> for all keyboard devices.
+        /// Retrieves the combined <see cref="OsuTK.Input.KeyboardState"/> for all keyboard devices.
         /// </summary>
-        /// <returns>An <see cref="OpenTK.Input.KeyboardState"/> structure containing the combined state for all keyboard devices.</returns>
+        /// <returns>An <see cref="OsuTK.Input.KeyboardState"/> structure containing the combined state for all keyboard devices.</returns>
         public static KeyboardState GetState()
         {
             lock (SyncRoot)
@@ -59,10 +59,10 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Retrieves the <see cref="OpenTK.Input.KeyboardState"/> for the specified keyboard device.
+        /// Retrieves the <see cref="OsuTK.Input.KeyboardState"/> for the specified keyboard device.
         /// </summary>
         /// <param name="index">The index of the keyboard device.</param>
-        /// <returns>An <see cref="OpenTK.Input.KeyboardState"/> structure containing the state of the keyboard device.</returns>
+        /// <returns>An <see cref="OsuTK.Input.KeyboardState"/> structure containing the state of the keyboard device.</returns>
         public static KeyboardState GetState(int index)
         {
             if (index < 0)

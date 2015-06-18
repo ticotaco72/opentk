@@ -31,9 +31,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
-using OpenTK.Platform;
+using OsuTK.Platform;
 
-namespace OpenTK.Graphics
+namespace OsuTK.Graphics
 {
     // Provides the foundation for all IGraphicsContext implementations.
     abstract class GraphicsContextBase : IGraphicsContext, IGraphicsContextInternal, IEquatable<IGraphicsContextInternal>

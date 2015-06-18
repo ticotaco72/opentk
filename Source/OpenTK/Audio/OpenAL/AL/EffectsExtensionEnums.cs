@@ -9,7 +9,7 @@
 
 using System;
 
-namespace OpenTK.Audio.OpenAL
+namespace OsuTK.Audio.OpenAL
 {
     #region Effect
 

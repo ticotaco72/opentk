@@ -67,7 +67,7 @@ typedef void ALCvoid;
  * IntPtr
 */
 
-namespace OpenTK.Audio.OpenAL
+namespace OsuTK.Audio.OpenAL
 {
 
     /// <summary>Alc = Audio Library Context</summary>

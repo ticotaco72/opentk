@@ -25,7 +25,7 @@
  //
  #endregion
 
-namespace OpenTK.Input
+namespace OsuTK.Input
 {
     /// <summary>
     /// The available keyboard keys.

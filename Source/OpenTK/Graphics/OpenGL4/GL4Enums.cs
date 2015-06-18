@@ -25,7 +25,7 @@
 
 using System;
 
-namespace OpenTK.Graphics.OpenGL4
+namespace OsuTK.Graphics.OpenGL4
 {
     /// <summary>
     /// Not used directly.

@@ -30,7 +30,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 
-namespace OpenTK.Platform.SDL2
+namespace OsuTK.Platform.SDL2
 {
     class Sdl2DisplayDeviceDriver : DisplayDeviceBase
     {

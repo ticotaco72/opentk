@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace OpenTK.Platform.X11.Bindings
+namespace OsuTK.Platform.X11.Bindings
 {
     // Fully implemented but not currently used by OpenTK
     // See System.IO.FileSystemWatcher for a cross-platform alternative

@@ -10,9 +10,9 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 
-using OpenTK.Graphics;
+using OsuTK.Graphics;
 
-namespace OpenTK.Platform.X11
+namespace OsuTK.Platform.X11
 {
     /// \internal
     /// <summary>

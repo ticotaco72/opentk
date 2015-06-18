@@ -29,9 +29,9 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
-using OpenTK.Input;
+using OsuTK.Input;
 
-namespace OpenTK.Platform.Windows
+namespace OsuTK.Platform.Windows
 {
     abstract class WinInputBase
     {

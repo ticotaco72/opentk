@@ -31,9 +31,9 @@ using System.Diagnostics;
 #if !MINIMAL
 using System.Drawing;
 #endif
-using OpenTK.Platform.MacOS.Carbon;
+using OsuTK.Platform.MacOS.Carbon;
 
-namespace OpenTK.Platform.MacOS
+namespace OsuTK.Platform.MacOS
 {
     sealed class QuartzDisplayDeviceDriver : DisplayDeviceBase
     {

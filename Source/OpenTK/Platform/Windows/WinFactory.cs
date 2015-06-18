@@ -31,10 +31,10 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 
-using OpenTK.Graphics;
-using OpenTK.Input;
+using OsuTK.Graphics;
+using OsuTK.Input;
 
-namespace OpenTK.Platform.Windows
+namespace OsuTK.Platform.Windows
 {
 
     class WinFactory : PlatformFactoryBase
@@ -114,17 +114,17 @@ namespace OpenTK.Platform.Windows
             };
         }
 
-        public override OpenTK.Input.IKeyboardDriver2 CreateKeyboardDriver()
+        public override OsuTK.Input.IKeyboardDriver2 CreateKeyboardDriver()
         {
             return RawInputDriver.KeyboardDriver;
         }
 
-        public override OpenTK.Input.IMouseDriver2 CreateMouseDriver()
+        public override OsuTK.Input.IMouseDriver2 CreateMouseDriver()
         {
             return RawInputDriver.MouseDriver;
         }
 
-        public override OpenTK.Input.IGamePadDriver CreateGamePadDriver()
+        public override OsuTK.Input.IGamePadDriver CreateGamePadDriver()
         {
             return new MappedGamePadDriver();
         }

@@ -29,7 +29,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenTK
+namespace OsuTK
 {
     /// <summary>
     /// Indicates that this function is generated automatically by a tool.

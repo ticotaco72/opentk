@@ -29,9 +29,9 @@
 
 using System;
 using System.Collections.Generic;
-using OpenTK.Input;
+using OsuTK.Input;
 
-namespace OpenTK.Platform
+namespace OsuTK.Platform
 {
     [Obsolete]
     internal class LegacyJoystickDriver : IJoystickDriver

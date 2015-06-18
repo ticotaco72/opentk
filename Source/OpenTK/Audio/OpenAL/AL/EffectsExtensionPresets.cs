@@ -10,7 +10,7 @@
 using System;
 
 
-namespace OpenTK.Audio.OpenAL
+namespace OsuTK.Audio.OpenAL
 {
     public partial class EffectsExtension
     {

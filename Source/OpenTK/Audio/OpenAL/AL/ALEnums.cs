@@ -9,7 +9,7 @@
 
 using System;
 
-namespace OpenTK.Audio.OpenAL
+namespace OsuTK.Audio.OpenAL
 {
 
     ///<summary>A list of valid Enable/Disable/IsEnabled parameters</summary>

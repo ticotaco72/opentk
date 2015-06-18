@@ -27,7 +27,7 @@
 
 using System;
 
-namespace OpenTK
+namespace OsuTK
 {
     /// <summary>
     /// Defines the event arguments for KeyPress events. Instances of this class are cached:

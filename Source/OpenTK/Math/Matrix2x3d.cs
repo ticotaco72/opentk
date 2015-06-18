@@ -25,7 +25,7 @@ SOFTWARE.
 using System;
 using System.Collections.Generic;
 
-namespace OpenTK
+namespace OsuTK
 {
     /// <summary>
     /// Represents a 2x3 matrix.

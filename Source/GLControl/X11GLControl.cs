@@ -12,10 +12,10 @@ using System.Text;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
-using OpenTK.Graphics;
-using OpenTK.Platform;
+using OsuTK.Graphics;
+using OsuTK.Platform;
 
-namespace OpenTK
+namespace OsuTK
 {
     class X11GLControl : IGLControl
     {

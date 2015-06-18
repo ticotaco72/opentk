@@ -27,9 +27,9 @@
 
 using System;
 using System.Diagnostics;
-using OpenTK.Graphics;
+using OsuTK.Graphics;
 
-namespace OpenTK.Platform.Egl
+namespace OsuTK.Platform.Egl
 {
     abstract class EglContext : EmbeddedGraphicsContext
     {

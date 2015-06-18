@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenTK
+namespace OsuTK
 {
     /// <summary>Represents errors related to Graphics operations.</summary>
     public class GraphicsException : Exception

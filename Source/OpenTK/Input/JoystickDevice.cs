@@ -28,7 +28,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace OpenTK.Input
+namespace OsuTK.Input
 {
     /// <summary>
     /// Represents a joystick device and provides methods to query its status.

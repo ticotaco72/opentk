@@ -32,7 +32,7 @@ using System.Diagnostics;
 using System.Drawing;
 #endif
 
-namespace OpenTK
+namespace OsuTK
 {
     /// <summary>
     /// Defines a display device on the underlying system, and provides

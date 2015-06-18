@@ -1,4 +1,4 @@
-﻿namespace OpenTK
+﻿namespace OsuTK
 {
     partial class GLControl
     {

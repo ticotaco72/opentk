@@ -33,9 +33,9 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Threading;
-using OpenTK.Input;
+using OsuTK.Input;
 
-namespace OpenTK.Platform.Linux
+namespace OsuTK.Platform.Linux
 {
     class LinuxInput : IKeyboardDriver2, IMouseDriver2, IDisposable
     {

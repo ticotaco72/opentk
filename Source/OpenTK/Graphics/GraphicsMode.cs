@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
 
-namespace OpenTK.Graphics
+namespace OsuTK.Graphics
 {
     /// <summary>Defines the format for graphics operations.</summary>
     public class GraphicsMode : IEquatable<GraphicsMode>

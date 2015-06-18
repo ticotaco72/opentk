@@ -29,7 +29,7 @@
 
 using System;
 
-namespace OpenTK.Input
+namespace OsuTK.Input
 {
     /// <summary>
     /// Enumerates discrete positions for a joystick hat.

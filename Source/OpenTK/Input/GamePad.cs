@@ -29,7 +29,7 @@
 
 using System;
 
-namespace OpenTK.Input
+namespace OsuTK.Input
 {
     /// <summary>
     /// Provides access to GamePad devices.

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenTK.Graphics
+namespace OsuTK.Graphics
 {
     /// <summary>
     /// Thrown when an operation that required GraphicsContext is performed, when no

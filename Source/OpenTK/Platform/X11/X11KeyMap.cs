@@ -31,9 +31,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
-using OpenTK.Input;
+using OsuTK.Input;
 
-namespace OpenTK.Platform.X11
+namespace OsuTK.Platform.X11
 {
     class X11KeyMap
     {

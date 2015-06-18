@@ -31,7 +31,7 @@ using System.Runtime.InteropServices;
 using System;
 using System.Drawing;
 
-namespace OpenTK.Platform.MacOS
+namespace OsuTK.Platform.MacOS
 {
     static class Cocoa
     {

@@ -1,4 +1,4 @@
-namespace OpenTK.Platform.Windows
+namespace OsuTK.Platform.Windows
 {
 #pragma warning disable 3019
 #pragma warning disable 1591

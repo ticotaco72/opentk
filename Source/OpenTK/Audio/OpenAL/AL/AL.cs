@@ -11,7 +11,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Security;
 
-using OpenTK;
+using OsuTK;
 
 /* Type Mapping
 // 8-bit boolean 
@@ -63,7 +63,7 @@ typedef void ALvoid;
  * void
 */
 
-namespace OpenTK.Audio.OpenAL
+namespace OsuTK.Audio.OpenAL
 {
     /// <summary>
     /// Provides access to the OpenAL 1.1 flat API.

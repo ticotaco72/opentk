@@ -25,7 +25,7 @@
 
 using System;
 
-namespace OpenTK.Graphics.ES20
+namespace OsuTK.Graphics.ES20
 {
     /// <summary>
     /// Not used directly.

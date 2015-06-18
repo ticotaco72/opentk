@@ -30,9 +30,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
-using OpenTK.Input;
+using OsuTK.Input;
 
-namespace OpenTK.Platform.X11
+namespace OsuTK.Platform.X11
 {
     sealed class XI2MouseKeyboard : IKeyboardDriver2, IMouseDriver2, IDisposable
     {

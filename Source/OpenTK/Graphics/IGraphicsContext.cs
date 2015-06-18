@@ -10,9 +10,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-using OpenTK.Platform;
+using OsuTK.Platform;
 
-namespace OpenTK.Graphics
+namespace OsuTK.Graphics
 {
     /// <summary>
     /// Provides methods for creating and interacting with an OpenGL context.

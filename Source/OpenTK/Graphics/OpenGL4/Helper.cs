@@ -33,7 +33,7 @@ using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace OpenTK.Graphics.OpenGL4
+namespace OsuTK.Graphics.OpenGL4
 {
     /// <summary>
     /// Provides access to OpenGL 4.x methods for the core profile.

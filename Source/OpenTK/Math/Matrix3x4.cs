@@ -25,7 +25,7 @@ SOFTWARE.
 using System;
 using System.Runtime.InteropServices;
 
-namespace OpenTK
+namespace OsuTK
 {
     /// <summary>
     /// Represents a 3x4 Matrix

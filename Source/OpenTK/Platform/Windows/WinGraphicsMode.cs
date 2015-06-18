@@ -31,9 +31,9 @@ using System.Text;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-using OpenTK.Graphics;
+using OsuTK.Graphics;
 
-namespace OpenTK.Platform.Windows
+namespace OsuTK.Platform.Windows
 {
     class WinGraphicsMode : IGraphicsMode
     {

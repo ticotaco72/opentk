@@ -32,7 +32,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace OpenTK.Platform.X11
+namespace OsuTK.Platform.X11
 {
     class DL
     {

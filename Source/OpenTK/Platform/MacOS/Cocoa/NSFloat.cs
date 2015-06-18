@@ -31,7 +31,7 @@ using System;
 using System.Drawing;
 using System.Runtime.InteropServices;
 
-namespace OpenTK.Platform.MacOS
+namespace OsuTK.Platform.MacOS
 {
     // NSFloat is defined as float on 32bit systems and double on 64bit.
     // We have to account for this peculiarity in order to run OpenTK on

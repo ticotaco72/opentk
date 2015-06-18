@@ -30,7 +30,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
 
-namespace OpenTK.Graphics.ES30
+namespace OsuTK.Graphics.ES30
 {
     // Used in debug-mode only, for automatic OpenGL error-checking.
     //

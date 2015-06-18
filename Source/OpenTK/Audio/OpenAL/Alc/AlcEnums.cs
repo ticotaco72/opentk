@@ -9,7 +9,7 @@
 
 using System;
 
-namespace OpenTK.Audio.OpenAL
+namespace OsuTK.Audio.OpenAL
 {
     /// <summary>
     /// Defines available context attributes.
@@ -60,7 +60,7 @@ namespace OpenTK.Audio.OpenAL
     }
 
     /// <summary>
-    /// Defines available parameters for <see cref="OpenTK.Audio.OpenAL.Alc.GetString(IntPtr, AlcGetString)"/>.
+    /// Defines available parameters for <see cref="OsuTK.Audio.OpenAL.Alc.GetString(IntPtr, AlcGetString)"/>.
     /// </summary>
     public enum AlcGetString : int
     {

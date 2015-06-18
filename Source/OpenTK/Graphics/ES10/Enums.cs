@@ -27,7 +27,7 @@
 
 using System;
 
-namespace OpenTK.Graphics.ES10
+namespace OsuTK.Graphics.ES10
 {
     #pragma warning disable 1591
 

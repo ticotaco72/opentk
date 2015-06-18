@@ -4,7 +4,7 @@ using System.Text;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-namespace OpenTK.Graphics.ES11
+namespace OsuTK.Graphics.ES11
 {
     /// <summary>
     /// Provides access to OpenGL ES 1.1 methods.

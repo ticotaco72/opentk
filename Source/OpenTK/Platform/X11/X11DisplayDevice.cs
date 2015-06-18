@@ -33,7 +33,7 @@ using System.Drawing;
 #endif
 using System.Runtime.InteropServices;
 
-namespace OpenTK.Platform.X11
+namespace OsuTK.Platform.X11
 {
     sealed class X11DisplayDevice : DisplayDeviceBase
     {

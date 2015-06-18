@@ -14,7 +14,7 @@ using System.Diagnostics;
 using System.Drawing;
 #endif
 
-namespace OpenTK
+namespace OsuTK
 {
     /// <summary>Contains information regarding a monitor's display resolution.</summary>
     public class DisplayResolution

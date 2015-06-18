@@ -26,10 +26,10 @@
 #endregion
 
 using System;
-using OpenTK.Graphics;
-using OpenTK.Platform;
+using OsuTK.Graphics;
+using OsuTK.Platform;
 
-namespace OpenTK
+namespace OsuTK
 {
     class DummyGLControl : IGLControl
     {

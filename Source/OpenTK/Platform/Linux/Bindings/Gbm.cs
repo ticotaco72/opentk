@@ -30,7 +30,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace OpenTK.Platform.Linux
+namespace OsuTK.Platform.Linux
 {
     using Device = IntPtr; // struct gbm_device*
     using Surface = IntPtr;

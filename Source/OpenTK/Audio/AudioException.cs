@@ -30,7 +30,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenTK.Audio
+namespace OsuTK.Audio
 {
     /// <summary>Represents exceptions related to the OpenTK.Audio subsystem.</summary>
     public class AudioException : Exception

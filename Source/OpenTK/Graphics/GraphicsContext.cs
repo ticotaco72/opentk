@@ -30,9 +30,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
 
-using OpenTK.Platform;
+using OsuTK.Platform;
 
-namespace OpenTK.Graphics
+namespace OsuTK.Graphics
 {
     /// <summary>
     /// Represents and provides methods to manipulate an OpenGL render context.
@@ -163,7 +163,7 @@ namespace OpenTK.Graphics
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OpenTK.Graphics.GraphicsContext"/> class using
+        /// Initializes a new instance of the <see cref="OsuTK.Graphics.GraphicsContext"/> class using
         /// an external context handle that was created by a third-party library.
         /// </summary>
         /// <param name="handle">
@@ -472,7 +472,7 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Makes the GraphicsContext the current rendering target.
         /// </summary>
-        /// <param name="window">A valid <see cref="OpenTK.Platform.IWindowInfo" /> structure.</param>
+        /// <param name="window">A valid <see cref="OsuTK.Platform.IWindowInfo" /> structure.</param>
         /// <remarks>
         /// You can use this method to bind the GraphicsContext to a different window than the one it was created from.
         /// </remarks>
@@ -545,7 +545,7 @@ namespace OpenTK.Graphics
         /// <summary>
         /// Loads all OpenGL entry points.
         /// </summary>
-        /// <exception cref="OpenTK.Graphics.GraphicsContextException">
+        /// <exception cref="OsuTK.Graphics.GraphicsContextException">
         /// Occurs when this instance is not current on the calling thread.
         /// </exception>
         public void LoadAll()

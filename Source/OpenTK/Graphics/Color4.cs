@@ -33,7 +33,7 @@ using System.Drawing;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace OpenTK.Graphics
+namespace OsuTK.Graphics
 {
     /// <summary>
     /// Represents a color with 4 floating-point components (R, G, B, A).

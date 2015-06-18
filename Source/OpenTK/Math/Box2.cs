@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Runtime.InteropServices;
-namespace OpenTK
+namespace OsuTK
 {
     /// <summary>
     /// Defines a 2d box (rectangle).

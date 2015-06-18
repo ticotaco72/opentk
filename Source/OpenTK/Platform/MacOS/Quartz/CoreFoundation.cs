@@ -30,7 +30,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 
-namespace OpenTK.Platform.MacOS.Carbon
+namespace OsuTK.Platform.MacOS.Carbon
 {
     using CFAllocatorRef = IntPtr;
     using CFIndex = System.IntPtr;

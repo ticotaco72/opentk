@@ -30,7 +30,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace OpenTK
+namespace OsuTK
 {
     /// <summary>
     /// Stores a window icon. A window icon is defined
@@ -44,7 +44,7 @@ namespace OpenTK
 
         /// \internal
         /// <summary>
-        /// Initializes a new instance of the <see cref="OpenTK.WindowIcon"/> class.
+        /// Initializes a new instance of the <see cref="OsuTK.WindowIcon"/> class.
         /// </summary>
         internal protected WindowIcon()
         {

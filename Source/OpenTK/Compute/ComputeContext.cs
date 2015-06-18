@@ -29,7 +29,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 
-namespace OpenTK.Compute
+namespace OsuTK.Compute
 {
 
 }

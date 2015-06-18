@@ -61,7 +61,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 
-namespace OpenTK
+namespace OsuTK
 {
 
     /// <summary>

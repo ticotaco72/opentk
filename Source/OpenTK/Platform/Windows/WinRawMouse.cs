@@ -30,10 +30,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
-using OpenTK.Input;
-using OpenTK.Platform.Common;
+using OsuTK.Input;
+using OsuTK.Platform.Common;
 
-namespace OpenTK.Platform.Windows
+namespace OsuTK.Platform.Windows
 {
     /// \internal
     /// <summary>

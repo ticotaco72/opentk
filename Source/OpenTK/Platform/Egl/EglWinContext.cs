@@ -28,14 +28,14 @@
 #endregion
 
 using System;
-using OpenTK.Graphics;
+using OsuTK.Graphics;
 
-namespace OpenTK.Platform.Egl
+namespace OsuTK.Platform.Egl
 {
     class EglWinContext : EglContext
     {
-        IntPtr ES1 = OpenTK.Platform.Windows.Functions.LoadLibrary("libGLESv1_CM");
-        IntPtr ES2 = OpenTK.Platform.Windows.Functions.LoadLibrary("libGLESv2");
+        IntPtr ES1 = OsuTK.Platform.Windows.Functions.LoadLibrary("libGLESv1_CM");
+        IntPtr ES2 = OsuTK.Platform.Windows.Functions.LoadLibrary("libGLESv2");
 
         public EglWinContext(GraphicsMode mode, EglWindowInfo window, IGraphicsContext sharedContext,
             int major, int minor, GraphicsContextFlags flags)

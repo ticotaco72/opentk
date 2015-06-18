@@ -30,10 +30,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using OpenTK;
-using OpenTK.Graphics;
+using OsuTK;
+using OsuTK.Graphics;
 
-namespace OpenTK.Platform.Linux
+namespace OsuTK.Platform.Linux
 {
     // Stores platform-specific information about a display
     class LinuxDisplay

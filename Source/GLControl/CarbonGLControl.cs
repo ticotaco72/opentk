@@ -30,11 +30,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 
-using OpenTK.Graphics;
-using OpenTK.Platform;
-using OpenTK.Platform.MacOS;
+using OsuTK.Graphics;
+using OsuTK.Platform;
+using OsuTK.Platform.MacOS;
 
-namespace OpenTK
+namespace OsuTK
 {
     class CarbonGLControl : IGLControl 
     {

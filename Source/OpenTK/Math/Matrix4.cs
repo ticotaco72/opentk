@@ -25,7 +25,7 @@ SOFTWARE.
 using System;
 using System.Runtime.InteropServices;
 
-namespace OpenTK
+namespace OsuTK
 {
     /// <summary>
     /// Represents a 4x4 matrix containing 3D rotation, scale, transform, and projection.

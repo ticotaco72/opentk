@@ -29,10 +29,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using OpenTK.Input;
-using OpenTK.Platform.Common;
+using OsuTK.Input;
+using OsuTK.Platform.Common;
 
-namespace OpenTK.Platform.MacOS
+namespace OsuTK.Platform.MacOS
 {
     using Carbon;
     using CFAllocatorRef = System.IntPtr;
@@ -528,7 +528,7 @@ namespace OpenTK.Platform.MacOS
                     break;
 
                 case HIDPage.Button:
-                    mouse.State[OpenTK.Input.MouseButton.Left + usage - 1] = v_int == 1;
+                    mouse.State[OsuTK.Input.MouseButton.Left + usage - 1] = v_int == 1;
                     break;
 
                 case HIDPage.Consumer:

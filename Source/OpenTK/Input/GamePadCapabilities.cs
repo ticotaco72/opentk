@@ -29,7 +29,7 @@
 
 using System;
 
-namespace OpenTK.Input
+namespace OsuTK.Input
 {
     /// <summary>
     /// Describes the capabilities of a <c>GamePad</c> input device.
@@ -343,9 +343,9 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Returns a <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.GamePadCapabilities"/>.
+        /// Returns a <see cref="System.String"/> that represents the current <see cref="OsuTK.Input.GamePadCapabilities"/>.
         /// </summary>
-        /// <returns>A <see cref="System.String"/> that represents the current <see cref="OpenTK.Input.GamePadCapabilities"/>.</returns>
+        /// <returns>A <see cref="System.String"/> that represents the current <see cref="OsuTK.Input.GamePadCapabilities"/>.</returns>
         public override string ToString()
         {
             return String.Format(
@@ -358,7 +358,7 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Serves as a hash function for a <see cref="OpenTK.Input.GamePadCapabilities"/> object.
+        /// Serves as a hash function for a <see cref="OsuTK.Input.GamePadCapabilities"/> object.
         /// </summary>
         /// <returns>A hash code for this instance that is suitable for use in hashing algorithms and data structures such as a
         /// hash table.</returns>
@@ -372,11 +372,11 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="OpenTK.Input.GamePadCapabilities"/>.
+        /// Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="OsuTK.Input.GamePadCapabilities"/>.
         /// </summary>
-        /// <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="OpenTK.Input.GamePadCapabilities"/>.</param>
+        /// <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="OsuTK.Input.GamePadCapabilities"/>.</param>
         /// <returns><c>true</c> if the specified <see cref="System.Object"/> is equal to the current
-        /// <see cref="OpenTK.Input.GamePadCapabilities"/>; otherwise, <c>false</c>.</returns>
+        /// <see cref="OsuTK.Input.GamePadCapabilities"/>; otherwise, <c>false</c>.</returns>
         public override bool Equals(object obj)
         {
             return
@@ -389,11 +389,11 @@ namespace OpenTK.Input
         #region IEquatable<GamePadCapabilities> Members
 
         /// <summary>
-        /// Determines whether the specified <see cref="OpenTK.Input.GamePadCapabilities"/> is equal to the current <see cref="OpenTK.Input.GamePadCapabilities"/>.
+        /// Determines whether the specified <see cref="OsuTK.Input.GamePadCapabilities"/> is equal to the current <see cref="OsuTK.Input.GamePadCapabilities"/>.
         /// </summary>
-        /// <param name="other">The <see cref="OpenTK.Input.GamePadCapabilities"/> to compare with the current <see cref="OpenTK.Input.GamePadCapabilities"/>.</param>
-        /// <returns><c>true</c> if the specified <see cref="OpenTK.Input.GamePadCapabilities"/> is equal to the current
-        /// <see cref="OpenTK.Input.GamePadCapabilities"/>; otherwise, <c>false</c>.</returns>
+        /// <param name="other">The <see cref="OsuTK.Input.GamePadCapabilities"/> to compare with the current <see cref="OsuTK.Input.GamePadCapabilities"/>.</param>
+        /// <returns><c>true</c> if the specified <see cref="OsuTK.Input.GamePadCapabilities"/> is equal to the current
+        /// <see cref="OsuTK.Input.GamePadCapabilities"/>; otherwise, <c>false</c>.</returns>
         public bool Equals(GamePadCapabilities other)
         {
             return

@@ -34,11 +34,11 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 
-using OpenTK.Platform;
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
+using OsuTK.Platform;
+using OsuTK.Graphics;
+using OsuTK.Graphics.OpenGL;
 
-namespace OpenTK
+namespace OsuTK
 {
     /// <summary>
     /// OpenGL-aware WinForms control.
@@ -471,7 +471,7 @@ namespace OpenTK
         #region WindowInfo
 
         /// <summary>
-        /// Gets the <see cref="OpenTK.Platform.IWindowInfo"/> for this instance.
+        /// Gets the <see cref="OsuTK.Platform.IWindowInfo"/> for this instance.
         /// </summary>
         public IWindowInfo WindowInfo
         {
@@ -490,7 +490,7 @@ namespace OpenTK
         /// <seealso cref="MakeCurrent"/>
         /// </summary>
         /// <returns>A System.Drawing.Bitmap, containing the contents of the frontbuffer.</returns>
-        /// <exception cref="OpenTK.Graphics.GraphicsContextException">
+        /// <exception cref="OsuTK.Graphics.GraphicsContextException">
         /// Occurs when no OpenTK.Graphics.GraphicsContext is current in the calling thread.
         /// </exception>
         [Obsolete("This method will not work correctly with OpenGL|ES. Please use GL.ReadPixels to capture the contents of the framebuffer (refer to http://www.opentk.com/doc/graphics/save-opengl-rendering-to-disk for more information).")]

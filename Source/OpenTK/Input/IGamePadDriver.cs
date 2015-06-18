@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace OpenTK.Input
+namespace OsuTK.Input
 {
     interface IGamePadDriver
     {

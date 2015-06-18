@@ -31,7 +31,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace OpenTK.Platform.MacOS.Carbon
+namespace OsuTK.Platform.MacOS.Carbon
 {
     #region --- Types defined in HIGeometry.h ---
 

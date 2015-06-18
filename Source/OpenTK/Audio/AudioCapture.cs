@@ -30,9 +30,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
-using OpenTK.Audio.OpenAL;
+using OsuTK.Audio.OpenAL;
 
-namespace OpenTK.Audio
+namespace OsuTK.Audio
 {
 
     /// <summary>

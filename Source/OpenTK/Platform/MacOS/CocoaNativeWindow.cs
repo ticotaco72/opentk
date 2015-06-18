@@ -33,10 +33,10 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.InteropServices;
 using System.Threading;
-using OpenTK.Graphics;
-using OpenTK.Input;
+using OsuTK.Graphics;
+using OsuTK.Input;
 
-namespace OpenTK.Platform.MacOS
+namespace OsuTK.Platform.MacOS
 {
     class CocoaNativeWindow : NativeWindowBase
     {
@@ -528,10 +528,10 @@ namespace OpenTK.Platform.MacOS
 
         private KeyModifiers GetModifiers(NSEventModifierMask mask)
         {
-            OpenTK.Input.KeyModifiers modifiers = 0;
-            if ((mask & NSEventModifierMask.ControlKeyMask) != 0) modifiers |= OpenTK.Input.KeyModifiers.Control;
-            if ((mask & NSEventModifierMask.ShiftKeyMask) != 0) modifiers |= OpenTK.Input.KeyModifiers.Shift;
-            if ((mask & NSEventModifierMask.AlternateKeyMask) != 0) modifiers |= OpenTK.Input.KeyModifiers.Alt;
+            OsuTK.Input.KeyModifiers modifiers = 0;
+            if ((mask & NSEventModifierMask.ControlKeyMask) != 0) modifiers |= OsuTK.Input.KeyModifiers.Control;
+            if ((mask & NSEventModifierMask.ShiftKeyMask) != 0) modifiers |= OsuTK.Input.KeyModifiers.Shift;
+            if ((mask & NSEventModifierMask.AlternateKeyMask) != 0) modifiers |= OsuTK.Input.KeyModifiers.Alt;
             return modifiers;
         }
 

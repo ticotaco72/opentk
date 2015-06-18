@@ -27,7 +27,7 @@
 
 using System;
 
-namespace OpenTK
+namespace OsuTK
 {
 	[AttributeUsage(AttributeTargets.Assembly, AllowMultiple = false, Inherited = false)]
 	class RewrittenAttribute : Attribute

@@ -35,10 +35,10 @@ using System.Drawing;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
-using OpenTK.Graphics;
-using OpenTK.Input;
+using OsuTK.Graphics;
+using OsuTK.Input;
 
-namespace OpenTK.Platform.X11
+namespace OsuTK.Platform.X11
 {
     /// \internal
     /// <summary>
@@ -1171,7 +1171,7 @@ namespace OpenTK.Platform.X11
 
         #region WindowState
 
-        public override OpenTK.WindowState WindowState
+        public override OsuTK.WindowState WindowState
         {
             get
             {
@@ -1215,27 +1215,27 @@ namespace OpenTK.Platform.X11
                 }
 
                 if (minimized)
-                    return OpenTK.WindowState.Minimized;
+                    return OsuTK.WindowState.Minimized;
                 else if (maximized == 2)
-                    return OpenTK.WindowState.Maximized;
+                    return OsuTK.WindowState.Maximized;
                 else if (fullscreen)
-                    return OpenTK.WindowState.Fullscreen;
+                    return OsuTK.WindowState.Fullscreen;
                 /*
                                 attributes = new XWindowAttributes();
                                 Functions.XGetWindowAttributes(window.Display, window.Handle, ref attributes);
                                 if (attributes.map_state == MapState.IsUnmapped)
                                     return (OpenTK.WindowState)(-1);
                 */
-                return OpenTK.WindowState.Normal;
+                return OsuTK.WindowState.Normal;
             }
             set
             {
-                OpenTK.WindowState current_state = this.WindowState;
+                OsuTK.WindowState current_state = this.WindowState;
 
                 // When switching away from normal state, store
                 // the "normal" border and size. These will be used
                 // for restoring to normal state.
-                if (current_state == OpenTK.WindowState.Normal)
+                if (current_state == OsuTK.WindowState.Normal)
                 {
                     _previous_window_border = WindowBorder;
                     _previous_window_size = ClientSize;
@@ -1250,7 +1250,7 @@ namespace OpenTK.Platform.X11
                 // When minimizing the window, call XIconifyWindow and bail out.
                 // For other states, we first need to restore the window, set the
                 // new state and reset the window border and bounds.
-                if (value != OpenTK.WindowState.Minimized)
+                if (value != OsuTK.WindowState.Minimized)
                 {
                     // Some WMs cannot switch between specific states directly,
                     // Switch back to a regular window first.
@@ -1270,19 +1270,19 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        void ResetWindowState(OpenTK.WindowState current_state)
+        void ResetWindowState(OsuTK.WindowState current_state)
         {
-            if (current_state != OpenTK.WindowState.Normal)
+            if (current_state != OsuTK.WindowState.Normal)
             {
                 using (new XLock(window.Display))
                 {
                     switch (current_state)
                     {
-                        case OpenTK.WindowState.Minimized:
+                        case OsuTK.WindowState.Minimized:
                             Functions.XMapWindow(window.Display, window.Handle);
                             break;
 
-                        case OpenTK.WindowState.Fullscreen:
+                        case OsuTK.WindowState.Fullscreen:
                             Functions.SendNetWMMessage(window,
                                 _atom_net_wm_state,
                                 _atom_remove,
@@ -1290,7 +1290,7 @@ namespace OpenTK.Platform.X11
                                 IntPtr.Zero);
                             break;
 
-                        case OpenTK.WindowState.Maximized:
+                        case OsuTK.WindowState.Maximized:
                             Functions.SendNetWMMessage(window,
                                 _atom_net_wm_state,
                                 _atom_toggle,
@@ -1302,30 +1302,30 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        void ChangeWindowState(OpenTK.WindowState value)
+        void ChangeWindowState(OsuTK.WindowState value)
         {
             using (new XLock(window.Display))
             {
                 switch (value)
                 {
-                    case OpenTK.WindowState.Normal:
+                    case OsuTK.WindowState.Normal:
                         Functions.XRaiseWindow(window.Display, window.Handle);
                         ChangeWindowBorder(_previous_window_border,
                             _previous_window_size.Width, _previous_window_size.Height);
                         break;
 
-                    case OpenTK.WindowState.Maximized:
+                    case OsuTK.WindowState.Maximized:
                         Functions.SendNetWMMessage(window, _atom_net_wm_state, _atom_add,
                             _atom_net_wm_state_maximized_horizontal,
                             _atom_net_wm_state_maximized_vertical);
                         Functions.XRaiseWindow(window.Display, window.Handle);
                         break;
 
-                    case OpenTK.WindowState.Minimized:
+                    case OsuTK.WindowState.Minimized:
                         Functions.XIconifyWindow(window.Display, window.Handle, window.Screen);
                         break;
 
-                    case OpenTK.WindowState.Fullscreen:
+                    case OsuTK.WindowState.Fullscreen:
                         Functions.SendNetWMMessage(window, _atom_net_wm_state, _atom_add,
                             _atom_net_wm_state_fullscreen, IntPtr.Zero);
                         Functions.XRaiseWindow(window.Display, window.Handle);
@@ -1338,15 +1338,15 @@ namespace OpenTK.Platform.X11
 
         #region WindowBorder
 
-        public override OpenTK.WindowBorder WindowBorder
+        public override OsuTK.WindowBorder WindowBorder
         {
             get
             {
-                if (IsWindowBorderHidden || WindowState == OpenTK.WindowState.Fullscreen)
+                if (IsWindowBorderHidden || WindowState == OsuTK.WindowState.Fullscreen)
                     return WindowBorder.Hidden;
                 else if (!IsWindowBorderResizable)
                     return WindowBorder.Fixed;
-                else if (WindowState == OpenTK.WindowState.Maximized)
+                else if (WindowState == OsuTK.WindowState.Maximized)
                     return _previous_window_border;
                 else
                     return WindowBorder.Resizable;
@@ -1359,7 +1359,7 @@ namespace OpenTK.Platform.X11
                 // We cannot change the border of a fullscreen window.
                 // Record the new value and set it on the next WindowState
                 // change.
-                if (WindowState == OpenTK.WindowState.Fullscreen)
+                if (WindowState == OsuTK.WindowState.Fullscreen)
                 {
                     _previous_window_border = value;
                     return;
