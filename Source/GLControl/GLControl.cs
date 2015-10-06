@@ -67,8 +67,6 @@ namespace OpenTK
 
         public bool MustUseAngle;
 
-        public static StringBuilder Log = new StringBuilder();
-
         #region --- Constructors ---
 
         /// <summary>
@@ -109,7 +107,7 @@ namespace OpenTK
             {
                 Backend = PlatformBackend.PreferNative
             });
-            
+
             SetStyle(ControlStyles.Opaque, true);
             SetStyle(ControlStyles.UserPaint, true);
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -134,113 +132,76 @@ namespace OpenTK
 
         #region --- Private  Methods ---
 
-        IGraphicsContext GetContext()
+        GraphicsContextFlags GetUsableContextFlags(GraphicsContextFlags flags)
         {
-            if (context != null)
-                context.Dispose();
+            Control temp_control = null;
+            IGraphicsContext temp_context = null;
+            IGLControl temp_implementation = null;
 
-            if (implementation == null)
+            Exception exc = null;
+
+            switch (flags)
             {
-                Log.AppendLine("Attempting to create native OpenGL context.");
-
-                implementation = design_mode ? new DummyGLControl() : new GLControlFactory().CreateGLControl(format, this, GraphicsContextFlags.Default);
-
-                try
-                {
-                    context = implementation.CreateContext(major, minor, GraphicsContextFlags.Default);
-                    MakeCurrent();
-                }
-                catch (Exception e)
-                {
-                    Log.AppendLine("Failed to create native OpenGL context.");
-                    Log.AppendLine(e.ToString());
-                    Log.AppendLine("Reverting to ANGLE.");
-
-                    flags = GraphicsContextFlags.Angle;
-                    return GetContext();
-                }
-
-                if (!design_mode)
-                {
-                    ((IGraphicsContextInternal)Context).LoadAll();
-
-                    Log.AppendLine("Loaded all endpoints.");
-                }
-
-                // Check if version < required version
-                if (new Version(GL.GetString(StringName.Version).Split(' ')[0]) < new Version(major, minor))
-                {
-                    Log.AppendLine("Native OpenGL context version is incompatible, reverting to ANGLE.");
-
-                    flags = GraphicsContextFlags.Angle;
-                    return GetContext();
-                }
-
-                Log.AppendLine("Successfully created native OpenGL context.");
-
-
-                if (flags == GraphicsContextFlags.Default)
-                {
-                    Log.AppendLine("Using native OpenGL context.");
-
-                    // We're using the default OpenGL renderer, exit early
-                    return context;
-                }
-            }
-
-            // If we reach this point, we need to use Angle
-            if (flags == GraphicsContextFlags.Angle)
-            {
-                try
-                {
-                    Log.AppendLine("Attempting to create ANGLED3D11 context.");
-
-                    // Try D3D11
-                    major = 3;
-                    minor = 0;
-                    flags = GraphicsContextFlags.AngleD3D11;
-                    return GetContext();
-                }
-                catch (Exception e)
-                {
-                    Log.AppendLine("Failed to create ANGLED3D11 context.");
-                    Log.AppendLine(e.ToString());
-                    Log.AppendLine("Reverting to ANGLED3D9.");
-
-                    try
+                default:
                     {
-                        Log.AppendLine("Attempting to create ANGLED3D9 context.");
-
-                        // Default to D3D9 (this should never fail)
-                        major = 2;
-                        minor = 0;
-                        flags = GraphicsContextFlags.AngleD3D9;
-                        return GetContext();
+                        return GetUsableContextFlags(GraphicsContextFlags.Default);
                     }
-                    catch (Exception e2)
+                case GraphicsContextFlags.Angle:
                     {
-                        Log.AppendLine("Failed to create ANGLED3D9 context. Oops.");
-                        Log.AppendLine(e.ToString());
-
-                        return null;
+                        return GetUsableContextFlags(GraphicsContextFlags.AngleD3D11);
                     }
+                case GraphicsContextFlags.Default:
+                case GraphicsContextFlags.AngleD3D11:
+                case GraphicsContextFlags.AngleD3D9:
+                    {
+                        try
+                        {
+                            temp_control = new Control();
+                            temp_control.CreateControl();
+
+                            if (flags == GraphicsContextFlags.AngleD3D11)
+                                major = 3;
+                            if (flags == GraphicsContextFlags.AngleD3D9)
+                                major = 2;
+
+                            temp_implementation = design_mode ? new DummyGLControl() : new GLControlFactory().CreateGLControl(format, temp_control, flags);
+                            temp_context = temp_implementation.CreateContext(major, minor, flags);
+
+                            temp_context.MakeCurrent(temp_implementation.WindowInfo);
+
+                            if (!design_mode)
+                                ((IGraphicsContextInternal)temp_context).LoadAll();
+
+                            // Enforce a minimum version for default renderer for maximum compatibility
+                            if (flags == GraphicsContextFlags.Default && new Version(GL.GetString(StringName.Version).Split(' ')[0]) < new Version(major, minor))
+                                throw new Exception("Unsupported version, using ANGLE.");
+                        }
+                        catch (Exception e)
+                        {
+                            exc = e;
+                        }
+                    }
+                    break;
+            }
+
+            temp_control?.Dispose();
+            temp_context?.Dispose();
+            temp_implementation?.WindowInfo?.Dispose();
+
+            if (exc != null)
+            {
+                switch (flags)
+                {
+                    case GraphicsContextFlags.Default:
+                        return GetUsableContextFlags(GraphicsContextFlags.Angle);
+                    case GraphicsContextFlags.AngleD3D11:
+                        return GetUsableContextFlags(GraphicsContextFlags.AngleD3D9);
+                    case GraphicsContextFlags.AngleD3D9:
+                        throw new NoGLContextAvailable(exc);
                 }
             }
 
-            implementation = design_mode ? new DummyGLControl() : new GLControlFactory().CreateGLControl(format, this, flags);
-
-            context = implementation.CreateContext(major, minor, flags);
-            MakeCurrent();
-            if (!design_mode)
-            {
-                ((IGraphicsContextInternal)Context).LoadAll();
-
-                Log.AppendLine("Loaded all endpoints.");
-            }
-
-            Log.AppendLine($"Using {(flags == GraphicsContextFlags.AngleD3D11 ? "ANGLED3D11" : "ANGLED3D9")} context.");
-
-            return context;
+            return flags;
         }
 
         IGLControl Implementation
@@ -290,7 +251,7 @@ namespace OpenTK
                 const int CS_OWNDC = 0x20;
 
                 CreateParams cp = base.CreateParams;
-                if (Configuration.RunningOnWindows)
+                if (OpenTK.Configuration.RunningOnWindows)
                 {
                     // Setup necessary class style for OpenGL on windows
                     cp.ClassStyle |= CS_VREDRAW | CS_HREDRAW | CS_OWNDC;
@@ -303,7 +264,19 @@ namespace OpenTK
         /// <param name="e">Not used.</param>
         protected override void OnHandleCreated(EventArgs e)
         {
-            context = GetContext();
+            context?.Dispose();
+            implementation?.WindowInfo?.Dispose();
+
+            // Test the current flags
+            flags = GetUsableContextFlags(flags);
+
+            implementation = design_mode ? new DummyGLControl() : new GLControlFactory().CreateGLControl(format, this, flags);
+            context = implementation.CreateContext(major, minor, flags);
+
+            MakeCurrent();
+
+            if (!design_mode)
+                ((IGraphicsContextInternal)context).LoadAll();
 
             // Deferred setting of vsync mode. See VSync property for more information.
             if (initial_vsync_value.HasValue)
@@ -372,13 +345,13 @@ namespace OpenTK
                 return;
             }
 
-            if (Configuration.RunningOnMacOS) 
+            if (OpenTK.Configuration.RunningOnMacOS)
             {
                 DelayUpdate delay = PerformContextUpdate;
                 BeginInvoke(delay); //Need the native window to resize first otherwise our control will be in the wrong place.
             }
             else if (context != null)
-                context.Update (Implementation.WindowInfo);
+                context.Update(Implementation.WindowInfo);
 
             base.OnResize(e);
         }
@@ -393,7 +366,7 @@ namespace OpenTK
         public void PerformContextUpdate()
         {
             if (context != null)
-                context.Update (Implementation.WindowInfo);
+                context.Update(Implementation.WindowInfo);
         }
 
         /// <summary>
@@ -591,7 +564,7 @@ namespace OpenTK
         {
             get { return implementation.WindowInfo; }
         }
-        
+
         #endregion
 
         #region public Bitmap GrabScreenshot()
@@ -621,11 +594,20 @@ namespace OpenTK
                           data.Scan0);
             bmp.UnlockBits(data);
             bmp.RotateFlip(RotateFlipType.RotateNoneFlipY);
-			return bmp;
+            return bmp;
         }
 
         #endregion
 
         #endregion
+    }
+
+    internal class NoGLContextAvailable : Exception
+    {
+        public NoGLContextAvailable(Exception innerException)
+            : base("No available GL context found.", innerException)
+        {
+
+        }
     }
 }

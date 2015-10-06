@@ -61,38 +61,41 @@ namespace OpenTK.Platform.Egl
             RenderableFlags renderable_flags)
         {
             IntPtr[] configs = new IntPtr[1];
-            int[] attribList = new int[] 
-            { 
-                Egl.SURFACE_TYPE, (int) surface_type,
-                Egl.RENDERABLE_TYPE, (int)renderable_flags,
-
-                Egl.RED_SIZE, color.Red, 
-                Egl.GREEN_SIZE, color.Green, 
-                Egl.BLUE_SIZE, color.Blue,
-                Egl.ALPHA_SIZE, color.Alpha,
-
-                Egl.DEPTH_SIZE, depth > 0 ? depth : 0,
-                Egl.STENCIL_SIZE, stencil > 0 ? stencil : 0,
-
-                Egl.SAMPLE_BUFFERS, samples > 0 ? 1 : 0,
-                Egl.SAMPLES, samples > 0 ? samples : 0,
-
-                Egl.NONE,
+            int[] config_attribs =
+            {
+                Egl.BUFFER_SIZE, depth,
+                Egl.ALPHA_SIZE, 8,
+                Egl.BLUE_SIZE, 8,
+                Egl.GREEN_SIZE, 8,
+                Egl.RED_SIZE, 8,
+                Egl.RENDERABLE_TYPE, Egl.OPENGL_ES2_BIT,
+                Egl.SURFACE_TYPE, Egl.WINDOW_BIT | Egl.PBUFFER_BIT,
+                Egl.NONE
             };
 
             int num_configs;
-            if (!Egl.ChooseConfig(display, attribList, configs, configs.Length, out num_configs))
-            {
+            if (!Egl.ChooseConfig(display, config_attribs, configs, 1, out num_configs))
                 throw new GraphicsModeException(String.Format("Failed to retrieve GraphicsMode, error {0}", Egl.GetError()));
+
+            if (num_configs > 0)
+            {
+                int config_depth;
+                if (!Egl.GetConfigAttrib(display, configs[0], Egl.BUFFER_SIZE, out config_depth))
+                    throw new GraphicsModeException(String.Format("Failed to retrieve the graphics mode depth attribute.", Egl.GetError()));
+
+                if (config_depth == depth)
+                    goto dostuff;
             }
+
+            // Try without an alpha channel
+            config_attribs[3] = 0;
+            if (!Egl.ChooseConfig(display, config_attribs, configs, 1, out num_configs))
+                throw new GraphicsModeException(String.Format("Failed to retrieve GraphicsMode, error {0}", Egl.GetError()));
+
+dostuff:
 
             if (num_configs == 0)
-            {
-                if (depth > 0)
-                    return SelectGraphicsMode(surface_type, display, color, 0, stencil, samples, accum, buffers, stereo, renderable_flags);
-
                 throw new GraphicsModeException(String.Format("Failed to retrieve GraphicsMode, no fitting configurations, error {0}", Egl.GetError()));
-            }
 
             // See what we really got
             IntPtr active_config = configs[0];

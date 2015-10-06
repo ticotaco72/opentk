@@ -35,6 +35,7 @@ using System.Text;
 using System.Windows.Forms;
 
 using OpenTK;
+using OpenTK.Graphics;
 
 namespace Examples
 {
@@ -100,29 +101,34 @@ namespace Examples
         [STAThread]
         public static void Main(string[] args)
         {
-            if (args.Length > 0)
-            {
-                LaunchExample(args[0]);
-            }
-            else
-            {
-                try
-                {
-                    Application.EnableVisualStyles();
-                    Application.SetCompatibleTextRenderingDefault(false);
+            var glControl = new GLControl(GraphicsMode.Default, 2, 0, GraphicsContextFlags.Angle);
+            glControl.Show();
 
-                    using (Form browser = new ExampleBrowser())
-                    {
-                        Application.Run(browser);
-                    }
-                }
-                catch (System.Security.SecurityException e)
-                {
-                    MessageBox.Show("The Example Launcher failed to start, due to insufficient permissions. This may happen if you execute the application from a network share.", "OpenTK Example Launcher failed to start.",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    Trace.WriteLine(e.ToString());
-                }
-            }
+            glControl.MakeCurrent();
+
+            //    if (args.Length > 0)
+            //    {
+            //        LaunchExample(args[0]);
+            //    }
+            //    else
+            //    {
+            //        try
+            //        {
+            //            Application.EnableVisualStyles();
+            //            Application.SetCompatibleTextRenderingDefault(false);
+
+            //            using (Form browser = new ExampleBrowser())
+            //            {
+            //                Application.Run(browser);
+            //            }
+            //        }
+            //        catch (System.Security.SecurityException e)
+            //        {
+            //            MessageBox.Show("The Example Launcher failed to start, due to insufficient permissions. This may happen if you execute the application from a network share.", "OpenTK Example Launcher failed to start.",
+            //                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            //            Trace.WriteLine(e.ToString());
+            //        }
+            //    }
         }
     }
 }

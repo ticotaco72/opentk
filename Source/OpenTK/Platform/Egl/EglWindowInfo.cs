@@ -30,6 +30,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Diagnostics;
 using OpenTK.Graphics;
+using System.Runtime.InteropServices;
 
 namespace OpenTK.Platform.Egl
 {
@@ -83,8 +84,25 @@ namespace OpenTK.Platform.Egl
 
         public void CreateWindowSurface(IntPtr config)
         {
-            Surface = Egl.CreateWindowSurface(Display, config, Handle, IntPtr.Zero);
-			if (Surface==IntPtr.Zero)
+            int[] windowAttribs =
+            {
+                Egl.FIXED_SIZE_ANGLE, 1,
+                Egl.WIDTH, 800,
+                Egl.HEIGHT, 600,
+                Egl.NONE
+            };
+
+            GCHandle handle = GCHandle.Alloc(windowAttribs, GCHandleType.Pinned);
+            try
+            {
+                Surface = Egl.CreateWindowSurface(Display, config, Handle, handle.AddrOfPinnedObject());
+            }
+            finally
+            {
+                if (handle.IsAllocated)
+                    handle.Free();
+            }
+            if (Surface==IntPtr.Zero)
 			{
                 throw new GraphicsContextException(String.Format(
                     "[EGL] Failed to create window surface, error {0}.", Egl.GetError()));
