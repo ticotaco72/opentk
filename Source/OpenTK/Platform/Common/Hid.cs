@@ -100,7 +100,8 @@ namespace OpenTK.Platform.Common
                     break;
             }
 
-            return JoystickAxis.Last;
+            Debug.Print("[Input] Unknown axis with HID page/usage {0}/{1}", page, usage);
+            return 0;
         }
     }
 

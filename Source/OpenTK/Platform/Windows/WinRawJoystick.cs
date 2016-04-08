@@ -81,9 +81,11 @@ namespace OpenTK.Platform.Windows
 
             public void SetAxis(short collection, HIDPage page, short usage, short value)
             {
-                JoystickAxis axis = GetAxis(collection, page, usage);
-                if (axis != JoystickAxis.Last)
+                if (page == HIDPage.GenericDesktop || page == HIDPage.Simulation) // set axis only when HIDPage is known by HidHelper.TranslateJoystickAxis() to avoid axis0 to be overwritten by unknown HIDPage
+                {
+                    JoystickAxis axis = GetAxis(collection, page, usage);
                     State.SetAxis(axis, value);
+                }
             }
 
             public void SetButton(short collection, HIDPage page, short usage, bool value)
@@ -144,8 +146,6 @@ namespace OpenTK.Platform.Windows
                 if (!axes.ContainsKey(key))
                 {
                     JoystickAxis axis = HidHelper.TranslateJoystickAxis(page, usage);
-                    if (axis == JoystickAxis.Last)
-                        return axis;
                     axes.Add(key, axis);
                 }
                 return axes[key];
@@ -261,7 +261,7 @@ namespace OpenTK.Platform.Windows
 
                     // This is a new device, query its capabilities and add it
                     // to the device list
-                    if (!QueryDeviceCaps(device))
+                    if (!QueryDeviceCaps(device) && !is_xinput)
                     {
                         continue;
                     }
@@ -352,15 +352,16 @@ namespace OpenTK.Platform.Windows
 
         HatPosition GetHatPosition(uint value, HidProtocolValueCaps caps)
         {
-            switch (caps.LogicalMax)
+            if (caps.LogicalMax == 8)
+                return (HatPosition)value;
+            else if (caps.LogicalMax == 7)
             {
-                case 8:
-                    return (HatPosition)value;
-                case 7:
-                    return (HatPosition)((value + 1) % 9);
-                default:
-                    return HatPosition.Centered;
+                value++;
+                value %= 9;
+                return (HatPosition)value;
             }
+            else
+                return HatPosition.Centered;
         }
 
         unsafe void UpdateAxes(RawInput* rin, Device stick)
@@ -610,6 +611,8 @@ namespace OpenTK.Platform.Windows
                         }
                     }
                 }
+                else
+                    return false;
             }
             finally
             {

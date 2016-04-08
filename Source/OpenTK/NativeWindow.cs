@@ -477,7 +477,7 @@ namespace OpenTK
         #region Width
 
         /// <summary>
-        /// Gets or sets the height of the OpenGL surface in window coordinates.
+        /// Gets or sets the width of the OpenGL surface in window coordinates.
         /// The coordinates are specified in device-dependent pixels.
         /// </summary>
         public int Width
@@ -499,7 +499,7 @@ namespace OpenTK
         #region WindowBorder
 
         /// <summary>
-        /// Gets or states the border of the NativeWindow.
+        /// Gets or sets the border of the NativeWindow.
         /// </summary>
         public WindowBorder WindowBorder
         {
@@ -534,7 +534,7 @@ namespace OpenTK
         #region WindowState
 
         /// <summary>
-        /// Gets or states the state of the NativeWindow.
+        /// Gets or sets the state of the NativeWindow.
         /// </summary>
         public virtual WindowState WindowState
         {
