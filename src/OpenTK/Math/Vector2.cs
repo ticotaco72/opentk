@@ -770,6 +770,32 @@ namespace OpenTK
 
         #endregion
 
+        #region Distance
+
+        /// <summary>
+        /// Compute the euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="vec1">The first vector</param>
+        /// <param name="vec2">The second vector</param>
+        /// <returns>The distance</returns>
+        public static float Distance(Vector2 vec1, Vector2 vec2)
+        {
+            return (vec1 - vec2).Length;
+        }
+
+        /// <summary>
+        /// Compute the squared euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="vec1">The first vector</param>
+        /// <param name="vec2">The second vector</param>
+        /// <returns>The squared distance</returns>
+        public static float DistanceSquared(Vector2 vec1, Vector2 vec2)
+        {
+            return (vec1 - vec2).LengthSquared;
+        }
+
+        #endregion
+
         #region Normalize
 
         /// <summary>
