@@ -41,6 +41,8 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
@@ -353,7 +355,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="OpenTK\GLControl\DerivedGLControl.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="OpenTK\GLControl\MultipleGLControls.cs">
       <SubType>Form</SubType>
@@ -485,6 +487,7 @@
     <None Include="..\..\OpenTK.snk">
       <Link>OpenTK.snk</Link>
     </None>
+    <None Include="app.config" />
     <None Include="app.manifest" />
     <None Include="Data\Poem.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -682,7 +685,5 @@
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
   </PropertyGroup>
-  <ItemGroup>
-    <Folder Include="OpenTK\GLWidget\" />
-  </ItemGroup>
+  <ItemGroup />
 </Project>
