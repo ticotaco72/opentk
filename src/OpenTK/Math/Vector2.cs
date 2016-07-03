@@ -954,6 +954,19 @@ namespace OpenTK
         #region Transform
 
         /// <summary>
+        /// Transforms a vector by a Matrix rotation.
+        /// </summary>
+        /// <param name="vec">The vector to transform.</param>
+        /// <param name="mat">The matrix to rotate the vector by.</param>
+        /// <returns>The result of the operation.</returns>
+        public static Vector2 Transform(ref Vector2 vec, ref Matrix2 mat)
+        {
+            Vector2 result;
+            Matrix2.Mult(ref mat, ref vec, out result);
+            return result;
+        }
+
+        /// <summary>
         /// Transforms a vector by a quaternion rotation.
         /// </summary>
         /// <param name="vec">The vector to transform.</param>
@@ -1074,7 +1087,32 @@ namespace OpenTK
             vec.Y *= scale.Y;
             return vec;
         }
-		
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix2 using right-handed notation
+        /// </summary>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="vec">The vector to transform</param>
+        /// <returns>The transformed vector</returns>
+        public static Vector2 operator *(Matrix2 mat, Vector2 vec)
+        {
+            return Vector2.Transform(ref vec, ref mat);
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix3 using right-handed notation
+        /// </summary>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="vec">The vector to transform</param>
+        /// <returns>The transformed vector</returns>
+        public static Vector2 operator *(Matrix3 mat, Vector2 vec)
+        {
+            Vector3 result;
+            Vector3 operand = new Vector3(vec.X, vec.Y, 1);
+            Vector3.Transform(ref mat, ref operand, out result);
+            return new Vector2(result.X / result.Z, result.Y / result.Z);
+        }
+
         /// <summary>
         /// Divides the specified instance by a scalar.
         /// </summary>
