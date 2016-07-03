@@ -391,8 +391,8 @@ namespace OpenTK
                 lM21 = left.Row1.X, lM22 = left.Row1.Y,
                 rX = right.X, rY = right.Y;
 
-            result.X = (lM11 * rX) + (lM12 * rY);
-            result.Y = (lM21 * rX) + (lM22 * rY);
+            result.X = (lM11 * rX) + (lM21 * rY);
+            result.Y = (lM12 * rX) + (lM22 * rY);
         }
 
         /// <summary>

@@ -985,7 +985,7 @@ namespace OpenTK
         /// <param name="vec">The vector to transform.</param>
         /// <param name="mat">The matrix to rotate the vector by.</param>
         /// <returns>The result of the operation.</returns>
-        public static Vector2 Transform(ref Vector2 vec, ref Matrix2 mat)
+        public static Vector2 Transform(ref Matrix2 mat, ref Vector2 vec)
         {
             Vector2 result;
             Matrix2.Mult(ref mat, ref vec, out result);
@@ -1019,6 +1019,18 @@ namespace OpenTK
             Quaternion.Multiply(ref t, ref i, out v);
 
             result = new Vector2(v.X, v.Y);
+        }
+
+        /// <summary>Transform a Position by the given Matrix</summary>
+        /// <param name="pos">The position to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <returns>The transformed position</returns>
+        public static Vector2 TransformPosition(Vector2 pos, Matrix3 mat)
+        {
+            Vector2 p;
+            p.X = Vector2.Dot(pos, new Vector2(mat.Column0)) + mat.Row2.X;
+            p.Y = Vector2.Dot(pos, new Vector2(mat.Column1)) + mat.Row2.Y;
+            return p;
         }
 
         #endregion
@@ -1115,28 +1127,25 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Transform a Vector by the given Matrix2 using right-handed notation
+        /// Transform a Vector by the given Matrix2
         /// </summary>
         /// <param name="mat">The desired transformation</param>
         /// <param name="vec">The vector to transform</param>
         /// <returns>The transformed vector</returns>
-        public static Vector2 operator *(Matrix2 mat, Vector2 vec)
+        public static Vector2 operator *(Vector2 vec, Matrix2 mat)
         {
-            return Vector2.Transform(ref vec, ref mat);
+            return Vector2.Transform(ref mat, ref vec);
         }
 
         /// <summary>
-        /// Transform a Vector by the given Matrix3 using right-handed notation
+        /// Transform a Vector by the given Matrix3
         /// </summary>
         /// <param name="mat">The desired transformation</param>
         /// <param name="vec">The vector to transform</param>
         /// <returns>The transformed vector</returns>
-        public static Vector2 operator *(Matrix3 mat, Vector2 vec)
+        public static Vector2 operator *(Vector2 vec, Matrix3 mat)
         {
-            Vector3 result;
-            Vector3 operand = new Vector3(vec.X, vec.Y, 1);
-            Vector3.Transform(ref mat, ref operand, out result);
-            return new Vector2(result.X / result.Z, result.Y / result.Z);
+            return TransformPosition(vec, mat);
         }
 
         /// <summary>
