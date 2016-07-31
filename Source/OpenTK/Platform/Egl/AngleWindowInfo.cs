@@ -135,17 +135,13 @@ namespace OpenTK.Platform.Egl
 
         public EGLSurface CreateSurface(int width, int height)
         {
-            IntPtr surface;
-            EglWindowInfo.CreatePbufferSurface(
-                EglContext.GraphicsMode.Index.Value,
-                width, height, 
-                out surface);
-            return surface;
+            EglWindowInfo.CreatePbufferSurface(EglContext.GraphicsMode.Index.Value);
+            return EglWindowInfo.Surface;
         }
 
         public void DestroySurface(ref EGLSurface surface)
         {
-            EglWindowInfo.DestroySurface(ref surface);
+            EglWindowInfo.DestroySurface();
         }
 
         public void MakeCurrent(EGLSurface surface)

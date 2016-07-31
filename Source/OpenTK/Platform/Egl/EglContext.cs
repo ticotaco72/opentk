@@ -56,8 +56,6 @@ namespace OpenTK.Platform.Egl
             if (window == null)
                 throw new ArgumentNullException("window");
 
-            EglContext shared = GetSharedEglContext(sharedContext);
-
             WindowInfo = window;
 
             // Select an EGLConfig that matches the desired mode. We cannot use the 'mode'
@@ -88,42 +86,25 @@ namespace OpenTK.Platform.Egl
                 Debug.Print("[EGL] Failed to bind rendering API. Error: {0}", Egl.GetError());
             }
 
-            bool offscreen = (flags & GraphicsContextFlags.Offscreen) != 0;
-
-            SurfaceType surface_type = offscreen 
-                ? SurfaceType.PBUFFER_BIT 
-                : SurfaceType.WINDOW_BIT;
-
-            Mode = new EglGraphicsMode().SelectGraphicsMode(surface_type,
-                    window.Display, mode.ColorFormat, mode.Depth, mode.Stencil,
-                    mode.Samples, mode.AccumulatorFormat, mode.Buffers, mode.Stereo,
-                    Renderable, (flags & GraphicsContextFlags.AngleFullscreen) > 0);
+            Mode = new EglGraphicsMode().SelectGraphicsMode(window,
+                mode.ColorFormat, mode.Depth, mode.Stencil, mode.Samples,
+                mode.AccumulatorFormat, mode.Buffers, mode.Stereo,
+                Renderable, (flags & GraphicsContextFlags.AngleFullscreen) > 0);
 
             if (!Mode.Index.HasValue)
                 throw new GraphicsModeException("Invalid or unsupported GraphicsMode.");
+
             IntPtr config = Mode.Index.Value;
 
             if (window.Surface == IntPtr.Zero)
-            {
-                if (!offscreen)
-                {
-                    window.CreateWindowSurface(config);
-                }
-                else
-                {
-                    window.CreatePbufferSurface(config);
-                }
-            }
+                window.CreateWindowSurface(config);
 
             int[] attrib_list = new int[] { Egl.CONTEXT_CLIENT_VERSION, major, Egl.NONE };
-            var share_context = shared != null ? shared.HandleAsEGLContext : IntPtr.Zero;
 
             try
             {
-                HandleAsEGLContext = Egl.CreateContext(window.Display, config, share_context, attrib_list);
+                HandleAsEGLContext = Egl.CreateContext(window.Display, config, sharedContext != null ? (sharedContext as IGraphicsContextInternal).Context.Handle : IntPtr.Zero, attrib_list);
 
-                GraphicsContextFlags = flags;
-                MakeCurrent(window);
             }
             catch
             {
@@ -149,7 +130,10 @@ namespace OpenTK.Platform.Egl
 
         public override void SwapBuffers()
         {
-            Egl.SwapBuffers(WindowInfo.Display, WindowInfo.Surface);
+            if (!Egl.SwapBuffers(WindowInfo.Display, WindowInfo.Surface))
+            {
+                throw new GraphicsContextException(string.Format("Failed to swap buffers for context {0} current. Error: {1}", Handle, Egl.GetError()));
+            }
         }
 
         public override void MakeCurrent(IWindowInfo window)
@@ -158,11 +142,19 @@ namespace OpenTK.Platform.Egl
             // trying to make the EglContext current on a non-EGL window will do,
             // nothing (the EglContext will remain current on the previous EGL window
             // or the window it was constructed on (which may not be EGL)).
-            if (window is EglWindowInfo)
-                WindowInfo = (EglWindowInfo)window;
-            else if (window is IAngleWindowInfoInternal)
-                WindowInfo = ((IAngleWindowInfoInternal) window).EglWindowInfo;
-            Egl.MakeCurrent(WindowInfo.Display, WindowInfo.Surface, WindowInfo.Surface, HandleAsEGLContext);
+            if (window != null)
+            {
+                if (window is EglWindowInfo)
+                    WindowInfo = (EglWindowInfo) window;
+                if (!Egl.MakeCurrent(WindowInfo.Display, WindowInfo.Surface, WindowInfo.Surface, HandleAsEGLContext))
+                {
+                    throw new GraphicsContextException(string.Format("Failed to make context {0} current. Error: {1}", Handle, Egl.GetError()));
+                }
+            }
+            else
+            {
+                Egl.MakeCurrent(WindowInfo.Display, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
+            }
         }
 
         public override bool IsCurrent
@@ -231,26 +223,12 @@ namespace OpenTK.Platform.Egl
             {
                 if (manual)
                 {
-                    Egl.MakeCurrent(WindowInfo.Display, WindowInfo.Surface, WindowInfo.Surface, IntPtr.Zero);
+                    if (IsCurrent)
+                        Egl.MakeCurrent(WindowInfo.Display, WindowInfo.Surface, WindowInfo.Surface, IntPtr.Zero);
                     Egl.DestroyContext(WindowInfo.Display, HandleAsEGLContext);
                 }
                 IsDisposed = true;
             }
-        }
-
-        private EglContext GetSharedEglContext(IGraphicsContext sharedContext)
-        {
-            if (sharedContext == null)
-            {
-                return null;
-            }
-
-            var internalContext = sharedContext as IGraphicsContextInternal;
-            if (internalContext != null)
-            {
-                return (EglContext) internalContext.Implementation;
-            }
-            return (EglContext) sharedContext;
         }
 
         #endregion
