@@ -303,6 +303,13 @@ namespace OpenTK
         /// <param name="e">Not used.</param>
         protected override void OnHandleCreated(EventArgs e)
         {
+            base.OnHandleCreated(e);
+
+            CreateContext();
+        }
+
+        public void CreateContext()
+        {
             context = GetContext();
 
             // Deferred setting of vsync mode. See VSync property for more information.
@@ -311,8 +318,6 @@ namespace OpenTK
                 Context.SwapInterval = initial_vsync_value.Value ? 1 : 0;
                 initial_vsync_value = null;
             }
-
-            base.OnHandleCreated(e);
 
             if (resize_event_suppressed)
             {
