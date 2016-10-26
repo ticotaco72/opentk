@@ -62,7 +62,7 @@ namespace OpenTK.Platform.Windows
         bool class_registered;
         bool disposed;
         bool exists;
-        WinWindowInfo window, child_window;
+        WinWindowInfo window;
         WindowBorder windowBorder = WindowBorder.Resizable;
         Nullable<WindowBorder> previous_window_border; // Set when changing to fullscreen state.
         Nullable<WindowBorder> deferred_window_border; // Set to avoid changing borders during fullscreen state.
@@ -145,11 +145,6 @@ namespace OpenTK.Platform.Windows
                         scale_x, scale_y, scale_width, scale_height,
                         title, options, device, IntPtr.Zero),
                     null);
-                child_window = new WinWindowInfo(
-                    CreateWindow(
-                        0, 0, ClientSize.Width, ClientSize.Height,
-                        title, options, device, window.Handle),
-                    window);
 
                 exists = true;
             }
@@ -285,7 +280,7 @@ namespace OpenTK.Platform.Windows
                         Functions.GetClientRect(handle, out rect);
                         client_rectangle = rect.ToRectangle();
 
-                        Functions.SetWindowPos(child_window.Handle, IntPtr.Zero, 0, 0, ClientRectangle.Width, ClientRectangle.Height,
+                        Functions.SetWindowPos(window.Handle, IntPtr.Zero, bounds.X, bounds.Y, bounds.Width, bounds.Height,
                             SetWindowPosFlags.NOZORDER | SetWindowPosFlags.NOOWNERZORDER |
                             SetWindowPosFlags.NOACTIVATE | SetWindowPosFlags.NOSENDCHANGING);
 
@@ -675,7 +670,6 @@ namespace OpenTK.Platform.Windows
                 Functions.UnregisterClass(ClassName, Instance);
             }
             window.Dispose();
-            child_window.Dispose();
 
             OnClosed(EventArgs.Empty);
         }
@@ -853,7 +847,7 @@ namespace OpenTK.Platform.Windows
         {
             TrackMouseEventStructure me = new TrackMouseEventStructure();
             me.Size = TrackMouseEventStructure.SizeInBytes;
-            me.TrackWindowHandle = child_window.Handle;
+            me.TrackWindowHandle = window.Handle;
             me.Flags = TrackMouseEventFlags.LEAVE;
 
             if (!Functions.TrackMouseEvent(ref me))
@@ -1553,7 +1547,7 @@ namespace OpenTK.Platform.Windows
 
         public override IWindowInfo WindowInfo
         {
-            get { return child_window; }
+            get { return window; }
         }
 
         #endregion
