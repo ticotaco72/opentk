@@ -1,13 +1,19 @@
 OpenTK
 ======
 
+
+### MAINTAINERS WANTED
+
+OpenTK is a large project, with a huge number of components. We're looking to add a more maintainers to the team.
+Email [@varon](https://github.com/varon) or message him in Gitter if you'd like to help out. 
+
 [![Join the chat at https://gitter.im/opentk/opentk](https://badges.gitter.im/opentk/opentk.svg)](https://gitter.im/opentk/opentk?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 The Open Toolkit library is a fast, low-level C# binding for OpenGL, OpenGL ES and OpenAL. It runs on all major platforms and powers hundreds of apps, games and scientific research.
 
 Use OpenTK to add cross-platform 3d graphics, audio, compute and haptics to your C# application. Integrate it into your existing user interface or use it standalone without any external dependencies.
 
-Project website: http://www.opentk.com/
+Project website: https://opentk.github.io/
 
 Official git repository: https://github.com/opentk/opentk
 
@@ -83,7 +89,7 @@ OpenTK 1.1.4c was released on 24 July 2014.
 
 This is a hotfix release that improves stability on Mac OS X. Moreover, it synchronizes the GamePad configuration database with SDL 2.0.4 and fixes an invalid GUID introduced in 1.1.4b.
 
-### 214-07-21
+### 2014-07-21
 
 OpenTK 1.1.4 was released on 21 July 2014.
 
