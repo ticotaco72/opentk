@@ -701,7 +701,7 @@ namespace OpenTK.Platform.Windows
                     break;
 
                 case WindowMessage.ERASEBKGND:
-                    return new IntPtr(1);
+                    break;
 
                 case WindowMessage.WINDOWPOSCHANGED:
                     HandleWindowPositionChanged(handle, message, wParam, lParam);
@@ -881,6 +881,33 @@ namespace OpenTK.Platform.Windows
 
         #region CreateWindow
 
+        [DllImport("gdi32.dll")]
+        static extern IntPtr GetStockObject(StockObjects fnObject);
+
+        public enum StockObjects
+        {
+            WHITE_BRUSH = 0,
+            LTGRAY_BRUSH = 1,
+            GRAY_BRUSH = 2,
+            DKGRAY_BRUSH = 3,
+            BLACK_BRUSH = 4,
+            NULL_BRUSH = 5,
+            HOLLOW_BRUSH = NULL_BRUSH,
+            WHITE_PEN = 6,
+            BLACK_PEN = 7,
+            NULL_PEN = 8,
+            OEM_FIXED_FONT = 10,
+            ANSI_FIXED_FONT = 11,
+            ANSI_VAR_FONT = 12,
+            SYSTEM_FONT = 13,
+            DEVICE_DEFAULT_FONT = 14,
+            DEFAULT_PALETTE = 15,
+            SYSTEM_FIXED_FONT = 16,
+            DEFAULT_GUI_FONT = 17,
+            DC_BRUSH = 18,
+            DC_PEN = 19,
+        }
+
         IntPtr CreateWindow(int x, int y, int width, int height, string title, GameWindowFlags options, DisplayDevice device, IntPtr parentHandle)
         {
             // Use win32 to create the native window.
@@ -912,6 +939,7 @@ namespace OpenTK.Platform.Windows
             {
                 ExtendedWindowClass wc = new ExtendedWindowClass();
                 wc.Size = ExtendedWindowClass.SizeInBytes;
+                wc.Background = GetStockObject(StockObjects.BLACK_BRUSH);
                 wc.Style = DefaultClassStyle;
                 wc.Instance = Instance;
                 wc.WndProc = WindowProcedureDelegate;
