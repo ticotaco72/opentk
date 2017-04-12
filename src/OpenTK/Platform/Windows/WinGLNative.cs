@@ -222,14 +222,15 @@ namespace OpenTK.Platform.Windows
         {
             // See http://msdn.microsoft.com/en-us/library/ms646274(VS.85).aspx (WM_ACTIVATE notification):
             // wParam: The low-order word specifies whether the window is being activated or deactivated.
-            bool new_focused_state = Focused;
-            if (IntPtr.Size == 4)
-                focused = (wParam.ToInt32() & 0xFFFF) != 0;
-            else
-                focused = (wParam.ToInt64() & 0xFFFF) != 0;
+            setFocus(((IntPtr.Size == 4 ? wParam.ToInt32() : wParam.ToInt64()) & 0xFFFF) != 0);
+        }
 
-            if (new_focused_state != Focused)
-                OnFocusedChanged(EventArgs.Empty);
+        void setFocus(bool focus)
+        {
+            if (focus == focused) return;
+
+            focused = focus;
+            OnFocusedChanged(EventArgs.Empty);
         }
 
         void HandleEnterModalLoop(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
@@ -258,6 +259,11 @@ namespace OpenTK.Platform.Windows
 
         void HandleWindowPositionChanged(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
+            // This is a work-around for the window not having a correct value for focused if the window is
+            // denied focus during startup procedures. On looking into all window events during startup,
+            // it looks like windows is incorrectly sending ACTIVATE / ACTIVATEAPP WindowProcedures. 
+            setFocus(Functions.GetForegroundWindow() == window?.Handle);
+
             unsafe
             {
                 WindowPosition* pos = (WindowPosition*)lParam;
@@ -629,6 +635,7 @@ namespace OpenTK.Platform.Windows
 
         void HandleKillFocus(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)
         {
+            setFocus(false);
         }
 
         void HandleCreate(IntPtr handle, WindowMessage message, IntPtr wParam, IntPtr lParam)

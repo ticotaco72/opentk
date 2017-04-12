@@ -848,6 +848,9 @@ namespace OpenTK.Platform.Windows
 
         #endregion
 
+        [DllImport("user32.dll")]
+        public static extern HWND GetForegroundWindow();
+
         #region IsWindowVisible
 
         [DllImport("user32.dll")]
