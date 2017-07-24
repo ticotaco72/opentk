@@ -1,5 +1,4 @@
-﻿#region License
-//
+﻿//
 // EventServices.cs
 //
 // Author:
@@ -25,7 +24,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 //
-#endregion
 
 using System;
 using System.Runtime.InteropServices;
@@ -36,7 +34,7 @@ namespace OpenTK.Platform.MacOS
     using CGEventRef = IntPtr;
     using CFMachPortRef = IntPtr;
 
-    partial class CG
+    internal partial class CG
     {
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         public delegate CGEventRef EventTapCallBack(
@@ -74,18 +72,19 @@ namespace OpenTK.Platform.MacOS
         {
             NSPoint r = new NSPoint();
 
-            unsafe {
+            unsafe
+            {
                 if (IntPtr.Size == 4)
                 {
                     NSPointF pf = EventGetLocationF(@event);
-                    r.X.Value = *(IntPtr *)&pf.x;
-                    r.Y.Value = *(IntPtr *)&pf.y;
+                    r.X.Value = *(IntPtr*)&pf.X;
+                    r.Y.Value = *(IntPtr*)&pf.Y;
                 }
                 else
                 {
                     NSPointD pd = EventGetLocationD(@event);
-                    r.X.Value = *(IntPtr *)&pd.x;
-                    r.Y.Value = *(IntPtr *)&pd.y;
+                    r.X.Value = *(IntPtr*)&pd.X;
+                    r.Y.Value = *(IntPtr*)&pd.Y;
                 }
             }
 
@@ -94,44 +93,44 @@ namespace OpenTK.Platform.MacOS
 
     }
 
-    enum CGEventTapLocation
+    internal enum CGEventTapLocation
     {
         HIDEventTap = 0,
         SessionEventTap,
         AnnotatedSessionEventTap
     }
 
-    enum CGEventTapPlacement
+    internal enum CGEventTapPlacement
     {
         HeadInsert = 0,
         TailAppend
     }
 
-    enum CGEventTapOptions
+    internal enum CGEventTapOptions
     {
         Default = 0x00000000,
         ListenOnly = 0x00000001
     }
 
     [Flags]
-    enum CGEventMask : long
+    internal enum CGEventMask : long
     {
-        LeftMouseDown       = 1 << CGEventType.LeftMouseDown,
-        LeftMouseUp         = 1 << CGEventType.LeftMouseUp,
-        RightMouseDown      = 1 << CGEventType.RightMouseDown,
-        RightMouseUp        = 1 << CGEventType.RightMouseUp,
-        MouseMoved          = 1 << CGEventType.MouseMoved,
-        LeftMouseDragged    = 1 << CGEventType.LeftMouseDown,
-        RightMouseDragged   = 1 << CGEventType.RightMouseDown,
-        KeyDown             = 1 << CGEventType.KeyDown,
-        KeyUp               = 1 << CGEventType.KeyUp,
-        FlagsChanged        = 1 << CGEventType.FlagsChanged,
-        ScrollWheel         = 1 << CGEventType.ScrollWheel,
-        TabletPointer       = 1 << CGEventType.TabletPointer,
-        TabletProximity     = 1 << CGEventType.TabletProximity,
-        OtherMouseDown      = 1 << CGEventType.OtherMouseDown,
-        OtherMouseUp        = 1 << CGEventType.OtherMouseUp,
-        OtherMouseDragged   = 1 << CGEventType.OtherMouseDragged,
+        LeftMouseDown = 1 << CGEventType.LeftMouseDown,
+        LeftMouseUp = 1 << CGEventType.LeftMouseUp,
+        RightMouseDown = 1 << CGEventType.RightMouseDown,
+        RightMouseUp = 1 << CGEventType.RightMouseUp,
+        MouseMoved = 1 << CGEventType.MouseMoved,
+        LeftMouseDragged = 1 << CGEventType.LeftMouseDown,
+        RightMouseDragged = 1 << CGEventType.RightMouseDown,
+        KeyDown = 1 << CGEventType.KeyDown,
+        KeyUp = 1 << CGEventType.KeyUp,
+        FlagsChanged = 1 << CGEventType.FlagsChanged,
+        ScrollWheel = 1 << CGEventType.ScrollWheel,
+        TabletPointer = 1 << CGEventType.TabletPointer,
+        TabletProximity = 1 << CGEventType.TabletProximity,
+        OtherMouseDown = 1 << CGEventType.OtherMouseDown,
+        OtherMouseUp = 1 << CGEventType.OtherMouseUp,
+        OtherMouseDragged = 1 << CGEventType.OtherMouseDragged,
         All = -1,
         AllMouse =
             LeftMouseDown | LeftMouseUp | LeftMouseDragged |
@@ -140,30 +139,30 @@ namespace OpenTK.Platform.MacOS
             ScrollWheel | MouseMoved
     }
 
-    enum CGEventType
+    internal enum CGEventType
     {
-        Null                = 0,
-        LeftMouseDown       = 1,
-        LeftMouseUp         = 2,
-        RightMouseDown      = 3,
-        RightMouseUp        = 4,
-        MouseMoved          = 5,
-        LeftMouseDragged    = 6,
-        RightMouseDragged   = 7,
-        KeyDown             = 10,
-        KeyUp               = 11,
-        FlagsChanged        = 12,
-        ScrollWheel         = 22,
-        TabletPointer       = 23,
-        TabletProximity     = 24,
-        OtherMouseDown      = 25,
-        OtherMouseUp        = 26,
-        OtherMouseDragged   = 27,
+        Null = 0,
+        LeftMouseDown = 1,
+        LeftMouseUp = 2,
+        RightMouseDown = 3,
+        RightMouseUp = 4,
+        MouseMoved = 5,
+        LeftMouseDragged = 6,
+        RightMouseDragged = 7,
+        KeyDown = 10,
+        KeyUp = 11,
+        FlagsChanged = 12,
+        ScrollWheel = 22,
+        TabletPointer = 23,
+        TabletProximity = 24,
+        OtherMouseDown = 25,
+        OtherMouseUp = 26,
+        OtherMouseDragged = 27,
         TapDisabledByTimeout = -2,
         TapDisabledByUserInput = -1
     }
 
-    enum CGEventField
+    internal enum CGEventField
     {
         MouseEventNumber = 0,
         MouseEventClickState = 1,

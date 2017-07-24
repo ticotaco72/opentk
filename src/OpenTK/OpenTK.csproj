@@ -40,7 +40,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <TargetFrameworkProfile />
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
@@ -114,7 +114,6 @@
     <Compile Include="Input\IKeyboardDriver2.cs" />
     <Compile Include="Input\IMouseDriver2.cs" />
     <Compile Include="Input\Joystick.cs" />
-    <Compile Include="Input\JoystickAxis.cs" />
     <Compile Include="Input\JoystickCapabilities.cs" />
     <Compile Include="Input\JoystickState.cs" />
     <Compile Include="InteropHelper.cs" />
@@ -225,9 +224,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Platform\Utilities.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Platform\INativeGLWindow.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Platform\DesktopGraphicsContext.cs">
@@ -443,15 +439,6 @@
     <Compile Include="Input\Key.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Input\IJoystickDriver.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Input\IMouseDriver.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Input\IInputDriver.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Input\KeyboardDevice.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -462,9 +449,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Input\JoystickDevice.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Input\IKeyboardDriver.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Input\KeyboardKeyEventArgs.cs">
@@ -495,9 +479,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Math\Vector3.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Math\Functions.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Math\Matrix4d.cs">
@@ -725,7 +706,6 @@
     <Compile Include="Input\ConfigurationType.cs" />
     <Compile Include="Input\GamePadConfigurationSource.cs" />
     <Compile Include="Input\GamePadConfigurationItem.cs" />
-    <Compile Include="Platform\LegacyJoystickDriver.cs" />
     <Compile Include="Platform\PlatformFactoryBase.cs" />
     <Compile Include="Input\JoystickHat.cs" />
     <Compile Include="Input\HatPosition.cs" />
@@ -745,7 +725,6 @@
     <Compile Include="Platform\MacOS\Cocoa\NSOpenGLPixelFormatAttribute.cs" />
     <Compile Include="Platform\MacOS\Cocoa\NSOpenGLProfile.cs" />
     <Compile Include="Platform\MacOS\Cocoa\NSOpenGLContextParameter.cs" />
-    <Compile Include="Platform\LegacyInputDriver.cs" />
     <Compile Include="Platform\MacOS\Cocoa\NSEventType.cs" />
     <Compile Include="Platform\MacOS\Cocoa\NSEventModifierMask.cs" />
     <Compile Include="Platform\MacOS\Cocoa\NSTrackingAreaOptions.cs" />
@@ -795,8 +774,10 @@
     <Compile Include="Platform\Linux\Bindings\Evdev.cs" />
     <Compile Include="Platform\Linux\DefaultCursor.cs" />
     <Compile Include="Platform\Linux\Bindings\Kms.cs" />
+    <Compile Include="Input\FileDropEventArgs.cs" />
     <None Include="OpenTK.csproj.paket.template" />
     <None Include="paket.references" />
+    <Compile Include="Platform\MacOS\Cocoa\NSDragOperation.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
