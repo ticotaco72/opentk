@@ -729,7 +729,7 @@ namespace OpenTK.Platform.Windows
                     break;
 
                 case WindowMessage.ERASEBKGND:
-                    return new IntPtr(1);
+                    break;
 
                 case WindowMessage.WINDOWPOSCHANGED:
                     HandleWindowPositionChanged(handle, message, wParam, lParam);
@@ -936,6 +936,7 @@ namespace OpenTK.Platform.Windows
             {
                 ExtendedWindowClass wc = new ExtendedWindowClass();
                 wc.Size = ExtendedWindowClass.SizeInBytes;
+                wc.Background = Functions.GetStockObject(StockObjects.BLACK_BRUSH);
                 wc.Style = DefaultClassStyle;
                 wc.Instance = Instance;
                 wc.WndProc = WindowProcedureDelegate;
