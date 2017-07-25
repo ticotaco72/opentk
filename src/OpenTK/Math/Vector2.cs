@@ -514,6 +514,28 @@ namespace OpenTK
         }
 
         /// <summary>
+        /// Compute the euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="vec1">The first vector</param>
+        /// <param name="vec2">The second vector</param>
+        /// <returns>The distance</returns>
+        public static float Distance(Vector2 vec1, Vector2 vec2)
+        {
+            return (vec1 - vec2).Length;
+        }
+
+        /// <summary>
+        /// Compute the squared euclidean distance between two vectors.
+        /// </summary>
+        /// <param name="vec1">The first vector</param>
+        /// <param name="vec2">The second vector</param>
+        /// <returns>The squared distance</returns>
+        public static float DistanceSquared(Vector2 vec1, Vector2 vec2)
+        {
+            return (vec1 - vec2).LengthSquared;
+        }
+
+        /// <summary>
         /// Scale a vector to unit length
         /// </summary>
         /// <param name="vec">The input vector</param>
@@ -697,6 +719,50 @@ namespace OpenTK
             Quaternion.Multiply(ref t, ref i, out v);
 
             result = new Vector2(v.X, v.Y);
+        }
+
+        /// <summary>Transform a Position by the given Matrix rotation</summary>
+        /// <param name="pos">The position to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <returns>The transformed position</returns>
+        public static Vector2 Transform(Vector2 pos, Matrix2 mat)
+        {
+            Vector2 result;
+            Transform(ref pos, ref mat, out result);
+            return result;
+        }
+
+        /// <summary>Transform a Position by the given Matrix rotation</summary>
+        /// <param name="pos">The position to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="result">The transformed vector</param>
+        /// <returns>The transformed position</returns>
+        public static void Transform(ref Vector2 pos, ref Matrix2 mat, out Vector2 result)
+        {
+            result.X = mat.Row0.X * pos.X + mat.Row1.X * pos.Y;
+            result.Y = mat.Row0.Y * pos.X + mat.Row1.Y * pos.Y;
+        }
+
+        /// <summary>Transform a Position by the given Matrix</summary>
+        /// <param name="pos">The position to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <returns>The transformed position</returns>
+        public static Vector2 Transform(Vector2 pos, Matrix3 mat)
+        {
+            Vector2 result;
+            Transform(ref pos, ref mat, out result);
+            return result;
+        }
+
+        /// <summary>Transform a Position by the given Matrix</summary>
+        /// <param name="pos">The position to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="result">The transformed vector</param>
+        /// <returns>The transformed position</returns>
+        public static void Transform(ref Vector2 pos, ref Matrix3 mat, out Vector2 result)
+        {
+            result.X = Dot(pos, new Vector2(mat.Column0.X, mat.Column0.Y)) + mat.Row2.X;
+            result.Y = Dot(pos, new Vector2(mat.Column1.X, mat.Column1.Y)) + mat.Row2.Y;
         }
 
         /// <summary>
