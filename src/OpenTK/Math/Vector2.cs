@@ -721,45 +721,45 @@ namespace OpenTK
             result = new Vector2(v.X, v.Y);
         }
 
-        /// <summary>Transform a Position by the given Matrix rotation</summary>
-        /// <param name="pos">The position to transform</param>
+        /// <summary>Transform a Position by the given Matrix rotation using right-handed notation.</summary>
         /// <param name="mat">The desired transformation</param>
+        /// <param name="pos">The position to transform</param>
         /// <returns>The transformed position</returns>
-        public static Vector2 Transform(Vector2 pos, Matrix2 mat)
+        public static Vector2 Transform(Matrix2 mat, Vector2 pos)
         {
             Vector2 result;
-            Transform(ref pos, ref mat, out result);
+            Transform(ref mat, ref pos, out result);
             return result;
         }
 
-        /// <summary>Transform a Position by the given Matrix rotation</summary>
-        /// <param name="pos">The position to transform</param>
+        /// <summary>Transform a Position by the given Matrix rotation using right-handed notation.</summary>
         /// <param name="mat">The desired transformation</param>
+        /// <param name="pos">The position to transform</param>
         /// <param name="result">The transformed vector</param>
         /// <returns>The transformed position</returns>
-        public static void Transform(ref Vector2 pos, ref Matrix2 mat, out Vector2 result)
+        public static void Transform(ref Matrix2 mat, ref Vector2 pos, out Vector2 result)
         {
             result.X = mat.Row0.X * pos.X + mat.Row1.X * pos.Y;
             result.Y = mat.Row0.Y * pos.X + mat.Row1.Y * pos.Y;
         }
 
-        /// <summary>Transform a Position by the given Matrix</summary>
-        /// <param name="pos">The position to transform</param>
+        /// <summary>Transform a Position by the given Matrix using right-handed notation.</summary>
         /// <param name="mat">The desired transformation</param>
+        /// <param name="pos">The position to transform</param>
         /// <returns>The transformed position</returns>
-        public static Vector2 Transform(Vector2 pos, Matrix3 mat)
+        public static Vector2 Transform(Matrix3 mat, Vector2 pos)
         {
             Vector2 result;
-            Transform(ref pos, ref mat, out result);
+            Transform(ref mat, ref pos, out result);
             return result;
         }
 
-        /// <summary>Transform a Position by the given Matrix</summary>
-        /// <param name="pos">The position to transform</param>
+        /// <summary>Transform a Position by the given Matrix using right-handed notation</summary>
         /// <param name="mat">The desired transformation</param>
+        /// <param name="pos">The position to transform</param>
         /// <param name="result">The transformed vector</param>
         /// <returns>The transformed position</returns>
-        public static void Transform(ref Vector2 pos, ref Matrix3 mat, out Vector2 result)
+        public static void Transform(ref Matrix3 mat, ref Vector2 pos, out Vector2 result)
         {
             result.X = Dot(pos, new Vector2(mat.Column0.X, mat.Column0.Y)) + mat.Row2.X;
             result.Y = Dot(pos, new Vector2(mat.Column1.X, mat.Column1.Y)) + mat.Row2.Y;
@@ -849,15 +849,28 @@ namespace OpenTK
         }
 
         /// <summary>
-        /// Transform a Vector by the given Matrix.
+        /// Transform a Vector by the given Matrix using right-handed notation.
         /// </summary>
         /// <param name="vec">The vector to transform</param>
         /// <param name="mat">The desired transformation</param>
         /// <returns>The transformed vector</returns>
-        public static Vector2 operator *(Vector2 vec, Matrix3 mat)
+        public static Vector2 operator *(Matrix3 mat, Vector2 vec)
         {
             Vector2 result;
-            Vector2.Transform(ref vec, ref mat, out result);
+            Vector2.Transform(ref mat, ref vec, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix using right-handed notation.
+        /// </summary>
+        /// <param name="vec">The vector to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <returns>The transformed vector</returns>
+        public static Vector2 operator *(Matrix2 mat, Vector2 vec)
+        {
+            Vector2 result;
+            Vector2.Transform(ref mat, ref vec, out result);
             return result;
         }
 
