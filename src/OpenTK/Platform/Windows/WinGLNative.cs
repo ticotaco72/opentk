@@ -128,8 +128,6 @@ namespace OpenTK.Platform.Windows
                     scale_y = ScaleY(y);
                 }
 
-                // To avoid issues with Ati drivers on Windows 6+ with compositing enabled, the context will not be
-                // bound to the top-level window, but rather to a child window docked in the parent.
                 window = new WinWindowInfo(
                     CreateWindow(
                         scale_x, scale_y, scale_width, scale_height,
