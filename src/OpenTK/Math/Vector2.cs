@@ -849,6 +849,19 @@ namespace OpenTK
         }
 
         /// <summary>
+        /// Transform a Vector by the given Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <returns>The transformed vector</returns>
+        public static Vector2 operator *(Vector2 vec, Matrix3 mat)
+        {
+            Vector2 result;
+            Vector2.Transform(ref vec, ref mat, out result);
+            return result;
+        }
+
+        /// <summary>
         /// Divides the specified instance by a scalar.
         /// </summary>
         /// <param name="vec">Left operand</param>
