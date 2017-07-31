@@ -68,8 +68,10 @@ namespace OpenTK
         /// <summary>
         /// Gets or sets the value at the index of the Vector.
         /// </summary>
-        public float this[int index] {
-            get{
+        public float this[int index]
+        {
+            get
+            {
                 if (index == 0)
                 {
                     return X;
@@ -79,7 +81,9 @@ namespace OpenTK
                     return Y;
                 }
                 throw new IndexOutOfRangeException("You tried to access this vector at index: " + index);
-            } set{
+            }
+            set
+            {
                 if (index == 0)
                 {
                     X = value;
@@ -914,6 +918,32 @@ namespace OpenTK
             vec.X *= scale.X;
             vec.Y *= scale.Y;
             return vec;
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix using right-handed notation.
+        /// </summary>
+        /// <param name="vec">The vector to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <returns>The transformed vector</returns>
+        public static Vector2 operator *(Vector2 mat, Matrix3 vec)
+        {
+            Vector2 result;
+            Vector2.Transform(ref vec, ref mat, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix using right-handed notation.
+        /// </summary>
+        /// <param name="vec">The vector to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <returns>The transformed vector</returns>
+        public static Vector2 operator *(Matrix3 mat, Vector2 vec)
+        {
+            Vector2 result;
+            Vector2.Transform(ref mat, ref vec, out result);
+            return result;
         }
 
         /// <summary>
