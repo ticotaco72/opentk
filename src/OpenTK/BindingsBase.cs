@@ -76,24 +76,27 @@ namespace OpenTK
         /// This method supports OpenTK and is not intended to be called by user code.
         /// </summary>
         /// <param name="ptr">A pointer to a null-terminated byte array.</param>
-        protected static string MarshalPtrToString(IntPtr ptr)
+        /// <param name="sb">The StringBuilder to receive the contents of the pointer.</param>
+        protected static void MarshalPtrToStringBuilder(IntPtr ptr, StringBuilder sb)
         {
             if (ptr == IntPtr.Zero)
             {
                 throw new ArgumentException("ptr");
             }
-
-            unsafe
+            if (sb == null)
             {
-                sbyte* str = (sbyte*)ptr.ToPointer();
-                int len = 0;
-                while (*str != 0)
-                {
-                    ++len;
-                    ++str;
-                }
+                throw new ArgumentNullException("sb");
+            }
 
-                return new string(str, 0, len, null);
+            sb.Length = 0;
+            for (int i = 0; ; i++)
+            {
+                byte b = Marshal.ReadByte(ptr, i);
+                if (b == 0)
+                {
+                    return;
+                }
+                sb.Append((char)b);
             }
         }
 
