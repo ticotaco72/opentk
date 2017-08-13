@@ -68,23 +68,27 @@ namespace OpenTK
         /// <summary>
         /// Gets or sets the value at the index of the Vector.
         /// </summary>
-        public float this[int index] {
-            get{
-                if(index == 0)
+        public float this[int index]
+        {
+            get
+            {
+                if (index == 0)
                 {
                     return X;
                 }
-                else if(index == 1)
+                else if (index == 1)
                 {
                     return Y;
                 }
                 throw new IndexOutOfRangeException("You tried to access this vector at index: " + index);
-            } set{
-                if(index == 0)
+            }
+            set
+            {
+                if (index == 0)
                 {
                     X = value;
                 }
-                else if(index == 1)
+                else if (index == 1)
                 {
                     Y = value;
                 }
@@ -758,11 +762,31 @@ namespace OpenTK
         /// <param name="mat">The desired transformation</param>
         /// <param name="pos">The position to transform</param>
         /// <param name="result">The transformed vector</param>
-        /// <returns>The transformed position</returns>
         public static void Transform(ref Matrix2 mat, ref Vector2 pos, out Vector2 result)
         {
-            result.X = mat.M11 * pos.X + mat.M12 * pos.Y;
-            result.Y = mat.M21 * pos.X + mat.M22 * pos.Y;
+            result.X = mat.Row0.X * pos.X + mat.Row0.Y * pos.Y;
+            result.Y = mat.Row1.X * pos.X + mat.Row1.Y * pos.Y;
+        }
+
+        /// <summary>Transform a Position by the given Matrix rotation.</summary>
+        /// <param name="pos">The position to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <returns>The transformed position</returns>
+        public static Vector2 Transform(Vector2 pos, Matrix2 mat)
+        {
+            Vector2 result;
+            Transform(ref pos, ref mat, out result);
+            return result;
+        }
+
+        /// <summary>Transform a Position by the given Matrix rotation.</summary>
+        /// <param name="pos">The position to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="result">The transformed vector</param>
+        public static void Transform(ref Vector2 pos, ref Matrix2 mat, out Vector2 result)
+        {
+            result.X = mat.Row0.X * pos.X + mat.Row1.X * pos.Y;
+            result.Y = mat.Row0.Y * pos.X + mat.Row1.Y * pos.Y;
         }
 
         /// <summary>Transform a Position by the given Matrix.</summary>
@@ -780,11 +804,31 @@ namespace OpenTK
         /// <param name="mat">The desired transformation</param>
         /// <param name="pos">The position to transform</param>
         /// <param name="result">The transformed vector</param>
-        /// <returns>The transformed position</returns>
         public static void Transform(ref Matrix3 mat, ref Vector2 pos, out Vector2 result)
         {
-            result.X = mat.M11 * pos.X + mat.M12 * pos.Y + mat.M13;
-            result.Y = mat.M21 * pos.X + mat.M22 * pos.Y + mat.M23;
+            result.X = mat.Row0.X * pos.X + mat.Row0.Y * pos.Y + mat.Row0.Z;
+            result.Y = mat.Row1.X * pos.X + mat.Row1.Y * pos.Y + mat.Row1.Z;
+        }
+
+        /// <summary>Transform a Position by the given Matrix</summary>
+        /// <param name="pos">The position to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <returns>The transformed position</returns>
+        public static Vector2 Transform(Vector2 pos, Matrix3 mat)
+        {
+            Vector2 result;
+            Transform(ref pos, ref mat, out result);
+            return result;
+        }
+
+        /// <summary>Transform a Position by the given Matrix</summary>
+        /// <param name="pos">The position to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <param name="result">The transformed vector</param>
+        public static void Transform(ref Vector2 pos, ref Matrix3 mat, out Vector2 result)
+        {
+            result.X = mat.Row0.X * pos.X + mat.Row1.X * pos.Y + mat.Row2.X;
+            result.Y = mat.Row0.Y * pos.X + mat.Row1.Y * pos.Y + mat.Row2.Y;
         }
 
         /// <summary>
@@ -873,13 +917,26 @@ namespace OpenTK
         /// <summary>
         /// Transform a Vector by the given Matrix.
         /// </summary>
-        /// <param name="vec">The vector to transform</param>
         /// <param name="mat">The desired transformation</param>
+        /// <param name="vec">The vector to transform</param>
         /// <returns>The transformed vector</returns>
         public static Vector2 operator *(Matrix2 mat, Vector2 vec)
         {
             Vector2 result;
             Vector2.Transform(ref mat, ref vec, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Transform a Vector by the given Matrix.
+        /// </summary>
+        /// <param name="vec">The vector to transform</param>
+        /// <param name="mat">The desired transformation</param>
+        /// <returns>The transformed vector</returns>
+        public static Vector2 operator *(Vector2 vec, Matrix2 mat)
+        {
+            Vector2 result;
+            Vector2.Transform(ref vec, ref mat, out result);
             return result;
         }
 
