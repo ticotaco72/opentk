@@ -49,6 +49,7 @@
     <Compile Include="Platform\Egl\EglUnixContext.cs" />
     <Compile Include="Platform\Egl\EglWinContext.cs" />
     <Compile Include="Platform\Egl\EglAnglePlatformFactory.cs" />
+    <Compile Include="Platform\MacOS\Cocoa\NSAutoreleasePool.cs" />
     <Compile Include="Platform\MappedGamePadDriver.cs" />
     <Compile Include="Platform\Windows\Bindings\HidProtocol.cs" />
     <Compile Include="Platform\Windows\WinInputBase.cs" />
@@ -559,12 +560,15 @@
     <Compile Include="Audio\OpenAL\AL\ALEnums.cs">
       <SubType>Code</SubType>
     </Compile>
-    <None Include="$(MSBuildThisFileDirectory)..\OpenTK.snk">
+    <None Include="..\..\OpenTK.snk">
       <Link>OpenTK.snk</Link>
     </None>
     <Compile Include="Platform\X11\X11Keyboard.cs" />
     <Compile Include="Platform\X11\X11Mouse.cs" />
     <Compile Include="Input\ButtonState.cs" />
+    <EmbeddedResource Include="OpenTK.dll.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
     <Compile Include="Platform\MacOS\HIDInput.cs" />
     <Compile Include="IntPtrEqualityComparer.cs" />
     <Compile Include="Input\GamePadAxes.cs" />
@@ -685,17 +689,19 @@
     <Compile Include="Platform\Linux\DefaultCursor.cs" />
     <Compile Include="Platform\Linux\Bindings\Kms.cs" />
     <Compile Include="Input\FileDropEventArgs.cs" />
+    <None Include="OpenTK.csproj.paket.template" />
+    <None Include="paket.references" />
     <Compile Include="Platform\MacOS\Cocoa\NSDragOperation.cs" />
+    <Compile Include="Platform\MacOS\CoreVideo.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Win32.Registry" Version="4.3.0" />
+    <PackageReference Include="Paket" Version="5.114.5" />
   </ItemGroup>
-
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="$(MSBuildThisFileDirectory)..\Generator.Rewrite\bin\Debug\Rewrite.exe $(OutputPath)OpenTK.dll $(MSBuildThisFileDirectory)..\..\OpenTK.snk -debug -netstandard" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Debug'" />
     <Exec Command="$(MSBuildThisFileDirectory)..\Generator.Rewrite\bin\Release\Rewrite.exe $(OutputPath)OpenTK.dll $(MSBuildThisFileDirectory)..\..\OpenTK.snk -netstandard" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Release'" />
     <Exec Command="mono $(MSBuildThisFileDirectory)../Generator.Rewrite/bin/Debug/Rewrite.exe $(OutputPath)OpenTK.dll $(MSBuildThisFileDirectory)../../OpenTK.snk -debug -netstandard" Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Debug'" />
     <Exec Command="mono $(MSBuildThisFileDirectory)../Generator.Rewrite/bin/Release/Rewrite.exe $(OutputPath)OpenTK.dll $(MSBuildThisFileDirectory)../../OpenTK.snk -netstandard" Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Release'" />
   </Target>
-
 </Project>
