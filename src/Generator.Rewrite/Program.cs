@@ -54,7 +54,8 @@ namespace OpenTK.Rewrite
             program.Rewrite();
         }
 
-        // mscorlib types
+        // coreAssembly types
+        private static string GetCoreAssemblyName() => Options.NETStandard ? "netstandard" : "mscorlib";
         private static AssemblyDefinition mscorlib;
 
         private static TypeDefinition TypeMarshal;
@@ -91,6 +92,21 @@ namespace OpenTK.Rewrite
                 Console.Error.WriteLine("No keyfile specified or keyfile missing.");
             }
 
+            if (Options.NETStandard)
+            {
+                DefaultAssemblyResolver resolver = new DefaultAssemblyResolver();
+                string searchPath = GetNetstandardRefPath();
+                if (!Directory.Exists(searchPath))
+                {
+                    Console.Error.WriteLine(
+                        "Could not locate .NET Standard reference assemblies. This is necessary for binary rewriting to proceed.");
+                    return;
+                }
+
+                resolver.AddSearchDirectory(searchPath);
+                read_params.AssemblyResolver = resolver;
+            }
+
             // Load assembly and process all modules
             try
             {
@@ -106,7 +122,7 @@ namespace OpenTK.Rewrite
                                 try
                                 {
                                     var resolved = module.AssemblyResolver.Resolve(reference);
-                                    if (reference.Name == "mscorlib")
+                                    if (reference.Name == GetCoreAssemblyName())
                                     {
                                         mscorlib = resolved;
                                     }
@@ -120,7 +136,7 @@ namespace OpenTK.Rewrite
 
                         if (mscorlib == null)
                         {
-                            Console.Error.WriteLine("Failed to locate mscorlib");
+                            Console.Error.WriteLine("Failed to locate " + GetCoreAssemblyName());
                             return;
                         }
                         TypeMarshal = mscorlib.MainModule.GetType("System.Runtime.InteropServices.Marshal");
@@ -152,6 +168,19 @@ namespace OpenTK.Rewrite
                 Console.WriteLine("Failed to load the assembly. It may already have been rewritten, and the debug symbols no longer match.");
                 Console.WriteLine(inex);
             }
+        }
+
+        private string GetNetstandardRefPath()
+        {
+            return Path.Combine(
+                Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
+                ".nuget",
+                "packages",
+                "netstandard.library",
+                "2.0.0-preview2-25401-01",
+                "build",
+                "netstandard2.0",
+                "ref");
         }
 
         private void Rewrite(TypeDefinition type)

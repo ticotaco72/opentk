@@ -1,5 +1,6 @@
 ﻿using CommandLine;
 using CommandLine.Text;
+using Mono.Cecil;
 
 namespace OpenTK.Rewrite
 {
@@ -20,5 +21,9 @@ namespace OpenTK.Rewrite
         [Option("dllimport", Default = false,
             HelpText = "Force native calls to use DllImport instead of GetProcAddress.")]
         public bool UseDLLImport { get; set; }
+        
+        [Option("netstandard", Default = false,
+            HelpText = "Rewrite with compatibility with .NET Standard.")]
+        public bool NETStandard { get; set;  }
     }
 }
