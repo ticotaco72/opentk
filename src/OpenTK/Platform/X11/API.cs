@@ -1323,10 +1323,11 @@ XF86VidModeGetGammaRampSize(
                 return XCreateWindow(display, parent, x, y, width, height, border_width, depth,
                     (int)@class, visual, (IntPtr)valuemask, ref attr);
             }
-            else
+            
+            unsafe
             {
-                return XCreateWindow(display, parent, x, y, width, height, border_width, depth,
-                    @class, visual, valuemask, null);
+                return XCreateWindow(display, parent, x, y, width, height, border_width, depth, 
+                    (int)@class, visual, (IntPtr)valuemask, null); 
             }
         }
 
