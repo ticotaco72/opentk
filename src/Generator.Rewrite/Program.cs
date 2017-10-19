@@ -172,15 +172,14 @@ namespace OpenTK.Rewrite
 
         private string GetNetstandardRefPath()
         {
-            return Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
-                ".nuget",
-                "packages",
-                "netstandard.library",
-                "2.0.0-preview2-25401-01",
-                "build",
-                "netstandard2.0",
-                "ref");
+            string dir = Environment.CurrentDirectory;
+            while (!Directory.Exists(Path.Combine(dir, "packages")) && !string.IsNullOrEmpty(dir))
+                dir = dir.Substring(0, dir.LastIndexOf(Path.DirectorySeparatorChar));
+
+            if (string.IsNullOrEmpty(dir))
+                return string.Empty;
+
+            return Path.Combine(dir, "packages", "NETStandard.Library.2.0.1", "build", "netstandard2.0", "ref");
         }
 
         private void Rewrite(TypeDefinition type)
