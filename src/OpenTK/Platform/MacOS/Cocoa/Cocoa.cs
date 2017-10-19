@@ -36,7 +36,7 @@ namespace OpenTK.Platform.MacOS
 {
     internal static class Cocoa
     {
-        private static readonly IntPtr selUTF8String = Selector.Get("UTF8String");
+        private static readonly IntPtr selCStringUsingEncoding = Selector.Get("cStringUsingEncoding:");
 
         internal const string LibObjC = "/usr/lib/libobjc.dylib";
 
@@ -227,10 +227,7 @@ namespace OpenTK.Platform.MacOS
             }
         }
 
-        public static string FromNSString(IntPtr handle)
-        {
-            return Marshal.PtrToStringAuto(SendIntPtr(handle, selUTF8String));
-        }
+        public static string FromNSString(IntPtr handle) => Marshal.PtrToStringUni(SendIntPtr(handle, selCStringUsingEncoding, (uint)NSStringEncoding.Unicode));
 
         public static unsafe IntPtr ToNSImage(Image img)
         {
