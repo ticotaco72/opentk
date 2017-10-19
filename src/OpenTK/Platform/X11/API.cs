@@ -1317,19 +1317,16 @@ XF86VidModeGetGammaRampSize(
             CreateWindowArgs @class, IntPtr visual, SetWindowValuemask valuemask,
             XSetWindowAttributes? attributes)
         {
-            unsafe
+            if (attributes.HasValue)
             {
-                if (attributes.HasValue)
-                {
-                    XSetWindowAttributes attr = attributes.Value;
-                    return XCreateWindow(display, parent, x, y, width, height, border_width, depth,
-                        (int)@class, visual, (IntPtr)valuemask, &attr);
-                }
-                else
-                {
-                    return XCreateWindow(display, parent, x, y, width, height, border_width, depth,
-                        (int)@class, visual, (IntPtr)valuemask, null);
-                }
+                XSetWindowAttributes attr = attributes.Value;
+                return XCreateWindow(display, parent, x, y, width, height, border_width, depth,
+                    (int)@class, visual, (IntPtr)valuemask, ref attr);
+            }
+            else
+            {
+                return XCreateWindow(display, parent, x, y, width, height, border_width, depth,
+                    @class, visual, valuemask, null);
             }
         }
 
