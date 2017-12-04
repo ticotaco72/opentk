@@ -91,6 +91,11 @@ namespace OpenTK.Rewrite
                 Console.Error.WriteLine("No keyfile specified or keyfile missing.");
             }
 
+            DefaultAssemblyResolver resolver = new DefaultAssemblyResolver();
+            read_params.AssemblyResolver = resolver;
+
+            resolver.AddSearchDirectory("/Library/Frameworks/Xamarin.iOS.framework/Versions/Current/lib/mono/Xamarin.iOS");
+
             // Load assembly and process all modules
             try
             {
