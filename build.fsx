@@ -82,6 +82,8 @@ let activeProjects =
     let xamarinFilter f =
         if isXamarinPlatform then
             f
+            -- "**/OpenTK.GLControl.csproj"
+            -- "**/OpenTK.GLWidget.csproj"
             -- "**/OpenTK.NS20.csproj"
             -- "**/OpenTK.Android.csproj"
         else
