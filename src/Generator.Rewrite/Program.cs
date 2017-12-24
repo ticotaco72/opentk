@@ -94,7 +94,10 @@ namespace OpenTK.Rewrite
             DefaultAssemblyResolver resolver = new DefaultAssemblyResolver();
             read_params.AssemblyResolver = resolver;
 
+            resolver.AddSearchDirectory("/Library/Frameworks/Xamarin.Mac.framework/Versions/Current/lib/mono");
+            resolver.AddSearchDirectory("/Library/Frameworks/Xamarin.iOS.framework/Versions/Current/lib/mono/2.1");
             resolver.AddSearchDirectory("/Library/Frameworks/Xamarin.iOS.framework/Versions/Current/lib/mono/Xamarin.iOS");
+            resolver.AddSearchDirectory("/Library/Frameworks/Xamarin.iOS.framework/Versions/Current/lib/mono/2.1/Facades");
 
             // Load assembly and process all modules
             try

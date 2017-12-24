@@ -82,6 +82,7 @@ let activeProjects =
     let xamarinFilter f =
         if isXamarinPlatform then
             f
+            -- "**/OpenTK.csproj"
             -- "**/OpenTK.GLControl.csproj"
             -- "**/OpenTK.GLWidget.csproj"
             -- "**/OpenTK.NS20.csproj"
@@ -92,7 +93,6 @@ let activeProjects =
             -- "**/OpenTK.iOS.csproj"
 
     !! "src/**/*.??proj"
-    ++ "tests/**/OpenTK.Tests*.fsproj"
     |> xamarinFilter
 
 // Generate assembly info files with the right version & up-to-date information
