@@ -243,11 +243,13 @@ namespace OpenTK.Platform.Windows
                 {
                     mouse.X = raw.LastX;
                     mouse.Y = raw.LastY;
+                    mouse.IsAbsolute = true;
                 }
                 else
                 {   // Seems like MOUSE_MOVE_RELATIVE is the default, unless otherwise noted.
                     mouse.X += raw.LastX;
                     mouse.Y += raw.LastY;
+                    mouse.IsAbsolute = false;
                 }
 
                 lock (UpdateLock)
