@@ -37,6 +37,8 @@ namespace OpenTK.Input
         private MouseScroll scroll;
         private ushort buttons;
 
+        public bool IsAbsolute { get; internal set; }
+
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether the specified
         /// <see cref="OpenTK.Input.MouseButton"/> is pressed.
@@ -340,6 +342,7 @@ namespace OpenTK.Input
                 buttons == other.buttons &&
                 X == other.X &&
                 Y == other.Y &&
+                IsAbsolute == other.IsAbsolute &&
                 Scroll == other.Scroll;
         }
     }
