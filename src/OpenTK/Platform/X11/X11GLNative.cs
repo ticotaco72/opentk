@@ -137,9 +137,10 @@ namespace OpenTK.Platform.X11
 
         private MouseCursor cursor = MouseCursor.Default;
         private IntPtr cursorHandle;
+        private bool cursor_grabbed = false;
         private bool cursor_visible = true;
 
-         // Keyboard input
+        // Keyboard input
         private readonly byte[] ascii = new byte[16];
 
         private readonly char[] chars = new char[16];
@@ -1119,9 +1120,9 @@ namespace OpenTK.Platform.X11
                                 OnFocusedChanged(EventArgs.Empty);
                             }
 
-                            if (Focused && !CursorVisible)
+                            if (Focused && CursorGrabbed)
                             {
-                                GrabMouse();
+                                SetCursorGrab(true);
                             }
                         }
                         break;
@@ -1682,49 +1683,65 @@ namespace OpenTK.Platform.X11
             }
         }
 
-        public override bool CursorVisible
+        public override bool CursorGrabbed
         {
-            get { return cursor_visible; }
+            get
+            {
+                return cursor_grabbed;
+            }
             set
             {
-                if (value && !cursor_visible)
+                using (new XLock(window.Display))
                 {
-                    using (new XLock(window.Display))
+                    if (value == cursor_grabbed)
                     {
-                        UngrabMouse();
-
-                        Point p = PointToScreen(new Point(MouseState.X, MouseState.Y));
-                        Mouse.SetPosition(p.X, p.Y);
-
-                        // Note: if cursorHandle = IntPtr.Zero, this restores the default cursor
-                        // (equivalent to calling XUndefineCursor)
-                        Functions.XDefineCursor(window.Display, window.Handle, cursorHandle);
-                        cursor_visible = true;
+                        return;
                     }
-                }
-                else if (!value && cursor_visible)
-                {
-                    using (new XLock(window.Display))
-                    {
-                        GrabMouse();
-                        cursor_visible = false;
-                    }
+                    SetCursorGrab(value);
+                    cursor_grabbed = value;
                 }
             }
         }
 
-        private void GrabMouse()
+        public override bool CursorVisible
         {
-            Functions.XGrabPointer(window.Display, window.Handle, false,
-                EventMask.PointerMotionMask | EventMask.ButtonPressMask |
-                EventMask.ButtonReleaseMask,
-                GrabMode.GrabModeAsync, GrabMode.GrabModeAsync,
-                window.Handle, EmptyCursor, IntPtr.Zero);
+            get
+            {
+                return cursor_visible;
+            }
+            set
+            {
+                using (new XLock(window.Display))
+                {
+                    if (value == cursor_visible)
+                    {
+                        return;
+                    }
+                    SetCursorVisible(value);
+                    cursor_visible = value;
+                }
+            }
         }
 
-        private void UngrabMouse()
+        private void SetCursorGrab(bool shouldGrab)
         {
-            Functions.XUngrabPointer(window.Display, IntPtr.Zero);
+            if (shouldGrab)
+            {
+                Functions.XGrabPointer(window.Display, window.Handle, false,
+                                       EventMask.PointerMotionMask | EventMask.ButtonPressMask |
+                                       EventMask.ButtonReleaseMask | EventMask.FocusChangeMask,
+                                       GrabMode.GrabModeAsync, GrabMode.GrabModeAsync,
+                                       window.Handle, IntPtr.Zero, IntPtr.Zero);
+            }
+            else
+            {
+                Functions.XUngrabPointer(window.Display, IntPtr.Zero);
+            }
+        }
+
+        private void SetCursorVisible(bool shouldVisible)
+        {
+            Functions.XDefineCursor(window.Display, window.Handle, shouldVisible ? cursorHandle : EmptyCursor);
         }
 
         /// <summary>

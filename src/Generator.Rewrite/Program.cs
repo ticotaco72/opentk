@@ -42,6 +42,7 @@ namespace OpenTK.Rewrite
             {
                 Console.Error.WriteLine($"Target assembly not found. \n" +
                                         $"Please check the given path ({Options.TargetAssembly}).");
+                return;
             }
 
             if (!File.Exists(Path.ChangeExtension(Options.TargetAssembly, "pdb")))
@@ -73,6 +74,7 @@ namespace OpenTK.Rewrite
             var read_params = new ReaderParameters();
             var write_params = new WriterParameters();
 
+            read_params.AssemblyResolver = new OpenTKAssemblyResolver();
             read_params.ReadSymbols = true;
             read_params.ReadWrite = true;
             write_params.WriteSymbols = true;
@@ -891,9 +893,10 @@ namespace OpenTK.Rewrite
             var attribute = parameter.CustomAttributes
                         .FirstOrDefault(a => a.AttributeType.Name == "CountAttribute");
 
-            var count = new CountAttribute();
+            CountAttribute count = null;
             if (attribute != null)
             {
+                count = new CountAttribute();
                 count.Count = (int)(GetAttributeField(attribute, "Count") ?? 0);
                 count.Parameter = (string)(GetAttributeField(attribute, "Parameter"));
                 count.Computed = (string)(GetAttributeField(attribute, "Computed"));
@@ -907,14 +910,22 @@ namespace OpenTK.Rewrite
             var countVariable = new VariableDefinition(TypeInt32);
             body.Variables.Add(countVariable);
 
-            // Parameter will either by a simple name or an
-            // expression like "name*5"
+            // Parameter will either by a simple name, a dereference of a name
+            // like "*name" or an expression like "name*5"
             var parameter = method.Parameters.FirstOrDefault(
                 param => param.Name == countParameter);
             if (parameter != null)
             {
                 il.Emit(OpCodes.Ldarg, parameter.Index);
                 il.Emit(OpCodes.Stloc, countVariable.Index);
+            }
+            else if (countParameter[0] == '*')
+            {
+                var pointerParam = method.Parameters.FirstOrDefault(
+                    param => param.Name == countParameter.Substring(1));
+
+                il.Emit(OpCodes.Ldarg, pointerParam.Index);
+                il.Emit(OpCodes.Ldind_I4);
             }
             else
             {

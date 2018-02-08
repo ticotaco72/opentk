@@ -47,7 +47,7 @@ namespace OpenTK
         private readonly INativeWindow implementation;
 
         private bool events;
-        private bool cursor_visible = true;
+        private bool previous_cursor_grabbed = false;
         private bool previous_cursor_visible = true;
 
         /// <summary>
@@ -476,11 +476,28 @@ namespace OpenTK
         /// </summary>
         public bool CursorVisible
         {
-            get { return cursor_visible; }
+            get
+            {
+                return implementation.CursorVisible;
+            }
             set
             {
-                cursor_visible = value;
                 implementation.CursorVisible = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the mouse cursor is grabbed.
+        /// </summary>
+        public bool CursorGrabbed
+        {
+            get
+            {
+                return implementation.CursorGrabbed;
+            }
+            set
+            {
+                implementation.CursorGrabbed = value;
             }
         }
 
@@ -667,17 +684,17 @@ namespace OpenTK
         {
             if (!Focused)
             {
-                // Release cursor when losing focus, to ensure
-                // IDEs continue working as expected.
+                // Release cursor and make it visible when losing focus,
+                // to ensure IDEs continue working as expected.
+                previous_cursor_grabbed = CursorGrabbed;
                 previous_cursor_visible = CursorVisible;
+                CursorGrabbed = false;
                 CursorVisible = true;
             }
-            else if (!previous_cursor_visible)
+            else
             {
-                // Make cursor invisible when focus is regained
-                // if cursor was invisible on previous focus loss.
-                previous_cursor_visible = true;
-                CursorVisible = false;
+                CursorGrabbed = previous_cursor_grabbed;
+                CursorVisible = previous_cursor_visible;
             }
             FocusedChanged(this, e);
         }

@@ -24,6 +24,7 @@
  //
 
 using System;
+using OpenTK.Platform.Windows;
 
 namespace OpenTK.Input
 {
@@ -36,6 +37,8 @@ namespace OpenTK.Input
         private Vector2 position;
         private MouseScroll scroll;
         private ushort buttons;
+
+        public RawMouseFlags RawFlags { get; internal set; }
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether the specified
@@ -340,6 +343,7 @@ namespace OpenTK.Input
                 buttons == other.buttons &&
                 X == other.X &&
                 Y == other.Y &&
+                RawFlags == other.RawFlags &&
                 Scroll == other.Scroll;
         }
     }
