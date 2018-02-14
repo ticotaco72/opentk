@@ -86,6 +86,7 @@ let runtimeProjects =
     let xamarinFilter f =
         if isXamarinPlatform then
             f
+            -- "**/OpenTK.NS20.csproj"
             -- "**/OpenTK.Android.csproj"
         else
             f
