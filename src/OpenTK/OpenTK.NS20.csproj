@@ -1,6 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>OpenTK</AssemblyName>
+    <PackageVersion>1.0.0</PackageVersion>
+    <PackageId>ppy.OpenTK.NS20</PackageId>
+    <Title>ppy.OpenTK.NS20</Title>
+    <Authors>ppy Pty Ltd &amp; The Open Toolkit Team</Authors>
+    <Description>A build of OpenTK geared towards netstandard20 deploys.</Description>
     <RootNamespace>OpenTK</RootNamespace>
     <TargetFramework>netstandard2.0</TargetFramework>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
