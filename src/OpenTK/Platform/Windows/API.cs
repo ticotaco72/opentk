@@ -1437,24 +1437,15 @@ namespace OpenTK.Platform.Windows
 
         [DllImport("shell32.dll")]
         public static extern DWORD_PTR SHGetFileInfo(LPCTSTR pszPath, DWORD dwFileAttributes, ref SHFILEINFO psfi, UINT cbFileInfo, ShGetFileIconFlags uFlags);
+        
+        [DllImport("advapi32.dll", CharSet = CharSet.Auto, BestFitMapping = false)]
+        internal static extern int RegOpenKeyEx(IntPtr hKey, string lpSubKey, int ulOptions, int samDesired, out IntPtr hkResult);
 
-        [DllImport("Advapi32.dll")]
-        internal static extern int RegOpenKeyEx(
-            HKEY hKey,
-            [MarshalAs(UnmanagedType.LPTStr)] LPCTSTR lpSubKey,
-            DWORD ulOptions,
-            REGSAM samDesired,
-            out PHKEY phkResult);
-
-        [DllImport("Advapi32.dll")]
-        internal static extern int RegGetValue(
-            HKEY hkey,
-            [MarshalAs(UnmanagedType.LPTStr)] LPCTSTR lpSubKey,
-            [MarshalAs(UnmanagedType.LPTStr)] LPCTSTR lpValue,
-            DWORD dwFlags,
-            out DWORD pdwType,
-            StringBuilder pvData,
-            ref DWORD pcbData);
+        [DllImport("advapi32.dll", CharSet = CharSet.Auto, BestFitMapping = false)]
+        internal static extern int RegQueryValueEx(IntPtr hKey, string lpValueName, int[] lpReserved, ref int lpType, [Out] char[] lpData, ref int lpcbData);
+        
+        [DllImport("advapi32.dll", CharSet = CharSet.Auto, BestFitMapping = false)] 
+        internal static extern int RegQueryValueEx(IntPtr hKey, string lpValueName, int[] lpReserved, ref int lpType, [Out] byte[] lpData, ref int lpcbData);
     }
 
     internal static class Constants
@@ -2728,17 +2719,26 @@ namespace OpenTK.Platform.Windows
 
         internal string GetValue(string subkey)
         {
-            int type;
+            int type = 0;
             int data_size = 255;
-            StringBuilder data = new StringBuilder(data_size);
-            Functions.RegGetValue(hkey, subkey, "", 0xffff, out type, data, ref data_size);
-            return data.ToString();
+
+            Functions.RegQueryValueEx(hkey, subkey, null, ref type, (byte[]) null, ref data_size);
+
+            if (data_size % 2 == 1)
+                data_size++;
+
+            char[] data = new char[data_size / 2];
+            Functions.RegQueryValueEx(hkey, subkey, null, ref type, data, ref data_size);
+
+            if (data.Length > 0 && data[data.Length - 1] == '\0')
+                return new string(data, 0, data.Length - 1);
+            return null;
         }
 
         internal RegistryKey OpenSubKey(string subkey)
         {
             IntPtr result;
-            Functions.RegOpenKeyEx(hkey, subkey, 0, 1, out result);
+            Functions.RegOpenKeyEx(hkey, subkey, 0, 0x20019, out result);
             return new RegistryKey(result);
         }
     }
