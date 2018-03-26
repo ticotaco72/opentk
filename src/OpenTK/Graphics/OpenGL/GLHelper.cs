@@ -25,9 +25,7 @@
 
 
 using System;
-#if !MINIMAL
 using System.Drawing;
-#endif
 using System.Text;
 using System.Runtime.InteropServices;
 
@@ -2786,7 +2784,6 @@ namespace OpenTK.Graphics.OpenGL
             GL.Viewport(0, 0, size.Width, size.Height);
         }
 
-#if !MINIMAL
         /// <summary>
         /// [requires: v1.0]
         /// Set the viewport.
@@ -2815,36 +2812,6 @@ namespace OpenTK.Graphics.OpenGL
         {
             GL.Viewport(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
         }
-#else
-        /// <summary>
-        /// [requires: v1.0]
-        /// Set the viewport.
-        /// </summary>
-        /// <param name="location">
-        /// Specifies the lower left corner of the viewport.
-        /// </param>
-        /// <param name="size">
-        /// Specifies the width and height of the viewport. When a GL context is first attached to a window, 
-        /// width and height are set to the dimensions of that window.
-        /// </param>
-        public static void Viewport(OpenTK.Point location, OpenTK.Size size)
-        {
-            GL.Viewport(location.X, location.Y, size.Width, size.Height);
-        }
-
-        /// <summary>
-        /// [requires: v1.0]
-        /// Set the viewport.
-        /// </summary>
-        /// <param name="rectangle">
-        /// Specifies the lower left corner, as well as the width and height of the viewport. When a GL context is 
-        /// first attached to a window, width and height are set to the dimensions of that window.
-        /// </param>
-        public static void Viewport(OpenTK.Rectangle rectangle)
-        {
-            GL.Viewport(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
-        }
-#endif
 
         /// <summary>
         /// [requires: v1.0][deprecated: v3.2]

@@ -25,8 +25,6 @@
 
 using System;
 using System.Diagnostics;
-#if !MINIMAL
-#endif
 using OpenTK.Input;
 
 namespace OpenTK.Platform.SDL2

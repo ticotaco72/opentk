@@ -24,9 +24,7 @@
 //
 
 using System;
-#if !MINIMAL
 using System.Drawing;
-#endif
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -336,7 +334,6 @@ namespace OpenTK.Graphics.ES30
             GL.Viewport(0, 0, size.Width, size.Height);
         }
 
-#if !MINIMAL
         public static void Viewport(Point location, Size size)
         {
             GL.Viewport(location.X, location.Y, size.Width, size.Height);
@@ -345,17 +342,6 @@ namespace OpenTK.Graphics.ES30
         {
             GL.Viewport(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
         }
-#else
-        public static void Viewport(OpenTK.Point location, OpenTK.Size size)
-        {
-            GL.Viewport(location.X, location.Y, size.Width, size.Height);
-        }
-
-        public static void Viewport(OpenTK.Rectangle rectangle)
-        {
-            GL.Viewport(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
-        }
-#endif
 
 #pragma warning restore 3019
 #pragma warning restore 1591

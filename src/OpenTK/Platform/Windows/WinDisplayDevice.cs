@@ -26,9 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-#if !MINIMAL
 using Microsoft.Win32;
-#endif
 
 namespace OpenTK.Platform.Windows
 {
