@@ -1185,8 +1185,10 @@ namespace OpenTK.Platform.Windows
                     }
                     else
                     {
-                        var stride = value.Width *
-                            (Bitmap.GetPixelFormatSize(PixelFormat.Format32bppArgb) / 8);
+                        var input = new StartupInput(1);
+                        GdiplusStartup(out var gdipToken, ref input, out _);
+                        
+                        var stride = value.Width * (Bitmap.GetPixelFormatSize(PixelFormat.Format32bppArgb) / 8);
                         
                         IntPtr bmp;
                         unsafe
@@ -1197,10 +1199,8 @@ namespace OpenTK.Platform.Windows
 
                         try
                         {
-                            var iconInfo = new IconInfo();
-
                             GdipCreateHICONFromBitmap(bmp, out var bmpIcon);
-                            var success = Functions.GetIconInfo(bmpIcon, out iconInfo);
+                            var success = Functions.GetIconInfo(bmpIcon, out var iconInfo);
                             
                             try
                             {
@@ -1241,6 +1241,8 @@ namespace OpenTK.Platform.Windows
                         {
                             GdipDisposeImage(bmp);
                         }
+
+                        GdiplusShutdown(ref gdipToken);
                     }
 
                     Debug.Assert(oldCursorHandle != IntPtr.Zero);
@@ -1264,6 +1266,36 @@ namespace OpenTK.Platform.Windows
 
         [DllImport("gdiplus.dll", CharSet = CharSet.Unicode, ExactSpelling = true)]
         private static extern int GdipCreateHICONFromBitmap(IntPtr bitmap, out IntPtr icon);
+        
+        [DllImport("gdiplus.dll", CharSet = CharSet.Unicode, ExactSpelling = true)]
+        private static extern int GdiplusStartup(out IntPtr token, ref StartupInput input, out StartupOutput output); 
+        
+        [DllImport("gdiplus.dll", SetLastError = true)]
+        private static extern void GdiplusShutdown(ref IntPtr token);
+        
+        [StructLayout(LayoutKind.Sequential)]
+        private struct StartupOutput
+        {
+            public IntPtr hook;
+            public IntPtr unhook;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        private struct StartupInput
+        {
+            public int GdiplusVersion;
+            public IntPtr DebugEventCallback;
+            public bool SuppressBackgroundThread;
+            public bool SuppressExternalCodecs;
+
+            public StartupInput(int version)
+            {
+                GdiplusVersion = version;
+                DebugEventCallback = IntPtr.Zero;
+                SuppressBackgroundThread = false;
+                SuppressExternalCodecs = false;
+            }
+        }
 
         public override bool CursorGrabbed
         {

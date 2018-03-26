@@ -117,7 +117,7 @@ namespace OpenTK
             return new BitmapData(Width, Height, 0);
         }
 
-        internal static int GetPixelFormatSize(PixelFormat format) => ((int)format >> 8) & 0xFF;
+        internal static int GetPixelFormatSize(PixelFormat format) => 32;
     }
 
     internal sealed class BitmapData
@@ -145,7 +145,7 @@ namespace OpenTK
     
     internal enum PixelFormat
     {
-        Format32bppArgb
+        Format32bppArgb = 2498570
     }
     
     internal enum ImageFormat
