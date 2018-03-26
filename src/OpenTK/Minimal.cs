@@ -675,15 +675,7 @@ namespace OpenTK
             return new BitmapData(Width, Height, 0);
         }
 
-        internal static int GetPixelFormatSize (PixelFormat format)
-        {
-            return 0;
-        }
-
-        internal IntPtr GetHicon ()
-        {
-            return IntPtr.Zero;
-        }
+        internal static int GetPixelFormatSize(PixelFormat format) => ((int)format >> 8) & 0xFF;
     }
 
     /// <summary>

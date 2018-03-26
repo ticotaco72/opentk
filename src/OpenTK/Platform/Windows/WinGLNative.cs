@@ -1190,23 +1190,21 @@ namespace OpenTK.Platform.Windows
                     {
                         var stride = value.Width *
                             (Bitmap.GetPixelFormatSize(PixelFormat.Format32bppArgb) / 8);
-
-                        Bitmap bmp;
+                        
+                        IntPtr bmp;
                         unsafe
                         {
                             fixed (byte* pixels = value.Data)
-                            {
-                                bmp = new Bitmap(value.Width, value.Height, stride,
-                                    PixelFormat.Format32bppArgb,
-                                    new IntPtr(pixels));
-                            }
+                                GdipCreateBitmapFromScan0(value.Width, value.Height, stride, PixelFormat.Format32bppArgb, new IntPtr(pixels), out bmp);
                         }
-                        using (bmp)
+
+                        try
                         {
                             var iconInfo = new IconInfo();
-                            var bmpIcon = bmp.GetHicon();
-                            var success = Functions.GetIconInfo(bmpIcon, out iconInfo);
 
+                            GdipCreateHICONFromBitmap(bmp, out var bmpIcon);
+                            var success = Functions.GetIconInfo(bmpIcon, out iconInfo);
+                            
                             try
                             {
                                 if (!success)
@@ -1242,6 +1240,10 @@ namespace OpenTK.Platform.Windows
                                 Functions.DestroyIcon(bmpIcon);
                             }
                         }
+                        finally
+                        {
+                            GdipDisposeImage(bmp);
+                        }
                     }
 
                     Debug.Assert(oldCursorHandle != IntPtr.Zero);
@@ -1256,6 +1258,15 @@ namespace OpenTK.Platform.Windows
                 }
             }
         }
+
+        [DllImport("gdiplus.dll", CharSet = CharSet.Unicode, ExactSpelling = true)]
+        private static extern int GdipCreateBitmapFromScan0(int width, int height, int stride, PixelFormat format, IntPtr scan0, out IntPtr bitmap);
+
+        [DllImport("gdiplus.dll", CharSet = CharSet.Unicode, ExactSpelling = true)]
+        private static extern int GdipDisposeImage(IntPtr image);
+
+        [DllImport("gdiplus.dll", CharSet = CharSet.Unicode, ExactSpelling = true)]
+        private static extern int GdipCreateHICONFromBitmap(IntPtr bitmap, out IntPtr icon);
 
         public override bool CursorGrabbed
         {
