@@ -355,8 +355,7 @@ namespace OpenTK.Platform.MacOS
             for (int i = 0; i < count; ++i)
             {
                 IntPtr obj = Cocoa.SendIntPtr(files, Selector.Get("objectAtIndex:"), new IntPtr(i));
-                IntPtr str = Cocoa.SendIntPtr(obj, Selector.Get("cStringUsingEncoding:"), new IntPtr(1));
-                OnFileDrop(Marshal.PtrToStringAuto(str));
+                OnFileDrop(Cocoa.FromNSString(obj));
             }
             
             return true;
