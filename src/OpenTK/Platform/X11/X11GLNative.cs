@@ -1251,6 +1251,12 @@ namespace OpenTK.Platform.X11
                         Functions.XResizeWindow(window.Display, window.Handle,
                             width, height);
                     }
+                    else
+                    {
+                        // Setting bounds before the window appears causes the program to hang indefinitely
+                        // at the subsequent call to ProcessEvents(), therefore return here.
+                        return;
+                    }
                 }
 
                 _waitForEvent = XEventName.ConfigureNotify;
