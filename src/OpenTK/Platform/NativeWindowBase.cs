@@ -275,7 +275,11 @@ namespace OpenTK.Platform
         protected void OnMouseWheel(float dx, float dy, bool isPrecise)
         {
             MouseState.SetScrollRelative(dx, dy);
-            MouseState.HasPreciseScroll = isPrecise;
+
+            if (isPrecise)
+                MouseState.Flags |= MouseStateFlags.HasPreciseScroll;
+            else
+                MouseState.Flags &= ~MouseStateFlags.HasPreciseScroll;
 
             var e = MouseWheelArgs;
             e.Mouse = MouseState;
