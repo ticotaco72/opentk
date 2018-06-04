@@ -38,7 +38,7 @@ namespace OpenTK.Input
         private MouseScroll scroll;
         private ushort buttons;
 
-        public RawMouseFlags RawFlags { get; internal set; }
+        public MouseStateFlags Flags { get; internal set; }
 
         /// <summary>
         /// Gets a <see cref="System.Boolean"/> indicating whether the specified
@@ -343,8 +343,33 @@ namespace OpenTK.Input
                 buttons == other.buttons &&
                 X == other.X &&
                 Y == other.Y &&
-                RawFlags == other.RawFlags &&
+                Flags == other.Flags &&
                 Scroll == other.Scroll;
         }
+    }
+
+    [Flags]
+    public enum MouseStateFlags : ushort
+    {
+        /// <summary>
+        /// LastX/Y indicate relative motion.
+        /// </summary>
+        MoveRelative = 0x00,
+        /// <summary>
+        /// LastX/Y indicate absolute motion.
+        /// </summary>
+        MoveAbsolute = 0x01,
+        /// <summary>
+        /// The coordinates are mapped to the virtual desktop.
+        /// </summary>
+        VirtualDesktop = 0x02,
+        /// <summary>
+        /// Requery for mouse attributes.
+        /// </summary>
+        AttributesChanged = 0x04,
+        /// <summary>
+        /// Whether scrolling with this mouse has precise values.
+        /// </summary>
+        HasPreciseScroll = 0x08,
     }
 }

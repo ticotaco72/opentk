@@ -130,30 +130,6 @@ namespace OpenTK.Platform.MacOS
         internal static extern CGError SetLocalEventsSuppressionInterval(double seconds);
 
         [DllImport(lib, EntryPoint="CGDisplayMoveCursorToPoint")]
-        internal static extern CGError DisplayMoveCursorToPointNative64(CGDirectDisplayID display, NSPointD point);
-
-        [DllImport(lib, EntryPoint="CGDisplayMoveCursorToPoint")]
-        internal static extern CGError DisplayMoveCursorToPointNative32(CGDirectDisplayID display, NSPointF point);
-
-        internal static CGError DisplayMoveCursorToPoint(CGDirectDisplayID display, NSPoint point)
-        {
-            unsafe
-            {
-                if (IntPtr.Size == 8)
-                {
-                    NSPointD p = new NSPointD();
-                    p.X = *(double *)&point.X;
-                    p.Y = *(double *)&point.Y;
-                    return DisplayMoveCursorToPointNative64(display, p);
-                }
-                else
-                {
-                    NSPointF p = new NSPointF();
-                    p.X = *(float *)&point.X;
-                    p.Y = *(float *)&point.Y;
-                    return DisplayMoveCursorToPointNative32(display, p);
-                }
-            }
-        }
+        internal static extern CGError DisplayMoveCursorToPoint(CGDirectDisplayID display, NSPoint point);
     }
 }
