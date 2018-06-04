@@ -1011,25 +1011,7 @@ namespace OpenTK.Platform.MacOS
         void IMouseDriver2.SetPosition(double x, double y)
         {
             CG.SetLocalEventsSuppressionInterval(0.0);
-
-            NSPoint p = new NSPoint();
-            unsafe
-            {
-                if (IntPtr.Size == 8)
-                {
-                    p.X.Value = *(IntPtr *)&x;
-                    p.Y.Value = *(IntPtr *)&y;
-                }
-                else
-                {
-                    float f1 = (float)x;
-                    float f2 = (float)y;
-                    p.X.Value = *(IntPtr *)&f1;
-                    p.Y.Value = *(IntPtr *)&f2;
-                }
-            }
-
-            CG.DisplayMoveCursorToPoint(CFStringRef.Zero, p);
+            CG.DisplayMoveCursorToPoint(CFStringRef.Zero, new NSPoint(x, y));
         }
 
         KeyboardState IKeyboardDriver2.GetState()

@@ -39,79 +39,25 @@ namespace OpenTK.Platform.MacOS
     // However, NSFloat is used internally in places where this precision loss does not matter.
     internal struct NSFloat
     {
-        private IntPtr _value;
-
-        public IntPtr Value
-        {
-            get { return _value; }
-            set { _value = value; }
-        }
+        private double _value;
 
         public static implicit operator NSFloat(float v)
         {
             NSFloat f = new NSFloat();
-            unsafe
-            {
-                if (IntPtr.Size == 4)
-                {
-                    f.Value = *(IntPtr*)&v;
-                }
-                else
-                {
-                    double d = v;
-                    f.Value = *(IntPtr*)&d;
-                }
-            }
+            f._value = v;
             return f;
         }
 
         public static implicit operator NSFloat(double v)
         {
             NSFloat f = new NSFloat();
-            unsafe
-            {
-                if (IntPtr.Size == 4)
-                {
-                    float fv = (float)v;
-                    f.Value = *(IntPtr*)&fv;
-                }
-                else
-                {
-                    f.Value = *(IntPtr*)&v;
-                }
-            }
+            f._value = v;
             return f;
         }
 
-        public static implicit operator float(NSFloat f)
-        {
-            unsafe
-            {
-                if (IntPtr.Size == 4)
-                {
-                    return *(float*)&f._value;
-                }
-                else
-                {
-                    return (float)*(double*)&f._value;
-                }
-            }
-        }
+        public static implicit operator float(NSFloat f) => (float)f._value;
 
-        public static implicit operator double(NSFloat f)
-        {
-            unsafe
-            {
-                if (IntPtr.Size == 4)
-                {
-                    return (double)*(float*)&f._value;
-                }
-                else
-                {
-                    return *(double*)&f._value;
-                }
-            }
-        }
+        public static implicit operator double(NSFloat f) => f._value;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -119,6 +65,12 @@ namespace OpenTK.Platform.MacOS
     {
         public NSFloat X;
         public NSFloat Y;
+
+        public NSPoint(NSFloat x, NSFloat y)
+        {
+            X = x;
+            Y = y;
+        }
 
         public static implicit operator NSPoint(PointF p)
         {
@@ -140,6 +92,12 @@ namespace OpenTK.Platform.MacOS
     {
         public NSFloat Width;
         public NSFloat Height;
+
+        public NSSize(NSFloat width, NSFloat height)
+        {
+            Width = width;
+            Height = height;
+        }
 
         public static implicit operator NSSize(SizeF s)
         {
@@ -180,22 +138,5 @@ namespace OpenTK.Platform.MacOS
         {
             return new RectangleF(s.Location, s.Size);
         }
-    }
-
-    // Using IntPtr in NSFloat cause that if imported function
-    // return struct that consist of them you will get wrong data
-    // This types are used for such function.
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct NSPointF
-    {
-        public float X;
-        public float Y;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct NSPointD
-    {
-        public double X;
-        public double Y;
     }
 }
