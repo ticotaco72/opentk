@@ -1177,7 +1177,7 @@ namespace OpenTK.Platform.MacOS
 
             if (imgdata == IntPtr.Zero)
             {
-                Debug.Print("Failed to create NSBitmapImageRep with size ({0},{1]})",
+                Debug.Print("Failed to create NSBitmapImageRep with size ({0},{1})",
                     cursor.Width, cursor.Height);
                 return IntPtr.Zero;
             }
