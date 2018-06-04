@@ -120,7 +120,7 @@ namespace OpenTK.Platform.MacOS
         private static readonly IntPtr NSCursor;
         private static readonly IntPtr NSImage;
         private static readonly IntPtr NSBitmapImageRep;
-        private static readonly IntPtr NSDeviceRGBColorSpace = Cocoa.ToNSString("NSDeviceRGBColorSpace");
+        private static readonly IntPtr NSDeviceRGBColorSpace;
         private static readonly IntPtr NSFilenamesPboardType;
 
         static CocoaNativeWindow()
@@ -132,6 +132,7 @@ namespace OpenTK.Platform.MacOS
             NSImage = Class.Get("NSImage");
             NSBitmapImageRep = Class.Get("NSBitmapImageRep");
             NSFilenamesPboardType = Cocoa.GetStringConstant(Cocoa.AppKitLibrary, "NSFilenamesPboardType");
+            NSDeviceRGBColorSpace = Cocoa.ToNSString("NSDeviceRGBColorSpace");
         }
 
         private CocoaWindowInfo windowInfo;
@@ -1167,8 +1168,8 @@ namespace OpenTK.Platform.MacOS
                     cursor.Height,
                     8,
                     4,
-                    1,
-                    0,
+                    true,
+                    false,
                     NSDeviceRGBColorSpace,
                     NSBitmapFormat.AlphaFirst,
                     4 * cursor.Width,
