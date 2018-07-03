@@ -23,6 +23,8 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
+using System.Collections.Generic;
+
 namespace OpenTK.Platform
 {
     internal interface IDisplayDeviceDriver
@@ -30,5 +32,6 @@ namespace OpenTK.Platform
         bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution);
         bool TryRestoreResolution(DisplayDevice device);
         DisplayDevice GetDisplay(DisplayIndex displayIndex);
+        List<DisplayDevice> AvailableDevices { get; }
     }
 }
