@@ -28,6 +28,7 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using OpenTK.Input;
@@ -641,6 +642,14 @@ namespace OpenTK.Platform.Linux
                 {
                     return new MouseState();
                 }
+            }
+        }
+
+        MouseState[] IMouseDriver2.GetStates()
+        {
+            lock (Sync)
+            {
+                return Mice.Select(m => m.State).ToArray();
             }
         }
 

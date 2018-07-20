@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
 using OpenTK.Input;
 using OpenTK.Platform.Common;
@@ -1002,6 +1003,12 @@ namespace OpenTK.Platform.MacOS
 
             return new MouseState();
         }
+
+        MouseState[] IMouseDriver2.GetStates()
+        {
+            return MouseDevices.Select(d => d.State).ToArray();
+        }
+
 
         MouseState IMouseDriver2.GetCursorState()
         {

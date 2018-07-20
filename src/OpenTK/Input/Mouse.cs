@@ -80,6 +80,18 @@ namespace OpenTK.Input
         }
 
         /// <summary>
+        /// Retrives <see cref="OpenTK.Input.MouseState"/> for all mouse device.
+        /// </summary>
+        /// <returns>An array of <see cref="OpenTK.Input.MouseState"/> representing the state for the mouse devices.</returns>
+        public static MouseState[] GetStates()
+        {
+            lock (SyncRoot)
+            {
+                return driver.GetStates();
+            }
+        }
+
+        /// <summary>
         /// Retreves the <see cref="OpenTK.Input.MouseState"/> for the mouse cursor.
         /// The X and Y coordinates are defined in absolute desktop points, with the origin
         /// placed at the top-left corner of <see cref="OpenTK.DisplayDevice.Default"/>.

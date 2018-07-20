@@ -82,6 +82,11 @@ namespace OpenTK.Platform.X11
             }
         }
 
+        public MouseState[] GetStates()
+        {
+            return new[] { GetState(0) };
+        }
+
         public MouseState GetCursorState()
         {
             ProcessEvents();
