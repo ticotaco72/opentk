@@ -67,6 +67,18 @@ namespace OpenTK.Input
             }
         }
 
+        /// <summary>
+        /// Retrives <see cref="OpenTK.Input.KeyboardState"/> for all keyboard devices.
+        /// </summary>
+        /// <returns>An array of <see cref="OpenTK.Input.KeyboardState"/> representing the state for the keyboard devices.</returns>
+        public static KeyboardState[] GetStates()
+        {
+            lock (SyncRoot)
+            {
+                return driver.GetStates();
+            }
+        }
+
 #if false
         // Disabled until a correct, cross-platform API can be defined.
 

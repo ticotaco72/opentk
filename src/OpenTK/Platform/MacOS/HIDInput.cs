@@ -1042,6 +1042,11 @@ namespace OpenTK.Platform.MacOS
             return new KeyboardState();
         }
 
+        public KeyboardState[] GetStates()
+        {
+            return KeyboardDevices.Select(device => device.State).ToArray();
+        }
+
         string IKeyboardDriver2.GetDeviceName(int index)
         {
             KeyboardData keyboard;

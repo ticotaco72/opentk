@@ -193,6 +193,14 @@ namespace OpenTK.Platform.X11
             }
         }
 
+        public KeyboardState[] GetStates()
+        {
+            lock (Sync)
+            {
+                return keyboards.Select(device => device.State).ToArray();
+            }
+        }
+
         string IKeyboardDriver2.GetDeviceName(int index)
         {
             lock (Sync)

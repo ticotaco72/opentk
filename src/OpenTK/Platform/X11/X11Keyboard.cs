@@ -90,6 +90,11 @@ namespace OpenTK.Platform.X11
             }
         }
 
+        public KeyboardState[] GetStates()
+        {
+            return new[] {GetState(0)};
+        }
+
         public string GetDeviceName(int index)
         {
             if (index == 0)

@@ -16,6 +16,12 @@
         KeyboardState GetState(int index);
 
         /// <summary>
+        /// Retrives <see cref="OpenTK.Input.KeyboardState"/> for all keyboard devices.
+        /// </summary>
+        /// <returns>An array of <see cref="OpenTK.Input.KeyboardState"/> representing the state for the keyboard devices.</returns>
+        KeyboardState[] GetStates();
+
+        /// <summary>
         /// Retrieves the device name for the keyboard device.
         /// </summary>
         /// <param name="index">The index of the keyboard device.</param>

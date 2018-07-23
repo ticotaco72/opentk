@@ -290,6 +290,14 @@ namespace OpenTK.Platform.Windows
             }
         }
 
+        public KeyboardState[] GetStates()
+        {
+            lock (UpdateLock)
+            {
+                return keyboards.ToArray();
+            }
+        }
+
         public string GetDeviceName(int index)
         {
             lock (UpdateLock)

@@ -600,6 +600,14 @@ namespace OpenTK.Platform.Linux
             }
         }
 
+        KeyboardState[] IKeyboardDriver2.GetStates()
+        {
+            lock (Sync)
+            {
+                return Keyboards.Select(device => device.State).ToArray();
+            }
+        }
+
         string IKeyboardDriver2.GetDeviceName(int index)
         {
             lock (Sync)
