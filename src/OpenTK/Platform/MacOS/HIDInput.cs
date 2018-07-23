@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
 using OpenTK.Input;
 using OpenTK.Platform.Common;
@@ -1003,6 +1004,11 @@ namespace OpenTK.Platform.MacOS
             return new MouseState();
         }
 
+        MouseState[] IMouseDriver2.GetStates()
+        {
+            return MouseDevices.Select(d => d.State).ToArray();
+        }
+
         MouseState IMouseDriver2.GetCursorState()
         {
             return CursorState;
@@ -1036,6 +1042,11 @@ namespace OpenTK.Platform.MacOS
             return new KeyboardState();
         }
 
+        public KeyboardState[] GetStates()
+        {
+            return KeyboardDevices.Select(device => device.State).ToArray();
+        }
+
         string IKeyboardDriver2.GetDeviceName(int index)
         {
             KeyboardData keyboard;
@@ -1057,6 +1068,11 @@ namespace OpenTK.Platform.MacOS
                 return joystick.State;
             }
             return new JoystickState();
+        }
+
+        JoystickState[] IJoystickDriver2.GetStates()
+        {
+            return JoystickDevices.Select(device => device.State).ToArray();
         }
 
         JoystickCapabilities IJoystickDriver2.GetCapabilities(int index)

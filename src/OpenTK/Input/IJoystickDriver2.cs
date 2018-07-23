@@ -32,6 +32,7 @@ namespace OpenTK.Input
     internal interface IJoystickDriver2
     {
         JoystickState GetState(int index);
+        JoystickState[] GetStates();
         JoystickCapabilities GetCapabilities(int index);
         Guid GetGuid(int index);
     }

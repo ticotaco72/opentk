@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading;
 using OpenTK.Input;
@@ -192,6 +193,14 @@ namespace OpenTK.Platform.X11
             }
         }
 
+        public KeyboardState[] GetStates()
+        {
+            lock (Sync)
+            {
+                return keyboards.Select(device => device.State).ToArray();
+            }
+        }
+
         string IKeyboardDriver2.GetDeviceName(int index)
         {
             lock (Sync)
@@ -226,6 +235,14 @@ namespace OpenTK.Platform.X11
                     return devices[index].State;
                 }
                 return new MouseState();
+            }
+        }
+
+        MouseState[] IMouseDriver2.GetStates()
+        {
+            lock (Sync)
+            {
+                return devices.Select(d => d.State).ToArray();
             }
         }
 

@@ -93,6 +93,11 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
+        public KeyboardState[] GetStates()
+        {
+            return new[] {GetState(0)};
+        }
+
         public string GetDeviceName(int index)
         {
             return "SDL2 Default Keyboard";

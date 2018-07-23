@@ -117,6 +117,11 @@ namespace OpenTK.Platform.SDL2
             }
         }
 
+        public MouseState[] GetStates()
+        {
+            return new[] { GetState(0) };
+        }
+
         public MouseState GetCursorState()
         {
             int x, y;

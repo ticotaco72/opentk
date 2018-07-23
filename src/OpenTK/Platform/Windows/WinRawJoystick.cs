@@ -28,6 +28,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
 using OpenTK.Input;
 using OpenTK.Platform.Common;
@@ -817,6 +818,14 @@ namespace OpenTK.Platform.Windows
                     }
                 }
                 return new JoystickState();
+            }
+        }
+
+        public JoystickState[] GetStates()
+        {
+            lock (UpdateLock)
+            {
+                return Enumerable.Range(0, Devices.Count()).Select(GetState).ToArray();
             }
         }
 

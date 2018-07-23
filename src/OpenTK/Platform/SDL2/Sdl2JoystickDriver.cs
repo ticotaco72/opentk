@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using OpenTK.Input;
 
 namespace OpenTK.Platform.SDL2
@@ -626,6 +627,11 @@ namespace OpenTK.Platform.SDL2
             }
 
             return state;
+        }
+
+        JoystickState[] IJoystickDriver2.GetStates()
+        {
+            return Enumerable.Range(0, joysticks.Count).Select(index => ((IJoystickDriver2)this).GetState(index)).ToArray();
         }
 
         JoystickCapabilities IJoystickDriver2.GetCapabilities(int index)

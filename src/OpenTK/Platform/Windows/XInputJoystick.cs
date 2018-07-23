@@ -476,6 +476,11 @@ namespace OpenTK.Platform.Windows
             }
         }
 
+        public JoystickState[] GetStates()
+        {
+            throw new NotImplementedException($"Use {nameof(WinRawJoystick)}'s {nameof(GetStates)} instead");
+        }
+
 #if DEBUG
         ~XInputJoystick()
         {

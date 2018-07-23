@@ -352,6 +352,14 @@ namespace OpenTK.Platform.Windows
             }
         }
 
+        public MouseState[] GetStates()
+        {
+            lock (UpdateLock)
+            {
+                return mice.ToArray();
+            }
+        }
+
         public void SetPosition(double x, double y)
         {
             Functions.SetCursorPos((int)x, (int)y);

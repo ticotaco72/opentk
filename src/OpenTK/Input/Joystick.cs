@@ -76,6 +76,15 @@ namespace OpenTK.Input
         }
 
         /// <summary>
+        /// Retrives <see cref="OpenTK.Input.JoystickState"/> for all joystick devices.
+        /// </summary>
+        /// <returns>An array of <see cref="OpenTK.Input.JoystickState"/> representing the state for the joystick devices.</returns>
+        public static JoystickState[] GetStates()
+        {
+            return implementation.GetStates();
+        }
+
+        /// <summary>
         /// Retrieves the ID of the device connected
         /// at the specified index.
         /// </summary>
