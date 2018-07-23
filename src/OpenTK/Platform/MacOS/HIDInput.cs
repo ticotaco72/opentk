@@ -1070,6 +1070,11 @@ namespace OpenTK.Platform.MacOS
             return new JoystickState();
         }
 
+        JoystickState[] IJoystickDriver2.GetStates()
+        {
+            return JoystickDevices.Select(device => device.State).ToArray();
+        }
+
         JoystickCapabilities IJoystickDriver2.GetCapabilities(int index)
         {
             JoystickData joystick = GetJoystick(index);
