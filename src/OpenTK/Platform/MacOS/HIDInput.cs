@@ -1009,7 +1009,6 @@ namespace OpenTK.Platform.MacOS
             return MouseDevices.Select(d => d.State).ToArray();
         }
 
-
         MouseState IMouseDriver2.GetCursorState()
         {
             return CursorState;
