@@ -42,7 +42,7 @@ namespace OpenTK.Platform.SDL2
         #elif IPHONE
         const string lib = "__Internal";
         #else
-        private const string lib = "SDL2.dll";
+        private const string lib = "SDL2";
         #endif
 
         public readonly static object Sync = new object();

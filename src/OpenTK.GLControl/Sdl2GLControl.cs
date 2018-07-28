@@ -58,7 +58,7 @@ namespace OpenTK
 
         private static class NativeMethods
         {
-            [DllImport("SDL2.dll", CallingConvention = CallingConvention.Cdecl)]
+            [DllImport("SDL2", CallingConvention = CallingConvention.Cdecl)]
             public static extern bool SDL_HasEvents(int minType, int maxType);
         }
     }
