@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <AssemblyName>OpenTK</AssemblyName>
-    <PackageVersion>1.0.4</PackageVersion>
+    <PackageVersion>1.0.8</PackageVersion>
     <PackageId>ppy.OpenTK.NS20</PackageId>
     <Title>ppy.OpenTK.NS20</Title>
     <PackageProjectUrl>https://github.com/ppy/opentk/tree/netstandard</PackageProjectUrl>
