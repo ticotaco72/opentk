@@ -28,7 +28,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace OpenTK.Platform.MacOS
+namespace osuTK.Platform.MacOS
 {
     [Flags]
     internal enum AddImageFlags
@@ -123,7 +123,7 @@ namespace OpenTK.Platform.MacOS
                 if (i >= max - 1)
                 {
                     throw new NotSupportedException(String.Format(
-                        "Function {0} is too long. Please report a bug at https://github.com/opentk/issues/issues",
+                        "Function {0} is too long. Please report a bug at https://github.com/osuTK/issues/issues",
                         Marshal.PtrToStringAnsi(function)));
                 }
 

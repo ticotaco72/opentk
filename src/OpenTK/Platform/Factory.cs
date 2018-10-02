@@ -26,7 +26,7 @@
 using System;
 using System.Diagnostics;
 
-namespace OpenTK.Platform
+namespace osuTK.Platform
 {
     using Graphics;
     using Input;
@@ -205,7 +205,7 @@ namespace OpenTK.Platform
 
         private class UnsupportedPlatform : PlatformFactoryBase
         {
-            private static readonly string error_string = "Please, refer to http://www.opentk.com for more information.";
+            private static readonly string error_string = "Please, refer to http://www.osuTK.com for more information.";
 
             public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
             {

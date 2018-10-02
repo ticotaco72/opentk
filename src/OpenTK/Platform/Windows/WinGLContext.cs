@@ -8,14 +8,14 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 
-using OpenTK.Graphics;
+using osuTK.Graphics;
 
-namespace OpenTK.Platform.Windows
+namespace osuTK.Platform.Windows
 {
     /// \internal
     /// <summary>
     /// Provides methods to create and control an opengl context on the Windows platform.
-    /// This class supports OpenTK, and is not intended for use by OpenTK programs.
+    /// This class supports osuTK, and is not intended for use by osuTK programs.
     /// </summary>
     internal sealed class WinGLContext : DesktopGraphicsContext
     {
@@ -447,7 +447,7 @@ namespace OpenTK.Platform.Windows
                 }
                 catch (AccessViolationException e)
                 {
-                    Debug.WriteLine("An access violation occured while destroying the OpenGL context. Please report at https://github.com/opentk/opentk/issues");
+                    Debug.WriteLine("An access violation occured while destroying the OpenGL context. Please report at https://github.com/osuTK/osuTK/issues");
                     Debug.Indent();
                     Debug.Print("Marshal.GetLastWin32Error(): {0}", Marshal.GetLastWin32Error().ToString());
                     Debug.WriteLine(e.ToString());

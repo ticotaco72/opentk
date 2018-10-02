@@ -28,9 +28,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using OpenTK.Input;
+using osuTK.Input;
 
-namespace OpenTK.Platform.Linux
+namespace osuTK.Platform.Linux
 {
     internal struct AxisInfo
     {

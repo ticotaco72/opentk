@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2009 the Open Toolkit (http://www.opentk.com)
+// Copyright (C) 2009 the Open Toolkit (http://www.osuTK.com)
 //
 // Permission is hereby granted, free of charge, to any person obtaining
 // a copy of this software and associated documentation files (the
@@ -30,7 +30,7 @@ using System.Xml;
 using System.Xml.Linq;
 using CommandLine;
 
-namespace OpenTK.Convert
+namespace osuTK.Convert
 {
     internal class EnumTokenComparer : IEqualityComparer<XNode>
     {

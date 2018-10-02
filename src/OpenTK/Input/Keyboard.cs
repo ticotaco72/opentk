@@ -25,7 +25,7 @@
 
 using System;
 
-namespace OpenTK.Input
+namespace osuTK.Input
 {
     /// <summary>
     /// Provides access to keyboard devices. Note: this API is not implemented yet.
@@ -38,9 +38,9 @@ namespace OpenTK.Input
         private static readonly object SyncRoot = new object();
 
         /// <summary>
-        /// Retrieves the combined <see cref="OpenTK.Input.KeyboardState"/> for all keyboard devices.
+        /// Retrieves the combined <see cref="osuTK.Input.KeyboardState"/> for all keyboard devices.
         /// </summary>
-        /// <returns>An <see cref="OpenTK.Input.KeyboardState"/> structure containing the combined state for all keyboard devices.</returns>
+        /// <returns>An <see cref="osuTK.Input.KeyboardState"/> structure containing the combined state for all keyboard devices.</returns>
         public static KeyboardState GetState()
         {
             lock (SyncRoot)
@@ -50,10 +50,10 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Retrieves the <see cref="OpenTK.Input.KeyboardState"/> for the specified keyboard device.
+        /// Retrieves the <see cref="osuTK.Input.KeyboardState"/> for the specified keyboard device.
         /// </summary>
         /// <param name="index">The index of the keyboard device.</param>
-        /// <returns>An <see cref="OpenTK.Input.KeyboardState"/> structure containing the state of the keyboard device.</returns>
+        /// <returns>An <see cref="osuTK.Input.KeyboardState"/> structure containing the state of the keyboard device.</returns>
         public static KeyboardState GetState(int index)
         {
             if (index < 0)
@@ -68,9 +68,9 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Retrives <see cref="OpenTK.Input.KeyboardState"/> for all keyboard devices.
+        /// Retrives <see cref="osuTK.Input.KeyboardState"/> for all keyboard devices.
         /// </summary>
-        /// <returns>An array of <see cref="OpenTK.Input.KeyboardState"/> representing the state for the keyboard devices.</returns>
+        /// <returns>An array of <see cref="osuTK.Input.KeyboardState"/> representing the state for the keyboard devices.</returns>
         public static KeyboardState[] GetStates()
         {
             lock (SyncRoot)

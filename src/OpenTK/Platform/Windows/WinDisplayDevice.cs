@@ -28,7 +28,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.Win32;
 
-namespace OpenTK.Platform.Windows
+namespace osuTK.Platform.Windows
 {
     internal sealed class WinDisplayDeviceDriver : DisplayDeviceBase
     {
@@ -82,10 +82,10 @@ namespace OpenTK.Platform.Windows
                 // and construct the device when every needed detail is available.
                 // The main DisplayDevice constructor adds the newly constructed device
                 // to the list of available devices.
-                DisplayDevice opentk_dev;
-                DisplayResolution opentk_dev_current_res = null;
-                List<DisplayResolution> opentk_dev_available_res = new List<DisplayResolution>();
-                bool opentk_dev_primary = false;
+                DisplayDevice osuTK_dev;
+                DisplayResolution osuTK_dev_current_res = null;
+                List<DisplayResolution> osuTK_dev_available_res = new List<DisplayResolution>();
+                bool osuTK_dev_primary = false;
                 int device_count = 0, mode_count = 0;
 
                 // Get available video adapters and enumerate all monitors
@@ -107,16 +107,16 @@ namespace OpenTK.Platform.Windows
                         VerifyMode(dev1, monitor_mode);
 
                         float scale = GetScale(ref monitor_mode);
-                        opentk_dev_current_res = new DisplayResolution(
+                        osuTK_dev_current_res = new DisplayResolution(
                             (int)(monitor_mode.Position.X / scale), (int)(monitor_mode.Position.Y / scale),
                             (int)(monitor_mode.PelsWidth / scale), (int)(monitor_mode.PelsHeight / scale),
                             monitor_mode.BitsPerPel, monitor_mode.DisplayFrequency);
 
-                        opentk_dev_primary =
+                        osuTK_dev_primary =
                             (dev1.StateFlags & DisplayDeviceStateFlags.PrimaryDevice) != DisplayDeviceStateFlags.None;
                     }
 
-                    opentk_dev_available_res.Clear();
+                    osuTK_dev_available_res.Clear();
                     mode_count = 0;
                     while (Functions.EnumDisplaySettingsEx(dev1.DeviceName.ToString(), mode_count++, monitor_mode, 0))
                     {
@@ -128,39 +128,39 @@ namespace OpenTK.Platform.Windows
                             (int)(monitor_mode.PelsWidth / scale), (int)(monitor_mode.PelsHeight / scale),
                             monitor_mode.BitsPerPel, monitor_mode.DisplayFrequency);
 
-                        opentk_dev_available_res.Add(res);
+                        osuTK_dev_available_res.Add(res);
                     }
 
-                    // Construct the OpenTK DisplayDevice through the accumulated parameters.
+                    // Construct the osuTK DisplayDevice through the accumulated parameters.
                     // The constructor will automatically add the DisplayDevice to the list
                     // of available devices.
                     #pragma warning disable 612,618
-                    opentk_dev = new DisplayDevice(
-                        opentk_dev_current_res,
-                        opentk_dev_primary,
-                        opentk_dev_available_res,
-                        opentk_dev_current_res.Bounds,
+                    osuTK_dev = new DisplayDevice(
+                        osuTK_dev_current_res,
+                        osuTK_dev_primary,
+                        osuTK_dev_available_res,
+                        osuTK_dev_current_res.Bounds,
                         dev1.DeviceName);
                     #pragma warning restore 612,618
 
                     // Set the original resolution if the DisplayDevice was previously available.
                     foreach (DisplayDevice existingDevice in previousDevices)
                     {
-                        if ((string)existingDevice.Id == (string)opentk_dev.Id)
+                        if ((string)existingDevice.Id == (string)osuTK_dev.Id)
                         {
-                            opentk_dev.OriginalResolution = existingDevice.OriginalResolution;
+                            osuTK_dev.OriginalResolution = existingDevice.OriginalResolution;
                         }
                     }
 
-                    AvailableDevices.Add(opentk_dev);
+                    AvailableDevices.Add(osuTK_dev);
 
-                    if (opentk_dev_primary)
+                    if (osuTK_dev_primary)
                     {
-                        Primary = opentk_dev;
+                        Primary = osuTK_dev;
                     }
 
                     Debug.Print("DisplayDevice {0} ({1}) supports {2} resolutions.",
-                        device_count, opentk_dev.IsPrimary ? "primary" : "secondary", opentk_dev.AvailableResolutions.Count);
+                        device_count, osuTK_dev.IsPrimary ? "primary" : "secondary", osuTK_dev.AvailableResolutions.Count);
                 }
             }
         }
@@ -180,7 +180,7 @@ namespace OpenTK.Platform.Windows
             if (mode.BitsPerPel == 0)
             {
                 Debug.Print(
-                    "[Warning] DisplayDevice '{0}' reported a mode with 0 bpp. Please create a bug report at https://github.com/opentk/opentk/issues",
+                    "[Warning] DisplayDevice '{0}' reported a mode with 0 bpp. Please create a bug report at https://github.com/osuTK/osuTK/issues",
                     device.DeviceName.ToString());
                 mode.BitsPerPel = 32;
             }

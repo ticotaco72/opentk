@@ -28,10 +28,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
-using OpenTK.Input;
-using OpenTK.Platform.Common;
+using osuTK.Input;
+using osuTK.Platform.Common;
 
-namespace OpenTK.Platform.MacOS
+namespace osuTK.Platform.MacOS
 {
     using Carbon;
     using CFAllocatorRef = System.IntPtr;
@@ -268,7 +268,7 @@ namespace OpenTK.Platform.MacOS
 
                     case CGEventType.ScrollWheel:
                         {
-                            // Note: OpenTK follows the win32 convention, where
+                            // Note: osuTK follows the win32 convention, where
                             // (+h, +v) = (right, up). MacOS reports (+h, +v) = (left, up)
                             // so we need to flip the horizontal scroll direction.
                             double h = CG.EventGetDoubleValueField(@event, CGEventField.ScrollWheelEventPointDeltaAxis2) * MacOSFactory.ScrollFactor;
@@ -282,7 +282,7 @@ namespace OpenTK.Platform.MacOS
                     case CGEventType.OtherMouseDown:
                         {
                             int n = CG.EventGetIntegerValueField(@event, CGEventField.MouseEventButtonNumber);
-                            n = n == 1 ? 2 : n == 2 ? 1 : n; // flip middle and right button numbers to match OpenTK
+                            n = n == 1 ? 2 : n == 2 ? 1 : n; // flip middle and right button numbers to match osuTK
                             MouseButton b = MouseButton.Left + n;
                             CursorState[b] = true;
                         }
@@ -293,7 +293,7 @@ namespace OpenTK.Platform.MacOS
                     case CGEventType.OtherMouseUp:
                         {
                             int n = CG.EventGetIntegerValueField(@event, CGEventField.MouseEventButtonNumber);
-                            n = n == 1 ? 2 : n == 2 ? 1 : n; // flip middle and right button numbers to match OpenTK
+                            n = n == 1 ? 2 : n == 2 ? 1 : n; // flip middle and right button numbers to match osuTK
                             MouseButton b = MouseButton.Left + n;
                             CursorState[b] = false;
                         }
@@ -371,7 +371,7 @@ namespace OpenTK.Platform.MacOS
                     {
                         // The device is not normally available in the InputValueCallback (HandleDeviceValueReceived), so we include
                         // the device identifier as the context variable, so we can identify it and figure out the device later.
-                        // Thanks to Jase: http://www.opentk.com/node/2800
+                        // Thanks to Jase: http://www.osuTK.com/node/2800
                         NativeMethods.IOHIDDeviceRegisterInputValueCallback(device,
                             HandleDeviceValueReceived, device);
 
@@ -513,7 +513,7 @@ namespace OpenTK.Platform.MacOS
                     break;
 
                 case HIDPage.Button:
-                    mouse.State[OpenTK.Input.MouseButton.Left + usage - 1] = v_int == 1;
+                    mouse.State[osuTK.Input.MouseButton.Left + usage - 1] = v_int == 1;
                     break;
 
                 case HIDPage.Consumer:
@@ -679,17 +679,17 @@ namespace OpenTK.Platform.MacOS
 
                 if (axis_elements.Count >= JoystickState.MaxAxes)
                 {
-                    Debug.Print("[Mac] JoystickAxis limit reached ({0} > {1}), please report a bug at https://github.com/opentk/opentk/issues",
+                    Debug.Print("[Mac] JoystickAxis limit reached ({0} > {1}), please report a bug at https://github.com/osuTK/osuTK/issues",
                         axis_elements.Count, JoystickState.MaxAxes);
                 }
                 if (button_elements.Count > JoystickState.MaxButtons)
                 {
-                    Debug.Print("[Mac] JoystickButton limit reached ({0} > {1}), please report a bug at https://github.com/opentk/opentk/issues",
+                    Debug.Print("[Mac] JoystickButton limit reached ({0} > {1}), please report a bug at https://github.com/osuTK/osuTK/issues",
                         button_elements.Count, JoystickState.MaxButtons);
                 }
                 if (hat_elements.Count > JoystickState.MaxHats)
                 {
-                    Debug.Print("[Mac] JoystickHat limit reached ({0} > {1}), please report a bug at https://github.com/opentk/opentk/issues",
+                    Debug.Print("[Mac] JoystickHat limit reached ({0} > {1}), please report a bug at https://github.com/osuTK/osuTK/issues",
                         hat_elements.Count, JoystickState.MaxHats);
                 }
 
@@ -1463,7 +1463,7 @@ namespace OpenTK.Platform.MacOS
             //_Reserved = 0xFFFF
         }
 
-        // Maps HIDKey to OpenTK.Input.Key.
+        // Maps HIDKey to osuTK.Input.Key.
         private static readonly Key[] RawKeyMap = new Key[]
         {
             Key.Unknown,

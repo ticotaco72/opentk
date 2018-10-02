@@ -10,9 +10,9 @@ using System;
 using ObjCRuntime;
 using OpenGLES;
 
-using OpenTK.Graphics;
+using osuTK.Graphics;
 
-namespace OpenTK.Platform.iPhoneOS {
+namespace osuTK.Platform.iPhoneOS {
     internal class iPhoneOSGraphicsContext : EmbeddedGraphicsContext
     {
         public EAGLContext EAGLContext {get; private set; }
@@ -89,7 +89,7 @@ namespace OpenTK.Platform.iPhoneOS {
 
         public override void SwapBuffers()
         {
-            if (!EAGLContext.PresentRenderBuffer((uint)OpenTK.Graphics.ES11.All.RenderbufferOes))
+            if (!EAGLContext.PresentRenderBuffer((uint)osuTK.Graphics.ES11.All.RenderbufferOes))
             {
                 throw new InvalidOperationException ("EAGLContext.PresentRenderbuffer failed.");
             }

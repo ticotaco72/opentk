@@ -15,7 +15,7 @@ using System.Diagnostics;
 #pragma warning disable 0169    // field / method is never used.
 #pragma warning disable 0414    // field assigned but never used.
 
-namespace OpenTK.Platform.X11
+namespace osuTK.Platform.X11
 {
     // using XID = System.Int32;
     using Window = System.IntPtr;
@@ -1589,7 +1589,7 @@ XF86VidModeGetGammaRampSize(
             {
                 if (_display == IntPtr.Zero)
                 {
-                    throw new InvalidOperationException("Internal error (XLockDisplay with IntPtr.Zero). Please report this at https://github.com/opentk/opentk/issues");
+                    throw new InvalidOperationException("Internal error (XLockDisplay with IntPtr.Zero). Please report this at https://github.com/osuTK/osuTK/issues");
                 }
                 return _display;
             }

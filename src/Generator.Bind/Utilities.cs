@@ -108,7 +108,7 @@ namespace Bind
 
         // Both GL and ES contains SGI extension enums, even though no function
         // uses them. This is a remnant from the glory days of gl.spec and GL 1.1.
-        // Note: REMOVING THESE WILL BREAK BINARY-COMPATIBILITY WITH OPENTK 1.0,
+        // Note: REMOVING THESE WILL BREAK BINARY-COMPATIBILITY WITH osuTK 1.0,
         // WRT THE ES 1.1 API.
         // You have been warned.
         private static List<string> extension_names = new List<string>

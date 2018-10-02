@@ -30,9 +30,9 @@ using System.Text;
 
 using OpenGLES;
 
-using OpenTK.Graphics;
+using osuTK.Graphics;
 
-namespace OpenTK.Platform.iPhoneOS
+namespace osuTK.Platform.iPhoneOS
 {
     internal class iPhoneFactory : PlatformFactoryBase
     {
@@ -69,17 +69,17 @@ namespace OpenTK.Platform.iPhoneOS
             return new AndroidDisplayDeviceDriver();
         }
 
-        public override OpenTK.Input.IKeyboardDriver2 CreateKeyboardDriver()
+        public override osuTK.Input.IKeyboardDriver2 CreateKeyboardDriver()
         {
             throw new NotImplementedException();
         }
 
-        public override OpenTK.Input.IMouseDriver2 CreateMouseDriver()
+        public override osuTK.Input.IMouseDriver2 CreateMouseDriver()
         {
             throw new NotImplementedException();
         }
 
-        public override OpenTK.Input.IJoystickDriver2 CreateJoystickDriver()
+        public override osuTK.Input.IJoystickDriver2 CreateJoystickDriver()
         {
             throw new NotImplementedException();
         }

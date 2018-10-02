@@ -29,7 +29,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Runtime.InteropServices;
 
-namespace OpenTK.Platform.X11
+namespace osuTK.Platform.X11
 {
     internal sealed class X11DisplayDevice : DisplayDeviceBase
     {
@@ -119,7 +119,7 @@ namespace OpenTK.Platform.X11
                     }
                 }
 
-            throw new InvalidOperationException("No primary display found. Please file a bug at https://github.com/opentk/opentk/issues");
+            throw new InvalidOperationException("No primary display found. Please file a bug at https://github.com/osuTK/osuTK/issues");
         }
 
         private bool QueryXinerama(List<DisplayDevice> devices)

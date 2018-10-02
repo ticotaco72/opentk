@@ -25,9 +25,9 @@
 
 using System;
 using System.Diagnostics;
-using OpenTK.Graphics;
+using osuTK.Graphics;
 
-namespace OpenTK.Platform.SDL2
+namespace osuTK.Platform.SDL2
 {
     internal class Sdl2GraphicsContext : DesktopGraphicsContext
     {
@@ -55,7 +55,7 @@ namespace OpenTK.Platform.SDL2
         public Sdl2GraphicsContext(GraphicsMode mode,
             IWindowInfo win, IGraphicsContext shareContext,
             int major, int minor,
-            OpenTK.Graphics.GraphicsContextFlags flags)
+            osuTK.Graphics.GraphicsContextFlags flags)
             : this(win)
         {
             lock (SDL.Sync)
@@ -235,7 +235,7 @@ namespace OpenTK.Platform.SDL2
 
             if (major > 0)
             {
-                // Workaround for https://github.com/opentk/opentk/issues/44
+                // Workaround for https://github.com/osuTK/osuTK/issues/44
                 // Mac OS X desktop OpenGL 3.x/4.x contexts require require
                 // ContextProfileFlags.Core, otherwise they will fail to construct.
                 if (Configuration.RunningOnMacOS && major >= 3 &&
