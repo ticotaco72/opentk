@@ -28,10 +28,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Microsoft.Win32;
-using OpenTK.Input;
-using OpenTK.Platform.Common;
+using osuTK.Input;
+using osuTK.Platform.Common;
 
-namespace OpenTK.Platform.Windows
+namespace osuTK.Platform.Windows
 {
     /// \internal
     /// <summary>
@@ -108,7 +108,7 @@ namespace OpenTK.Platform.Windows
                         string deviceClass = (string)regkey.GetValue("Class") as string;
                         if (deviceClass == null)
                         {
-                            // Added to address OpenTK issue 3198 with mouse on Windows 8
+                            // Added to address osuTK issue 3198 with mouse on Windows 8
                             string deviceClassGUID = (string)regkey.GetValue("ClassGUID");
                             RegistryKey classGUIDKey = Registry.LocalMachine.OpenSubKey(@"SYSTEM\CurrentControlSet\Control\Class\" + deviceClassGUID);
                             deviceClass = classGUIDKey != null ? (string)classGUIDKey.GetValue("Class") : string.Empty;
@@ -177,7 +177,7 @@ namespace OpenTK.Platform.Windows
                 int mouse_handle = rawids.ContainsKey(handle) ? rawids[handle] : 0;
                 mouse = mice[mouse_handle];
 
-                // Set and release capture of the mouse to fix http://www.opentk.com/node/2133, Patch by Artfunkel
+                // Set and release capture of the mouse to fix http://www.osuTK.com/node/2133, Patch by Artfunkel
                 if ((raw.ButtonFlags & RawInputMouseState.LEFT_BUTTON_DOWN) != 0)
                 {
                     mouse.EnableBit((int)MouseButton.Left);

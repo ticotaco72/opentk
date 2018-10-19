@@ -27,9 +27,9 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using OpenTK.Platform.MacOS.Carbon;
+using osuTK.Platform.MacOS.Carbon;
 
-namespace OpenTK.Platform.MacOS
+namespace osuTK.Platform.MacOS
 {
     internal sealed class QuartzDisplayDeviceDriver : DisplayDeviceBase
     {
@@ -39,7 +39,7 @@ namespace OpenTK.Platform.MacOS
         {
             lock (display_lock)
             {
-                // To minimize the need to add static methods to OpenTK.Graphics.DisplayDevice
+                // To minimize the need to add static methods to osuTK.Graphics.DisplayDevice
                 // we only allow settings to be set through its constructor.
                 // Thus, we save all necessary parameters in temporary variables
                 // and construct the device when every needed detail is available.
@@ -77,8 +77,8 @@ namespace OpenTK.Platform.MacOS
                     CFArray displayModes = new CFArray(displayModesPtr);
                     Debug.Print("Supports {0} display modes.", displayModes.Count);
 
-                    DisplayResolution opentk_dev_current_res = null;
-                    List<DisplayResolution> opentk_dev_available_res = new List<DisplayResolution>();
+                    DisplayResolution osuTK_dev_current_res = null;
+                    List<DisplayResolution> osuTK_dev_available_res = new List<DisplayResolution>();
                     IntPtr currentModePtr = CG.DisplayCurrentMode(currentDisplay);
                     CFDictionary currentMode = new CFDictionary(currentModePtr);
 
@@ -112,11 +112,11 @@ namespace OpenTK.Platform.MacOS
                         //Debug.Print("Mode {0} is {1}x{2}x{3} @ {4}.", j, width, height, bpp, freq);
 
                         DisplayResolution thisRes = new DisplayResolution(0, 0, width, height, bpp, (float)freq);
-                        opentk_dev_available_res.Add(thisRes);
+                        osuTK_dev_available_res.Add(thisRes);
 
                         if (current)
                         {
-                            opentk_dev_current_res = thisRes;
+                            osuTK_dev_current_res = thisRes;
                         }
                     }
 
@@ -125,14 +125,14 @@ namespace OpenTK.Platform.MacOS
 
                     Debug.Print("Display {0} bounds: {1}", i, newRect);
 
-                    DisplayDevice opentk_dev = new DisplayDevice(opentk_dev_current_res,
-                        primary, opentk_dev_available_res, newRect, currentDisplay);
+                    DisplayDevice osuTK_dev = new DisplayDevice(osuTK_dev_current_res,
+                        primary, osuTK_dev_available_res, newRect, currentDisplay);
 
-                    AvailableDevices.Add(opentk_dev);
+                    AvailableDevices.Add(osuTK_dev);
 
                     if (primary)
                     {
-                        Primary = opentk_dev;
+                        Primary = osuTK_dev;
                     }
                 }
 

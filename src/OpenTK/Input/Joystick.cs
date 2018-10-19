@@ -27,7 +27,7 @@
 
 using System;
 
-namespace OpenTK.Input
+namespace osuTK.Input
 {
     /// <summary>
     /// Provides access to Joystick devices.
@@ -76,9 +76,9 @@ namespace OpenTK.Input
         }
 
         /// <summary>
-        /// Retrives <see cref="OpenTK.Input.JoystickState"/> for all joystick devices.
+        /// Retrives <see cref="osuTK.Input.JoystickState"/> for all joystick devices.
         /// </summary>
-        /// <returns>An array of <see cref="OpenTK.Input.JoystickState"/> representing the state for the joystick devices.</returns>
+        /// <returns>An array of <see cref="osuTK.Input.JoystickState"/> representing the state for the joystick devices.</returns>
         public static JoystickState[] GetStates()
         {
             return implementation.GetStates();

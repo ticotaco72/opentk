@@ -30,10 +30,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
-using OpenTK.Input;
-using OpenTK.Platform.Common;
+using osuTK.Input;
+using osuTK.Platform.Common;
 
-namespace OpenTK.Platform.Windows
+namespace osuTK.Platform.Windows
 {
     internal class WinRawJoystick : IJoystickDriver2
     {
@@ -395,7 +395,7 @@ namespace OpenTK.Platform.Windows
             {
                 if (stick.AxisCaps[i].IsRange)
                 {
-                    Debug.Print("[{0}] Axis range collections not implemented. Please report your controller type at https://github.com/opentk/opentk/issues",
+                    Debug.Print("[{0}] Axis range collections not implemented. Please report your controller type at https://github.com/osuTK/osuTK/issues",
                         GetType().Name);
                     continue;
                 }

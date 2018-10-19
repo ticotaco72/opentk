@@ -17,18 +17,18 @@ using OpenGLES;
 using UIKit;
 using ObjCRuntime;
 
-using OpenTK;
-using OpenTK.Graphics;
-using OpenTK.Input;
-using OpenTK.Platform;
-using OpenTK.Platform.iPhoneOS;
+using osuTK;
+using osuTK.Graphics;
+using osuTK.Input;
+using osuTK.Platform;
+using osuTK.Platform.iPhoneOS;
 
-using All  = OpenTK.Graphics.ES11.All;
-using ES11 = OpenTK.Graphics.ES11;
-using ES20 = OpenTK.Graphics.ES20;
-using ES30 = OpenTK.Graphics.ES30;
+using All  = osuTK.Graphics.ES11.All;
+using ES11 = osuTK.Graphics.ES11;
+using ES20 = osuTK.Graphics.ES20;
+using ES30 = osuTK.Graphics.ES30;
 
-namespace OpenTK.Platform.iPhoneOS
+namespace osuTK.Platform.iPhoneOS
 {
     internal sealed class GLCalls {
         public delegate void glBindFramebuffer(All target, int framebuffer);
