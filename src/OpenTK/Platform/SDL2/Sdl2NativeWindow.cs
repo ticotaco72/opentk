@@ -303,12 +303,8 @@ namespace OpenTK.Platform.SDL2
             window.OnMouseWheel(ev.X, ev.Y, false);
         }
 
-        private static readonly int SystemDefaultCharSize = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? 2 : 1;
-
         private static string PtrToStringAuto(IntPtr ptr)
-        {
-            return SystemDefaultCharSize == 2 ? Marshal.PtrToStringUni(ptr) : Marshal.PtrToStringAnsi(ptr);
-        }
+        => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? Marshal.PtrToStringUni(ptr) : Marshal.PtrToStringAnsi(ptr);
 
         private static unsafe void ProcessDropEvent(Sdl2NativeWindow window, DropEvent ev)
         {
