@@ -32,7 +32,7 @@ namespace OpenTK.Platform.Linux
 {
     internal class Kms
     {
-        private const string lib = "libkms";
+        private const string lib = "libkms.so.1";
 
         [DllImport(lib, EntryPoint = "kms_bo_map", CallingConvention = CallingConvention.Cdecl)]
         public static extern int MapBuffer(IntPtr bo, out IntPtr @out);
