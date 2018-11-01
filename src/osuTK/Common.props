@@ -7,7 +7,6 @@
     <RootNamespace>osuTK</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
   <ItemGroup>
     <None Include="..\..\osuTK.snk">
