@@ -6,6 +6,8 @@
  */
 // Copyright 2011 Xamarin Inc. All rights reserved.
 
+#if IPHONE
+
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -1124,3 +1126,5 @@ namespace osuTK.Platform.iPhoneOS
 }
 
 // vim: et ts=4 sw=4
+
+#endif

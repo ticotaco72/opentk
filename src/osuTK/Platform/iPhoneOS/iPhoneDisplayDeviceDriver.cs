@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if IPHONE
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using osuTK.Platform;
@@ -32,3 +34,5 @@ namespace osuTK.Platform.iPhoneOS
         }
     }
 }
+
+#endif

@@ -5,6 +5,8 @@
  * See license.txt for licensing detailed licensing details.
  */
 
+#if ANDROID
+
 using System;
 
 namespace osuTK.Platform.Android
@@ -36,3 +38,5 @@ namespace osuTK.Platform.Android
         }
     }
 }
+
+#endif
