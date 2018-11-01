@@ -17,6 +17,8 @@ namespace osuTK.Platform.iPhoneOS
             dev.BitsPerPixel = 16;
         }
 
+        public List<DisplayDevice> AvailableDevices { get; } = new List<DisplayDevice> { dev };
+
         public DisplayDevice GetDisplay(DisplayIndex displayIndex)
         {
             return (displayIndex == DisplayIndex.First || displayIndex == DisplayIndex.Primary) ? dev : null;
