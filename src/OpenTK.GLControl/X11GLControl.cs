@@ -16,6 +16,7 @@ namespace OpenTK
     internal class X11GLControl : IGLControl
     {
         private const string lib = "libX11.so.6";
+
         [DllImport(lib)]
         private static extern IntPtr XCreateColormap(IntPtr display, IntPtr window, IntPtr visual, int alloc);
 
