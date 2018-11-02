@@ -398,7 +398,7 @@ namespace OpenTK.Platform.X11
 
         private static class NativeMethods
         {
-            private const string Xinerama = "libXinerama";
+            private const string Xinerama = "libXinerama.so.1";
 
             [DllImport(Xinerama)]
             public static extern bool XineramaQueryExtension(IntPtr dpy, out int event_basep, out int error_basep);

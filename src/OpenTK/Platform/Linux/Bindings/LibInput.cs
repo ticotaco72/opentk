@@ -40,7 +40,7 @@ namespace OpenTK.Platform.Linux
 
     internal class LibInput
     {
-        internal const string lib = "libinput";
+        internal const string lib = "libinput.so.10";
 
         [DllImport(lib, EntryPoint = "libinput_udev_create_context", CallingConvention = CallingConvention.Cdecl)]
         public static extern IntPtr CreateContext(InputInterface @interface,

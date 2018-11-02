@@ -65,8 +65,8 @@ namespace OpenTK.Platform.X11
 
     internal static class API
     {
-        private const string _dll_name = "libX11";
-        private const string _dll_name_vid = "libXxf86vm";
+        private const string _dll_name = "libX11.so.6";
+        private const string _dll_name_vid = "libXxf86vm.so.1";
 
         private static Window rootWindow;
 
@@ -1285,7 +1285,7 @@ XF86VidModeGetGammaRampSize(
 
     internal static partial class Functions
     {
-        internal const string X11Library = "libX11";
+        internal const string X11Library = "libX11.so.6";
         internal const string XcursorLibrary = "libXcursor.so.1";
 
         /// <summary>
@@ -1553,7 +1553,7 @@ XF86VidModeGetGammaRampSize(
         [DllImport(X11Library)]
         unsafe public static extern Pixmap XCreateBitmapFromData(Display display, Window d, byte* data, int width, int height);
 
-        [DllImport("libX11", EntryPoint = "XAllocColor")]
+        [DllImport(X11Library, EntryPoint = "XAllocColor")]
         public static extern Status XAllocNamedColor(Display display, Colormap colormap, string color_name, out XColor screen_def_return, out XColor exact_def_return);
     }
     /*
