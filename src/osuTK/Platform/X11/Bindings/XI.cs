@@ -38,7 +38,7 @@ namespace osuTK.Platform.X11
     // Bindings for the XInput2 extension
     internal class XI
     {
-        private const string lib = "libXi";
+        private const string lib = "libXi.so.6";
 
         internal const int XIAllDevices = 0;
         internal const int XIAllMasterDevices = 1;

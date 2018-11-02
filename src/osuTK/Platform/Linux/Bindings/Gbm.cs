@@ -39,7 +39,7 @@ namespace osuTK.Platform.Linux
 
     internal class Gbm
     {
-        private const string lib = "gbm";
+        private const string lib = "libgbm.so.1";
 
         [DllImport(lib, EntryPoint = "gbm_bo_create", CallingConvention = CallingConvention.Cdecl)]
         public static extern BufferObject CreateBuffer(Device gbm, int width, int height, SurfaceFormat format, SurfaceFlags flags);

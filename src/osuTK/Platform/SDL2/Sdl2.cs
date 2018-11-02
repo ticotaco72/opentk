@@ -42,7 +42,7 @@ namespace osuTK.Platform.SDL2
         #elif IPHONE
         const string lib = "__Internal";
         #else
-        private const string lib = "SDL2";
+        private const string lib = "libSDL2-2.0.so.0";
         #endif
 
         public readonly static object Sync = new object();

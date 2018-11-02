@@ -44,7 +44,7 @@ namespace osuTK.Platform.X11
 
     internal class Xkb
     {
-        private const string lib = "libX11";
+        private const string lib = "libX11.so.6";
 
         internal const int KeyNameLength = 4;
         internal const int NumModifiers = 8;

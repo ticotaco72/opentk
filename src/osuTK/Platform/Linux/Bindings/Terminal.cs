@@ -32,7 +32,7 @@ namespace osuTK.Platform.Linux
 {
     internal class Terminal
     {
-        private const string lib = "libc";
+        private const string lib = "libc.so.6";
 
         [DllImport(lib, EntryPoint = "isatty", CallingConvention = CallingConvention.Cdecl)]
         [return: MarshalAs(UnmanagedType.I4)]
