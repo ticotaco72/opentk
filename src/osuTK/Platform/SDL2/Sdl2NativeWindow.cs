@@ -304,7 +304,7 @@ namespace osuTK.Platform.SDL2
         }
 
         private static string PtrToStringAuto(IntPtr ptr)
-        => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? Marshal.PtrToStringUni(ptr) : Marshal.PtrToStringAnsi(ptr);
+            => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? Marshal.PtrToStringUni(ptr) : Marshal.PtrToStringAnsi(ptr);
 
         private static unsafe void ProcessDropEvent(Sdl2NativeWindow window, DropEvent ev)
         {
