@@ -5,6 +5,8 @@
  * See license.txt for licensing detailed licensing details.
  */
 
+#if ANDROID
+
 using System;
 
 namespace osuTK.Platform.Android
@@ -18,6 +20,8 @@ namespace osuTK.Platform.Android
             dev.IsPrimary = true;
             dev.BitsPerPixel = 16;
         }
+
+        public List<DisplayDevice> AvailableDevices { get; } = new List<DisplayDevice> { dev };
 
         public DisplayDevice GetDisplay(DisplayIndex displayIndex)
         {
@@ -36,3 +40,5 @@ namespace osuTK.Platform.Android
         }
     }
 }
+
+#endif

@@ -1,3 +1,5 @@
+#if ANDROID
+
 using System;
 using osuTK.Graphics;
 
@@ -57,3 +59,5 @@ namespace osuTK.Platform.Android
         }
     }
 }
+
+#endif

@@ -5,6 +5,8 @@
  * See license.txt for licensing detailed licensing details.
  */
 
+ #if IPHONE
+
 using System;
 
 using ObjCRuntime;
@@ -144,3 +146,4 @@ namespace osuTK.Platform.iPhoneOS {
     }
 }
 
+#endif

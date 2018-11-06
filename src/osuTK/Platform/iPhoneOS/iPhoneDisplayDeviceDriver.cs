@@ -1,4 +1,6 @@
-﻿using System;
+﻿#if IPHONE
+
+using System;
 using System.Collections.Generic;
 using System.Text;
 using osuTK.Platform;
@@ -14,6 +16,8 @@ namespace osuTK.Platform.iPhoneOS
             dev.IsPrimary = true;
             dev.BitsPerPixel = 16;
         }
+
+        public List<DisplayDevice> AvailableDevices { get; } = new List<DisplayDevice> { dev };
 
         public DisplayDevice GetDisplay(DisplayIndex displayIndex)
         {
@@ -32,3 +36,5 @@ namespace osuTK.Platform.iPhoneOS
         }
     }
 }
+
+#endif

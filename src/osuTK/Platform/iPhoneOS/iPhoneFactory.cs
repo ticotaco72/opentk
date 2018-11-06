@@ -24,6 +24,8 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
+#if IPHONE
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -85,3 +87,5 @@ namespace osuTK.Platform.iPhoneOS
         }
     }
 }
+
+#endif
