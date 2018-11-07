@@ -1,0 +1,23 @@
+﻿<Project Sdk="MSBuild.Sdk.Extras/1.6.55">
+  <Import Project="Common.props" />
+  <PropertyGroup>
+    <PackageVersion>1.0.0</PackageVersion>
+    <PackageId>ppy.OpenTK.iOS</PackageId>
+    <Title>ppy.OpenTK.iOS</Title>
+    <TargetFramework>XamarinIos10</TargetFramework>
+    <DefineConstants>$(DefineConstants);IPHONE;OPENGLES;MINIMAL</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Xamarin.iOS" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="OpenTK-1.0" />
+  </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="$(MSBuildThisFileDirectory)..\Generator.Rewrite\bin\Debug\Rewrite.exe -a $(OutputPath)osuTK.dll -k $(MSBuildThisFileDirectory)..\..\osuTK.snk --debug" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Debug'" />
+    <Exec Command="$(MSBuildThisFileDirectory)..\Generator.Rewrite\bin\Release\Rewrite.exe -a $(OutputPath)osuTK.dll -k $(MSBuildThisFileDirectory)..\..\osuTK.snk" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Release'" />
+    <Exec Command="mono $(MSBuildThisFileDirectory)../Generator.Rewrite/bin/Debug/Rewrite.exe -a $(OutputPath)osuTK.dll --debug" Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Debug'" />
+    <Exec Command="mono $(MSBuildThisFileDirectory)../Generator.Rewrite/bin/Release/Rewrite.exe -a $(OutputPath)osuTK.dll" Condition="$(OS) != 'Windows_NT' and $(Configuration) == 'Release'" />
+  </Target>
+</Project>
