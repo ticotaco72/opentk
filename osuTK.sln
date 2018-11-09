@@ -1,17 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.28010.2050
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Bind", "src\Generator.Bind\Generator.Bind.csproj", "{31D19132-0000-0000-0000-000000000000}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Convert", "src\Generator.Converter\Generator.Convert.csproj", "{5FDFF4B6-0000-0000-0000-000000000000}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Rewrite", "src\Generator.Rewrite\Generator.Rewrite.csproj", "{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osuTK.Android", "src\osuTK\osuTK.Android.csproj", "{1648ACE1-E7D0-41CB-9A0E-C2A9D76C13A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osuTK.iOS", "src\osuTK\osuTK.iOS.csproj", "{88368190-E3DF-4EBE-ACAA-7B1779F376CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "osuTK.iOS", "src\osuTK\osuTK.iOS.csproj", "{88368190-E3DF-4EBE-ACAA-7B1779F376CA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osuTK.GLControl", "src\osuTK.GLControl\osuTK.GLControl.csproj", "{A625BE88-0000-0000-0000-000000000000}"
 EndProject
@@ -27,10 +25,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".paket", ".paket", "{F1A570
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "project", "project", "{5EEEC96B-BD2F-45B0-935D-19E9E6D7D969}"
 	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
 		build.fsx = build.fsx
 		README.md = README.md
 		RELEASE_NOTES.md = RELEASE_NOTES.md
-		.gitignore = .gitignore
 	EndProjectSection
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "osuTK.Tests", "tests\osuTK.Tests\osuTK.Tests.fsproj", "{6801C263-ADDA-4A7B-979D-649BCB5A1DF7}"
@@ -41,7 +39,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osuTK.Tests.Math", "tests\o
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "osuTK.Tests.Generators", "tests\osuTK.Tests.Generators\osuTK.Tests.Generators.fsproj", "{2B11AAEB-D8AC-4356-938F-532D720E0C30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osuTK.NS20", "src\osuTK\osuTK.NS20.csproj", "{071FF8A5-47A2-4591-B8B5-A7BE11EE358B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "osuTK.NS20", "src\osuTK\osuTK.NS20.csproj", "{071FF8A5-47A2-4591-B8B5-A7BE11EE358B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Generator.Bind", "src\Generator.Bind\Generator.Bind.csproj", "{D8DDECA3-9B6E-4322-89E2-AFBC4CE5E347}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,10 +49,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{31D19132-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{31D19132-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{31D19132-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{31D19132-0000-0000-0000-000000000000}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5FDFF4B6-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5FDFF4B6-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FDFF4B6-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -97,6 +93,10 @@ Global
 		{071FF8A5-47A2-4591-B8B5-A7BE11EE358B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{071FF8A5-47A2-4591-B8B5-A7BE11EE358B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{071FF8A5-47A2-4591-B8B5-A7BE11EE358B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8DDECA3-9B6E-4322-89E2-AFBC4CE5E347}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8DDECA3-9B6E-4322-89E2-AFBC4CE5E347}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8DDECA3-9B6E-4322-89E2-AFBC4CE5E347}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8DDECA3-9B6E-4322-89E2-AFBC4CE5E347}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -106,5 +106,8 @@ Global
 		{522D9279-3ED6-475F-867A-6AE69A53C24A} = {1857BB8E-1A35-4EBF-9F6D-685F11DC025B}
 		{C2B07CD9-B388-4FC3-AF31-C648F7EA904E} = {1857BB8E-1A35-4EBF-9F6D-685F11DC025B}
 		{2B11AAEB-D8AC-4356-938F-532D720E0C30} = {1857BB8E-1A35-4EBF-9F6D-685F11DC025B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B7B689C3-2302-425A-8CD6-3FCA39445800}
 	EndGlobalSection
 EndGlobal
