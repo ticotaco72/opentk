@@ -47,7 +47,7 @@ namespace osuTK.Platform.MacOS
         ReturnOnError = 4
     }
 
-    internal class NS
+    public class NS
     {
         private const string Library = "libdl.dylib";
 
@@ -69,13 +69,13 @@ namespace osuTK.Platform.MacOS
         // Unfortunately, these are slower even if they are more
         // portable and simpler to use.
         [DllImport(Library)]
-        internal static extern IntPtr dlopen(String fileName, int flags);
+        public static extern IntPtr dlopen(String fileName, int flags);
         [DllImport(Library)]
-        internal static extern int dlclose(IntPtr handle);
+        public static extern int dlclose(IntPtr handle);
         [DllImport (Library)]
-        internal static extern IntPtr dlsym (IntPtr handle, string symbol);
+        public static extern IntPtr dlsym (IntPtr handle, string symbol);
         [DllImport (Library)]
-        internal static extern IntPtr dlsym (IntPtr handle, IntPtr symbol);
+        public static extern IntPtr dlsym (IntPtr handle, IntPtr symbol);
 
         public static IntPtr GetAddress(string function)
         {
