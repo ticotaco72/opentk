@@ -4,11 +4,15 @@ using OpenGLES;
 using osuTK.Graphics;
 using osuTK.Graphics.ES30;
 using osuTK.Platform;
+using osuTK.Platform.MacOS;
 
 namespace osuTK.iOS
 {
     public class iOSGraphicsContext : IGraphicsContext, IGraphicsContextInternal
     {
+        private const string gles = "/System/Library/Frameworks/OpenGLES.framework/OpenGLES";
+        private static Dylib glesLibrary = Dylib.Load(gles);
+
         public EAGLContext EAGLContext { get; private set; }
 
         internal iOSGraphicsContext(ContextHandle h)
@@ -32,7 +36,7 @@ namespace osuTK.iOS
             EAGLContext = shared != null && shared.EAGLContext != null
                 ? new EAGLContext(version, shared.EAGLContext.ShareGroup)
                 : new EAGLContext(version);
-            contextHandle = new ContextHandle(EAGLContext.Handle);
+            Context = new ContextHandle(EAGLContext.Handle);
         }
 
         public void SwapBuffers()
@@ -47,54 +51,33 @@ namespace osuTK.iOS
                 throw new InvalidOperationException("Unable to change current EAGLContext.");
         }
 
-        public bool IsCurrent
-        {
-            get { return EAGLContext.CurrentContext == EAGLContext; }
-        }
+        public bool IsCurrent => EAGLContext.CurrentContext == EAGLContext;
 
-        public bool IsDisposed
-        {
-            get { return EAGLContext == null; }
-        }
+        public bool IsDisposed => EAGLContext == null;
 
         public bool VSync
         {
-            get { throw new NotSupportedException(); }
-            set { throw new NotSupportedException(); }
+            get => throw new NotSupportedException();
+            set => throw new NotSupportedException();
         }
 
-        public void Update(IWindowInfo window)
-        {
-            throw new NotSupportedException();
-        }
+        public void Update(IWindowInfo window) => throw new NotSupportedException();
 
         public GraphicsMode GraphicsMode { get; private set; }
 
         public bool ErrorChecking
         {
-            get { return false; }
+            get => false;
             set { }
         }
 
-        IGraphicsContext IGraphicsContextInternal.Implementation
-        {
-            get { return this; }
-        }
+        public IGraphicsContext Implementation => this;
 
         public void LoadAll()
         {
         }
 
-        ContextHandle contextHandle;
-        ContextHandle IGraphicsContextInternal.Context
-        {
-            get { return contextHandle; }
-        }
-
-        IntPtr IGraphicsContextInternal.GetAddress(string function)
-        {
-            return IntPtr.Zero;
-        }
+        public ContextHandle Context { get; }
 
         public void Dispose()
         {
@@ -120,6 +103,8 @@ namespace osuTK.iOS
             set => throw new NotSupportedException();
         }
 
-        public IntPtr GetAddress(IntPtr function) => IntPtr.Zero;
+        public IntPtr GetAddress(string function) => glesLibrary.GetAddress(function);
+
+        public IntPtr GetAddress(IntPtr function) => glesLibrary.GetAddress(function);
     }
 }

@@ -98,7 +98,7 @@ let runtimeProjects =
 
     !! "src/osuTK/osuTK.NS20.csproj"
     -- "src/Generator.*/**.csproj"
-    |> xamarinFilter
+//    |> xamarinFilter
 
 let activeProjects =
     Seq.concat [buildProjects; runtimeProjects]

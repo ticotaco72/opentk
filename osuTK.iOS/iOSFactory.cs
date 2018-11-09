@@ -8,15 +8,11 @@ namespace osuTK.iOS
 {
     public class iOSFactory : PlatformFactoryBase
     {
-        public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
-        {
-            return new iOSGraphicsContext(mode, window, shareContext, major, minor, flags);
-        }
+        public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags) =>
+            new iOSGraphicsContext(mode, window, shareContext, major, minor, flags);
 
-        public override IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
-        {
-            return new iOSGraphicsContext(handle);
-        }
+        public override IGraphicsContext CreateGLContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags) =>
+            new iOSGraphicsContext(handle);
 
         public override GraphicsContext.GetCurrentContextDelegate CreateGetCurrentGraphicsContext()
         {
@@ -31,30 +27,14 @@ namespace osuTK.iOS
             };
         }
 
-        public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device)
-        {
-            throw new NotImplementedException();
-        }
+        public override INativeWindow CreateNativeWindow(int x, int y, int width, int height, string title, GraphicsMode mode, GameWindowFlags options, DisplayDevice device) => throw new NotImplementedException();
 
-        public override IDisplayDeviceDriver CreateDisplayDeviceDriver()
-        {
-            return new iOSDisplayDeviceDriver();
-        }
+        public override IDisplayDeviceDriver CreateDisplayDeviceDriver() => new iOSDisplayDeviceDriver();
 
-        public override IKeyboardDriver2 CreateKeyboardDriver()
-        {
-            throw new NotImplementedException();
-        }
+        public override IKeyboardDriver2 CreateKeyboardDriver() => throw new NotImplementedException();
 
-        public override IMouseDriver2 CreateMouseDriver()
-        {
-            throw new NotImplementedException();
-        }
+        public override IMouseDriver2 CreateMouseDriver() => throw new NotImplementedException();
 
-        public override IJoystickDriver2 CreateJoystickDriver()
-        {
-            throw new NotImplementedException();
-        }
-
+        public override IJoystickDriver2 CreateJoystickDriver() => throw new NotImplementedException();
     }
 }

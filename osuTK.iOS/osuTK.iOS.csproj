@@ -54,7 +54,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="iOSGameView.cs" />
     <Compile Include="iOSGraphicsContext.cs" />
-    <Compile Include="iOSGraphicsMode.cs" />
     <Compile Include="iOSFactory.cs" />
     <Compile Include="iOSDisplayDeviceDriver.cs" />
   </ItemGroup>

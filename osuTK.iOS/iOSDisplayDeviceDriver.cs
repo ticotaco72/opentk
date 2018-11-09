@@ -4,7 +4,7 @@ using osuTK.Platform;
 
 namespace osuTK.iOS
 {
-    internal class iOSDisplayDeviceDriver : IDisplayDeviceDriver
+    public class iOSDisplayDeviceDriver : IDisplayDeviceDriver
     {
         private static DisplayDevice dev;
         static iOSDisplayDeviceDriver()
@@ -16,20 +16,11 @@ namespace osuTK.iOS
 
         public List<DisplayDevice> AvailableDevices => new List<DisplayDevice>(new DisplayDevice[] { dev });
 
-        public DisplayDevice GetDisplay(DisplayIndex displayIndex)
-        {
-            return (displayIndex == DisplayIndex.First || displayIndex == DisplayIndex.Primary) ? dev : null;
-        }
+        public DisplayDevice GetDisplay(DisplayIndex displayIndex) =>
+            (displayIndex == DisplayIndex.First || displayIndex == DisplayIndex.Primary) ? dev : null;
 
-        public bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution)
-        {
-            return false;
-        }
+        public bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution) => false;
 
-        public bool TryRestoreResolution(DisplayDevice device)
-        {
-            return false;
-        }
+        public bool TryRestoreResolution(DisplayDevice device) => false;
     }
-
 }

@@ -700,6 +700,7 @@
     <None Include="paket.references" />
     <Compile Include="Platform\MacOS\Cocoa\NSDragOperation.cs" />
     <Compile Include="Platform\MacOS\CoreVideo.cs" />
+    <Compile Include="Platform\MacOS\Dylib.cs" />
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="$(MSBuildThisFileDirectory)..\Generator.Rewrite\bin\Debug\Rewrite.exe -a $(OutputPath)osuTK.dll -k $(MSBuildThisFileDirectory)..\..\osuTK.snk --debug --netstandard" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Debug'" />
