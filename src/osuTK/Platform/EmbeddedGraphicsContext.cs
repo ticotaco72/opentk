@@ -29,7 +29,7 @@ using osuTK.Graphics;
 namespace osuTK.Platform
 {
     // Provides the foundation for all desktop IGraphicsContext implementations.
-    internal abstract class EmbeddedGraphicsContext : GraphicsContextBase
+    public abstract class EmbeddedGraphicsContext : GraphicsContextBase
     {
         public override void LoadAll()
         {

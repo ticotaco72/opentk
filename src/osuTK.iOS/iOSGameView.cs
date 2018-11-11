@@ -97,7 +97,15 @@ namespace osuTK.iOS
             UserInteractionEnabled = true;
 
             eaglContext = new EAGLContext(ContextRenderingAPI);
-            GraphicsContext = new iOSGraphicsContext(new ContextHandle(eaglContext.Handle));
+
+            // some nasty hackery due to OpenTK's GameWindow system being a poor fit for iOS
+            var contextHandle = new ContextHandle(eaglContext.Handle);
+            var context = new iOSGraphicsContext(contextHandle);
+            GraphicsContext = context;
+            Graphics.GraphicsContext.GetCurrentContext = () => contextHandle;
+            Graphics.GraphicsContext.AddContext(context);
+            context.MakeCurrent(null);
+            context.LoadAll();
         }
 
         protected virtual void CreateFrameBuffer()

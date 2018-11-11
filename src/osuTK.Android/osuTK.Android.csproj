@@ -58,7 +58,7 @@
     <AndroidResource Include="Resources\values\Strings.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\src\osuTK\osuTK.NS20.csproj">
+    <ProjectReference Include="..\osuTK\osuTK.NS20.csproj">
       <Project>{71896DEF-4479-4264-A3C2-706AC824FB16}</Project>
       <Name>osuTK.NS20</Name>
     </ProjectReference>
