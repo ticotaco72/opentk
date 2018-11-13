@@ -79,7 +79,7 @@ namespace osuTK.Input
             }
         }
 
-#if false
+/*
         // Disabled until a correct, cross-platform API can be defined.
 
         /// <summary>
@@ -99,6 +99,6 @@ namespace osuTK.Input
                 return driver.GetDeviceName(index);
             }
         }
-#endif
+*/
     }
 }

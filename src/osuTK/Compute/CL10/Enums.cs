@@ -23,7 +23,7 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-#if EXPERIMENTAL
+/* EXPERIMENTAL
 
 using System;
 
@@ -701,4 +701,4 @@ namespace osuTK.Compute.CL10
 
 }
 
-#endif
+*/

@@ -2313,7 +2313,7 @@ namespace osuTK.Platform.Windows
         /// </summary>
         [FieldOffset(20)] public ULONG ExtraInformation;
     }
-#if false
+/*
     [StructLayout(LayoutKind.Sequential)]
     internal struct RawMouse
     {
@@ -2366,7 +2366,7 @@ namespace osuTK.Platform.Windows
         /// </summary>
         internal ULONG ExtraInformation { get { unsafe { return *(ULONG*)this[20]; } } }
     }
-#endif
+*/ 
 
     /// \internal
     /// <summary>

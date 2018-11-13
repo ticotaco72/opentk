@@ -31,7 +31,7 @@ namespace osuTK.Platform.Linux
     // (the keyboard remains tied up.) We need to find a
     // proper way to clean up after ourselves, even in case
     // of a crash.
-    #if EXPERIMENTAL
+    /* EXPERIMENTAL
     class LinuxKeyboardTTY : IKeyboardDriver2, IDisposable
     {
         const int stdin = 0; // STDIN_FILENO
@@ -91,7 +91,7 @@ namespace osuTK.Platform.Linux
 
             // Update terminal state
             current_state = original_state;
-            current_state.LocalMode &= ~(/*LocalFlags.ECHO |*/ LocalFlags.ICANON | LocalFlags.ISIG);
+            current_state.LocalMode &= ~(/*LocalFlags.ECHO |*//* LocalFlags.ICANON | LocalFlags.ISIG);
             current_state.InputMode &= ~(
                 InputFlags.ISTRIP | InputFlags.IGNCR | InputFlags.ICRNL |
                 InputFlags.INLCR | InputFlags.IXOFF | InputFlags.IXON);
@@ -243,6 +243,6 @@ namespace osuTK.Platform.Linux
             Dispose(false);
         }
     }
-    #endif
+    */
 }
 

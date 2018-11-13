@@ -191,7 +191,7 @@ namespace osuTK.Platform.Windows
             return NumberOfSetBits((int)xbuttons);
         }
 
-#if false
+/*
         // Todo: Implement JoystickType enumeration
         GamePadType TranslateSubType(XInputDeviceSubType xtype)
         {
@@ -212,7 +212,7 @@ namespace osuTK.Platform.Windows
                     return GamePadType.Unknown;
             }
         }
-#endif
+*/
 
         private enum XInputErrorCode
         {

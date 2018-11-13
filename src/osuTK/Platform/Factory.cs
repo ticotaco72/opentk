@@ -86,51 +86,49 @@ namespace osuTK.Platform
                 // using the same API.
                 Embedded = Default;
             }
-#if IPHONE
+
             else if (Configuration.RunningOnIOS)
             {
                 Embedded = new iPhoneOS.iPhoneFactory();
             }
-#else
+
             else if (Egl.Egl.IsSupported)
             {
                 if (Configuration.RunningOnLinux)
                 {
                     Embedded = Default;
                 }
-#if X11
+
                 else if (Configuration.RunningOnX11)
                 {
                     Embedded = new Egl.EglX11PlatformFactory();
                 }
-#endif
-#if WIN32
+
                 else if (Configuration.RunningOnWindows)
                 {
                     Embedded = new Egl.EglWinPlatformFactory();
                 }
-#endif
-#if CARBON
+
+#
                 else if (Configuration.RunningOnMacOS)
                 {
                     Embedded = new Egl.EglMacPlatformFactory();
                 }
-#endif
-#if ANDROID
+
+
                 else if (Configuration.RunningOnAndroid) Embedded = new Android.AndroidFactory();
-#endif
+
                 else
                 {
                     Embedded = new UnsupportedPlatform();
                 }
 
-#if ANDROID
-                Angle = new UnsupportedPlatform();
-#else
-                Angle = new Egl.EglAnglePlatformFactory(Embedded);
-#endif
+                if (Configuration.RunningOnAndroid)
+                    Angle = new UnsupportedPlatform();
+                else
+                    Angle = new Egl.EglAnglePlatformFactory(Embedded);
             }
-#endif
+
             else
             {
                 Embedded = new UnsupportedPlatform();

@@ -188,7 +188,7 @@ namespace osuTK
         {
             return InverseSqrtFast((float)x);
             // TODO: The following code is wrong. Fix it, to improve precision.
-#if false
+/*
             unsafe
             {
                 double xhalf = 0.5f * x;
@@ -198,7 +198,7 @@ namespace osuTK
                 x = x * (1.5f - xhalf * x * x); // Perform left single Newton-Raphson step.
                 return x;
             }
-#endif
+*/
         }
 
         /// <summary>

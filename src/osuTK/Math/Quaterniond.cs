@@ -725,7 +725,7 @@ namespace osuTK
             }
         }
 
-#if false
+/*
 
         /// <summary>The W component of the Quaterniond.</summary>
         public double W;
@@ -1320,7 +1320,7 @@ namespace osuTK
         /// <summary>A quaterion representing the Z axis.</summary>
         public static readonly Quaterniond ZAxis = new Quaterniond(0, 0, 0, 1);
 
-#endif
+*/
 
         /// <summary>
         /// Compares this Quaterniond instance to another Quaterniond for equality.

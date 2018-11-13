@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Convert", "src\Ge
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Generator.Rewrite", "src\Generator.Rewrite\Generator.Rewrite.csproj", "{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "osuTK.iOS", "src\osuTK\osuTK.iOS.csproj", "{88368190-E3DF-4EBE-ACAA-7B1779F376CA}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osuTK.GLControl", "src\osuTK.GLControl\osuTK.GLControl.csproj", "{A625BE88-0000-0000-0000-000000000000}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "osuTK.GLWidget", "src\osuTK.GLWidget\osuTK.GLWidget.csproj", "{A625BE87-0000-0000-0000-000000000000}"
@@ -59,10 +57,6 @@ Global
 		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C426C9D1-8857-4E52-BAC7-4C05EE6070AB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{88368190-E3DF-4EBE-ACAA-7B1779F376CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{88368190-E3DF-4EBE-ACAA-7B1779F376CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{88368190-E3DF-4EBE-ACAA-7B1779F376CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{88368190-E3DF-4EBE-ACAA-7B1779F376CA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A625BE88-0000-0000-0000-000000000000}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A625BE88-0000-0000-0000-000000000000}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A625BE88-0000-0000-0000-000000000000}.Release|Any CPU.ActiveCfg = Release|Any CPU

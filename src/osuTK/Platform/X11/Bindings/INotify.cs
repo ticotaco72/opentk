@@ -2,7 +2,7 @@
 {
     // Fully implemented but not currently used by osuTK
     // See System.IO.FileSystemWatcher for a cross-platform alternative
-#if false
+/*
     class INotify
     {
         const string lib = "";
@@ -201,5 +201,5 @@
             Access | Modify | Attrib | Close | Open | Move |
             Create | Delete | DeleteSelf | MoveSelf
     }
-#endif
+*/
 }

@@ -164,9 +164,10 @@ namespace osuTK
             return t != null;
         }
 
-        #if SDL2
+        
         private static bool DetectSdl2()
         {
+#if SDL2
             bool supported = false;
 
             // Detect whether SDL2 is supported
@@ -218,10 +219,12 @@ namespace osuTK
                 Debug.Print("SDL2 is supported. Version is {0}.{1}.{2}",
                     version.Major, version.Minor, version.Patch);
             }
-
+#else
+            supported = false;
+#endif
             return supported;
         }
-        #endif
+        
 
         private static void DetectUnix(out bool unix, out bool linux, out bool macos)
         {
@@ -278,7 +281,7 @@ namespace osuTK
                 {
 #if ANDROID || IPHONE
                     RunningOnMono = true;
-#else
+#endif
                     RunningOnMono = DetectMono();
                     RunningOnWindows = DetectWindows();
                     if (!RunningOnWindows)
@@ -297,7 +300,7 @@ namespace osuTK
                     }
 
                     initialized = true;
-#endif
+
                     Debug.Print("Detected configuration: {0} / {1}",
                         RunningOnWindows ? "Windows" : RunningOnLinux ? "Linux" : RunningOnMacOS ? "MacOS" :
                         runningOnUnix ? "Unix" : RunningOnX11 ? "X11" : "Unknown Platform",
