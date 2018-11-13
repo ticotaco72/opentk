@@ -42,7 +42,7 @@ namespace osuTK
             this.RefreshRate = refreshRate;
         }
 
-#if false
+/*
 
         /// <summary>
         /// Creates a new DisplayResolution object for the specified DisplayDevice.
@@ -69,7 +69,7 @@ namespace osuTK
             this.bits_per_pixel = res.bits_per_pixel;
             this.refresh_rate = res.refresh_rate;
         }
-#endif
+*/
 
         /// <summary>
         /// Gets a System.Drawing.Rectangle that contains the bounds of this display device.

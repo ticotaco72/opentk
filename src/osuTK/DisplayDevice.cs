@@ -359,7 +359,7 @@ namespace osuTK
         //    return current_resolution.GetHashCode() ^ IsPrimary.GetHashCode() ^ available_resolutions.Count;
         //}
     }
-#if false
+/*
     class FadeEffect : IDisposable
     {
         List<Form> forms = new List<Form>();
@@ -468,5 +468,5 @@ namespace osuTK
                 form.Dispose();
         }
     }
-#endif
+*/
 }
