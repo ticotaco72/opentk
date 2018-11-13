@@ -23,7 +23,7 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 //
 
-
+#if ES31
 
 using System;
 
@@ -41134,3 +41134,5 @@ namespace osuTK.Graphics.ES31
     }
 
 }
+
+#endif
