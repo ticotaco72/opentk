@@ -1,4 +1,5 @@
-﻿#if !MINIMAL
+﻿//propably there we can delete directive too, but i have to investigate
+#if !MINIMAL
 
 using System.Drawing;
 

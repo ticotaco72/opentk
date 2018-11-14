@@ -183,9 +183,7 @@ namespace osuTK
                     if (version.Number >= 2000)
                 {
                     if (Platform.SDL2.SDL.WasInit(0))
-                    {
                         supported = true;
-                    }
                     else
                     {
                         // Attempt to initialize SDL2.
@@ -194,9 +192,7 @@ namespace osuTK
                             Platform.SDL2.SystemFlags.TIMER;
 
                         if (Platform.SDL2.SDL.Init(flags) == 0)
-                        {
                             supported = true;
-                        }
                         else
                         {
                             Debug.Print("SDL2 init failed with error: {0}",
@@ -211,14 +207,10 @@ namespace osuTK
             }
 
             if (!supported)
-            {
                 Debug.Print("SDL2 is not supported");
-            }
             else
-            {
                 Debug.Print("SDL2 is supported. Version is {0}.{1}.{2}",
                     version.Major, version.Minor, version.Patch);
-            }
 #else
             supported = false;
 #endif
@@ -281,19 +273,13 @@ namespace osuTK
                     RunningOnMono = DetectMono();
                     RunningOnWindows = DetectWindows();
                     if (!RunningOnWindows)
-                    {
                         DetectUnix(out runningOnUnix, out runningOnLinux, out runningOnMacOS);
-                    }
 
                     if (options.Backend == PlatformBackend.Default)
-                    {
                         RunningOnSdl2 = DetectSdl2();
-                    }
 
                     if ((runningOnLinux && !RunningOnSdl2) || options.Backend == PlatformBackend.PreferX11)
-                    {
                         RunningOnX11 = DetectX11();
-                    }
 
                     initialized = true;
 

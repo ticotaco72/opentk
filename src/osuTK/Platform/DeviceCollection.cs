@@ -71,9 +71,7 @@ namespace osuTK.Platform
                 {
                     ++Index;
                     if (Index < Collection.Devices.Count)
-                    {
                         Current = Collection.Devices[Index];
-                    }
                 } while (Index < Collection.Devices.Count && Collection.Devices[Index] == null);
 
                 return Index < Collection.Devices.Count;
@@ -140,9 +138,7 @@ namespace osuTK.Platform
         public bool TryRemove(long id)
         {
             if (!Map.ContainsKey(id))
-            {
                 return false;
-            }
 
             Devices[Map[id]] = default(T);
             Map.Remove(id);
@@ -152,13 +148,9 @@ namespace osuTK.Platform
         public T FromIndex(int index)
         {
             if (index >= 0 && index < Devices.Count)
-            {
                 return Devices[index];
-            }
             else
-            {
                 return default(T);
-            }
         }
 
         public bool FromIndex(int index, out T device)
@@ -178,13 +170,9 @@ namespace osuTK.Platform
         public T FromHardwareId(long id)
         {
             if (Map.ContainsKey(id))
-            {
                 return FromIndex(Map[id]);
-            }
             else
-            {
                 return default(T);
-            }
         }
 
         public bool FromHardwareId(long id, out T device)
@@ -214,9 +202,7 @@ namespace osuTK.Platform
             for (int i = 0; i < Devices.Count; i++)
             {
                 if (Devices[i] == null)
-                {
                     return i;
-                }
             }
 
             Devices.Add(default(T));

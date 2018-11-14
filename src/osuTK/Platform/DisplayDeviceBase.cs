@@ -39,17 +39,11 @@ namespace osuTK.Platform
         public virtual DisplayDevice GetDisplay(DisplayIndex index)
         {
             if (index == DisplayIndex.Primary)
-            {
                 return Primary;
-            }
             else if ((int)index >= 0 && (int)index < AvailableDevices.Count)
-            {
                 return AvailableDevices[(int)index];
-            }
             else
-            {
                 return null;
-            }
         }
     }
 }

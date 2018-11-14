@@ -43,9 +43,7 @@ namespace osuTK
         private Toolkit(Factory factory)
         {
             if (factory == null)
-            {
                 throw new ArgumentNullException("factory");
-            }
             platform_factory = factory;
         }
 
@@ -118,9 +116,7 @@ namespace osuTK
         public static Toolkit Init(ToolkitOptions options)
         {
             if (options == null)
-            {
                 throw new ArgumentNullException("options");
-            }
 
             lock (InitLock)
             {

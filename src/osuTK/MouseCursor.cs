@@ -62,9 +62,7 @@ namespace osuTK
             : base(width, height, data)
         {
             if (hotx < 0 || hotx >= Width || hoty < 0 || hoty >= Height)
-            {
                 throw new ArgumentOutOfRangeException();
-            }
 
             X = hotx;
             Y = hoty;
@@ -93,9 +91,7 @@ namespace osuTK
             : base(width, height, data)
         {
             if (hotx < 0 || hotx >= Width || hoty < 0 || hoty >= Height)
-            {
                 throw new ArgumentOutOfRangeException();
-            }
 
             X = hotx;
             Y = hoty;

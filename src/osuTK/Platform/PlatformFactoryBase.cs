@@ -77,9 +77,7 @@ namespace osuTK.Platform
         public void RegisterResource(IDisposable resource)
         {
             lock (sync)
-            {
                 Resources.Add(resource);
-            }
         }
 
         public void Dispose()
@@ -97,9 +95,7 @@ namespace osuTK.Platform
                     lock (sync)
                     {
                         foreach (var resource in Resources)
-                        {
                             resource.Dispose();
-                        }
                         Resources.Clear();
                     }
                 }

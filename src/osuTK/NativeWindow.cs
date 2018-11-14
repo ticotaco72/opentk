@@ -87,17 +87,11 @@ namespace osuTK
         {
             // TODO: Should a constraint be added for the position?
             if (width < 1)
-            {
                 throw new ArgumentOutOfRangeException("width", "Must be greater than zero.");
-            }
             if (height < 1)
-            {
                 throw new ArgumentOutOfRangeException("height", "Must be greater than zero.");
-            }
             if (mode == null)
-            {
                 throw new ArgumentNullException("mode");
-            }
 
             this.options = options;
             this.device = device;
@@ -111,16 +105,12 @@ namespace osuTK
             if ((options & GameWindowFlags.Fullscreen) != 0)
             {
                 if (this.device != null)
-                {
                     this.device.ChangeResolution(width, height, mode.ColorFormat.BitsPerPixel, 0);
-                }
                 WindowState = WindowState.Fullscreen;
             }
 
             if ((options & GameWindowFlags.FixedWindow) != 0)
-            {
                 WindowBorder = WindowBorder.Fixed;
-            }
         }
 
         /// <summary>
@@ -240,9 +230,7 @@ namespace osuTK
             {
                 EnsureUndisposed();
                 if (value == null)
-                {
                     value = MouseCursor.Empty;
-                }
                 implementation.Cursor = value;
             }
         }
@@ -612,12 +600,8 @@ namespace osuTK
             if (!IsDisposed)
             {
                 if ((options & GameWindowFlags.Fullscreen) != 0)
-                {
                     if (device != null)
-                    {
                         device.RestoreResolution();
-                    }
-                }
                 implementation.Dispose();
                 GC.SuppressFinalize(this);
 
@@ -872,13 +856,9 @@ namespace osuTK
         {
             EnsureUndisposed();
             if (this.thread_id != System.Threading.Thread.CurrentThread.ManagedThreadId)
-            {
                 throw new InvalidOperationException("ProcessEvents must be called on the same thread that created the window.");
-            }
             if (!retainEvents && !events)
-            {
                 Events = true;
-            }
             implementation.ProcessEvents();
         }
 
@@ -932,9 +912,7 @@ namespace osuTK
                 if (value)
                 {
                     if (events)
-                    {
                         throw new InvalidOperationException("Event propagation is already enabled.");
-                    }
                     implementation.Closed += OnClosedInternal;
                     implementation.Closing += OnClosingInternal;
                     implementation.Disposed += OnDisposedInternal;
@@ -984,9 +962,7 @@ namespace osuTK
                     events = false;
                 }
                 else
-                {
                     throw new InvalidOperationException("Event propagation is already disabled.");
-                }
             }
         }
     }

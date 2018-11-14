@@ -46,9 +46,7 @@ namespace osuTK
         public override bool Equals(object obj)
         {
             if (obj is ContextHandle)
-            {
                 return this.Equals((ContextHandle)obj);
-            }
             return false;
         }
 

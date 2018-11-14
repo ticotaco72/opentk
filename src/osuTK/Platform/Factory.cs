@@ -46,35 +46,19 @@ namespace osuTK.Platform
             Toolkit.Init();
 
             // Create regular platform backend
-
             if (Configuration.RunningOnSdl2)
-            {
                 Default = new SDL2.Sdl2Factory();
-            }
-
             else if (Configuration.RunningOnWindows)
-            {
                 Default = new Windows.WinFactory();
-            }
-
             else if (Configuration.RunningOnMacOS)
-            {
                 Default = new MacOS.MacOSFactory();
-            }
-
             else if (Configuration.RunningOnX11)
-            {
                 Default = new X11.X11Factory();
-            }
             else if (Configuration.RunningOnLinux && !Configuration.RunningOnAndroid)
-            {
                 Default = new Linux.LinuxFactory();
-            }
 
             if (Default == null)
-            {
                 Default = new UnsupportedPlatform();
-            }
 
             // Create embedded platform backend for EGL / OpenGL ES.
             // Todo: we could probably delay this until the embedded
@@ -86,42 +70,22 @@ namespace osuTK.Platform
                 // using the same API.
                 Embedded = Default;
             }
-
             else if (Configuration.RunningOnIOS)
-            {
                 Embedded = new UnsupportedPlatform();//iPhoneOS.iPhoneFactory();
-            }
-
             else if (Egl.Egl.IsSupported)
             {
                 if (Configuration.RunningOnLinux && !Configuration.RunningOnAndroid)
-                {
                     Embedded = Default;
-                }
-
                 else if (Configuration.RunningOnX11)
-                {
                     Embedded = new Egl.EglX11PlatformFactory();
-                }
-
                 else if (Configuration.RunningOnWindows)
-                {
                     Embedded = new Egl.EglWinPlatformFactory();
-                }
-
-
                 else if (Configuration.RunningOnMacOS)
-                {
                     Embedded = new Egl.EglMacPlatformFactory();
-                }
-
-
-                else if (Configuration.RunningOnAndroid) Embedded = new UnsupportedPlatform(); //Android.AndroidFactory();
-
+                else if (Configuration.RunningOnAndroid)
+                    Embedded = new UnsupportedPlatform(); //Android.AndroidFactory();
                 else
-                {
                     Embedded = new UnsupportedPlatform();
-                }
 
                 if (Configuration.RunningOnAndroid)
                     Angle = new UnsupportedPlatform();
@@ -136,9 +100,7 @@ namespace osuTK.Platform
             }
 
             if (Default is UnsupportedPlatform && !(Embedded is UnsupportedPlatform))
-            {
                 Default = Embedded;
-            }
         }
 
         public static IPlatformFactory Default { get; private set; }

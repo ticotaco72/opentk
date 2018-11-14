@@ -175,13 +175,9 @@ namespace osuTK.Platform
             else
             {
                 if (KeyboardState[Key.AltLeft])
-                {
                     OnKeyUp(Key.AltLeft);
-                }
                 if (KeyboardState[Key.AltRight])
-                {
                     OnKeyUp(Key.AltRight);
-                }
             }
 
             if (control)
@@ -192,13 +188,9 @@ namespace osuTK.Platform
             else
             {
                 if (KeyboardState[Key.ControlLeft])
-                {
                     OnKeyUp(Key.ControlLeft);
-                }
                 if (KeyboardState[Key.ControlRight])
-                {
                     OnKeyUp(Key.ControlRight);
-                }
             }
 
             if (shift)
@@ -209,13 +201,9 @@ namespace osuTK.Platform
             else
             {
                 if (KeyboardState[Key.ShiftLeft])
-                {
                     OnKeyUp(Key.ShiftLeft);
-                }
                 if (KeyboardState[Key.ShiftRight])
-                {
                     OnKeyUp(Key.ShiftRight);
-                }
             }
         }
 
@@ -264,9 +252,7 @@ namespace osuTK.Platform
             e.YDelta = MouseState.Y - PreviousMouseState.Y;
 
             if (e.XDelta == 0 && e.YDelta == 0)
-            {
                 return;
-            }
 
             PreviousMouseState = MouseState;
             MouseMove(this, e);
@@ -329,9 +315,7 @@ namespace osuTK.Platform
                 for (Key key = 0; key < Key.LastKey; key++)
                 {
                     if (KeyboardState[key])
-                    {
                         OnKeyUp(key);
-                    }
                 }
             }
         }

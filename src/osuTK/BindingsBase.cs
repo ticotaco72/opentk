@@ -113,9 +113,7 @@ namespace osuTK
         protected static IntPtr MarshalStringToPtr(string str)
         {
             if (String.IsNullOrEmpty(str))
-            {
                 return IntPtr.Zero;
-            }
 
             // Allocate a buffer big enough to hold the marshalled string.
             // GetMaxByteCount() appears to allocate space for the final NUL
@@ -124,9 +122,7 @@ namespace osuTK
             int max_count = Encoding.UTF8.GetMaxByteCount(str.Length) + 1;
             IntPtr ptr = Marshal.AllocHGlobal(max_count);
             if (ptr == IntPtr.Zero)
-            {
                 throw new OutOfMemoryException();
-            }
 
             // Pin the managed string and convert it to UTF8 using
             // the pointer overload of System.Encoding.UTF8.GetBytes().
@@ -163,9 +159,7 @@ namespace osuTK
             {
                 ptr = Marshal.AllocHGlobal(str_array.Length * IntPtr.Size);
                 if (ptr == IntPtr.Zero)
-                {
                     throw new OutOfMemoryException();
-                }
 
                 int i = 0;
                 try
@@ -199,9 +193,7 @@ namespace osuTK
         protected static void FreeStringArrayPtr(IntPtr ptr, int length)
         {
             for (int i = 0; i < length; i++)
-            {
                 Marshal.FreeHGlobal(Marshal.ReadIntPtr(ptr, i * IntPtr.Size));
-            }
             Marshal.FreeHGlobal(ptr);
         }
 

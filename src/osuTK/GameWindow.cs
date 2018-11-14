@@ -326,24 +326,16 @@ namespace osuTK
             try
             {
                 if (updates_per_second < 0.0 || updates_per_second > 200.0)
-                {
                     throw new ArgumentOutOfRangeException("updates_per_second", updates_per_second,
                         "Parameter should be inside the range [0.0, 200.0]");
-                }
                 if (frames_per_second < 0.0 || frames_per_second > 200.0)
-                {
                     throw new ArgumentOutOfRangeException("frames_per_second", frames_per_second,
                         "Parameter should be inside the range [0.0, 200.0]");
-                }
 
                 if (updates_per_second != 0)
-                {
                     TargetUpdateFrequency = updates_per_second;
-                }
                 if (frames_per_second != 0)
-                {
                     TargetRenderFrequency = frames_per_second;
-                }
 
                 Visible = true;   // Make sure the GameWindow is visible.
                 OnLoadInternal(EventArgs.Empty);
@@ -369,15 +361,11 @@ namespace osuTK
                     if (Exists && !IsExiting)
                     {
                         if (isSingleThreaded)
-                        {
                             DispatchUpdateFrame(watchRender);
-                        }
                         DispatchRenderFrame();
                     }
                     else
-                    {
                         return;
-                    }
                 }
             }
             finally
@@ -396,9 +384,7 @@ namespace osuTK
             OnUpdateThreadStarted(this, new EventArgs());
             watchUpdate.Start();
             while (Exists && !IsExiting)
-            {
                 DispatchUpdateFrame(watchUpdate);
-            }
         }
 
         private double ClampElapsed(double elapsed)
@@ -425,21 +411,17 @@ namespace osuTK
                 elapsed = ClampElapsed(timestamp - update_timestamp);
 
                 if (TargetUpdatePeriod <= Double.Epsilon)
-                {
                     // According to the TargetUpdatePeriod documentation,
                     // a TargetUpdatePeriod of zero means we will raise
                     // UpdateFrame events as fast as possible (one event
                     // per ProcessEvents() call)
                     break;
-                }
 
                 is_running_slowly = update_epsilon >= TargetUpdatePeriod;
                 if (is_running_slowly && --is_running_slowly_retries == 0)
-                {
                     // If UpdateFrame consistently takes longer than TargetUpdateFrame
                     // stop raising events to avoid hanging inside the UpdateFrame loop.
                     break;
-                }
             }
         }
 
@@ -448,9 +430,7 @@ namespace osuTK
             double timestamp = watchRender.Elapsed.TotalSeconds;
             double elapsed = ClampElapsed(timestamp - render_timestamp);
             if (elapsed > 0 && elapsed >= TargetRenderPeriod)
-            {
                 RaiseRenderFrame(elapsed, ref timestamp);
-            }
         }
 
         private void RaiseUpdateFrame(Stopwatch watch, double elapsed, ref double timestamp)
@@ -537,9 +517,7 @@ namespace osuTK
             {
                 EnsureUndisposed();
                 if (render_period == 0.0)
-                {
                     return 1.0;
-                }
                 return 1.0 / render_period;
             }
         }
@@ -586,26 +564,18 @@ namespace osuTK
             {
                 EnsureUndisposed();
                 if (TargetRenderPeriod == 0.0)
-                {
                     return 0.0;
-                }
                 return 1.0 / TargetRenderPeriod;
             }
             set
             {
                 EnsureUndisposed();
                 if (value < 1.0)
-                {
                     TargetRenderPeriod = 0.0;
-                }
                 else if (value <= MaxFrequency)
-                {
                     TargetRenderPeriod = 1.0 / value;
-                }
                 else
-                {
                     Debug.Print("Target render frequency clamped to {0}Hz.", MaxFrequency);
-                }
             }
         }
 
@@ -627,17 +597,11 @@ namespace osuTK
             {
                 EnsureUndisposed();
                 if (value <= 1 / MaxFrequency)
-                {
                     target_render_period = 0.0;
-                }
                 else if (value <= 1.0)
-                {
                     target_render_period = value;
-                }
                 else
-                {
                     Debug.Print("Target render period clamped to 1.0 seconds.");
-                }
             }
         }
 
@@ -654,26 +618,18 @@ namespace osuTK
             {
                 EnsureUndisposed();
                 if (TargetUpdatePeriod == 0.0)
-                {
                     return 0.0;
-                }
                 return 1.0 / TargetUpdatePeriod;
             }
             set
             {
                 EnsureUndisposed();
                 if (value < 1.0)
-                {
                     TargetUpdatePeriod = 0.0;
-                }
                 else if (value <= MaxFrequency)
-                {
                     TargetUpdatePeriod = 1.0 / value;
-                }
                 else
-                {
                     Debug.Print("Target render frequency clamped to {0}Hz.", MaxFrequency);
-                }
             }
         }
 
@@ -695,17 +651,11 @@ namespace osuTK
             {
                 EnsureUndisposed();
                 if (value <= 1 / MaxFrequency)
-                {
                     target_update_period = 0.0;
-                }
                 else if (value <= 1.0)
-                {
                     target_update_period = value;
-                }
                 else
-                {
                     Debug.Print("Target update period clamped to 1.0 seconds.");
-                }
             }
         }
 
@@ -718,9 +668,7 @@ namespace osuTK
             {
                 EnsureUndisposed();
                 if (update_period == 0.0)
-                {
                     return 1.0;
-                }
                 return 1.0 / update_period;
             }
         }
@@ -759,17 +707,11 @@ namespace osuTK
                 EnsureUndisposed();
                 GraphicsContext.Assert();
                 if (Context.SwapInterval < 0)
-                {
                     return VSyncMode.Adaptive;
-                }
                 else if (Context.SwapInterval == 0)
-                {
                     return VSyncMode.Off;
-                }
                 else
-                {
                     return VSyncMode.On;
-                }
             }
             set
             {
@@ -807,9 +749,7 @@ namespace osuTK
                 Debug.Print("Updating Context after setting WindowState to {0}", value);
 
                 if (Context != null)
-                {
                     Context.Update(WindowInfo);
-                }
             }
         }
         /// <summary>
@@ -897,9 +837,7 @@ namespace osuTK
         private void OnRenderFrameInternal(FrameEventArgs e) 
         { 
             if (Exists && !isExiting)
-            {
                 OnRenderFrame(e);
-            }
         }
 
         private void OnUnloadInternal(EventArgs e)
@@ -910,9 +848,7 @@ namespace osuTK
         private void OnUpdateFrameInternal(FrameEventArgs e) 
         { 
             if (Exists && !isExiting)
-            {
                 OnUpdateFrame(e);
-            }
         }
 
         private void OnWindowInfoChangedInternal(EventArgs e)

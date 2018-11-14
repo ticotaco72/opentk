@@ -45,12 +45,10 @@ namespace osuTK
         {
             Type = typeof(T);
             if (Type.IsValueType && !Type.IsGenericType)
-            {
                 // Does this support generic types? On Mono 2.4.3 it does
                 // On .Net it doesn't.
                 // http://msdn.microsoft.com/en-us/library/5s4920fa.aspx
                 Stride = Marshal.SizeOf(typeof(T));
-            }
         }
 
         /// <summary>
@@ -78,9 +76,7 @@ namespace osuTK
         public static bool Check(Type type)
         {
             if (!CheckStructLayoutAttribute(type))
-            {
                 Debug.Print("Warning: type {0} does not specify a StructLayoutAttribute with Pack=1. The memory layout of the struct may change between platforms.", type.Name);
-            }
 
             return CheckType(type);
         }
@@ -91,23 +87,17 @@ namespace osuTK
         {
             //Debug.Print("Checking type {0} (size: {1} bytes).", type.Name, Marshal.SizeOf(type));
             if (type.IsPrimitive)
-            {
                 return true;
-            }
 
             if (!type.IsValueType)
-            {
                 return false;
-            }
 
             FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             Debug.Indent();
             foreach (FieldInfo field in fields)
             {
                 if (!CheckType(field.FieldType))
-                {
                     return false;
-                }
             }
             Debug.Unindent();
 
@@ -123,9 +113,7 @@ namespace osuTK
 
             if ((attr == null) ||
                 (attr != null && attr.Length > 0 && attr[0].Value != LayoutKind.Explicit && attr[0].Pack != 1))
-            {
                 return false;
-            }
 
             return true;
         }
@@ -204,9 +192,7 @@ namespace osuTK
         public static int StrideOf<T>(T type)
         {
             if (!Check(type))
-            {
                 throw new ArgumentException("type");
-            }
 
             return BlittableValueType<T>.Stride;
         }
@@ -222,9 +208,7 @@ namespace osuTK
         public static int StrideOf<T>(T[] type)
         {
             if (!Check(type))
-            {
                 throw new ArgumentException("type");
-            }
 
             return BlittableValueType<T>.Stride;
         }
@@ -240,9 +224,7 @@ namespace osuTK
         public static int StrideOf<T>(T[,] type)
         {
             if (!Check(type))
-            {
                 throw new ArgumentException("type");
-            }
 
             return BlittableValueType<T>.Stride;
         }
@@ -258,9 +240,7 @@ namespace osuTK
         public static int StrideOf<T>(T[,,] type)
         {
             if (!Check(type))
-            {
                 throw new ArgumentException("type");
-            }
 
             return BlittableValueType<T>.Stride;
         }
