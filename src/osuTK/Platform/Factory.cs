@@ -89,7 +89,7 @@ namespace osuTK.Platform
 
             else if (Configuration.RunningOnIOS)
             {
-                Embedded = new iPhoneOS.iPhoneFactory();
+                Embedded = new UnsupportedPlatform();//iPhoneOS.iPhoneFactory();
             }
 
             else if (Egl.Egl.IsSupported)
@@ -109,14 +109,14 @@ namespace osuTK.Platform
                     Embedded = new Egl.EglWinPlatformFactory();
                 }
 
-#
+
                 else if (Configuration.RunningOnMacOS)
                 {
                     Embedded = new Egl.EglMacPlatformFactory();
                 }
 
 
-                else if (Configuration.RunningOnAndroid) Embedded = new Android.AndroidFactory();
+                else if (Configuration.RunningOnAndroid) Embedded = new UnsupportedPlatform(); //Android.AndroidFactory();
 
                 else
                 {
