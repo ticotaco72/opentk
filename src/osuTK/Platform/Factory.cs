@@ -66,7 +66,7 @@ namespace osuTK.Platform
             {
                 Default = new X11.X11Factory();
             }
-            else if (Configuration.RunningOnLinux)
+            else if (Configuration.RunningOnLinux && !Configuration.RunningOnAndroid)
             {
                 Default = new Linux.LinuxFactory();
             }
@@ -94,7 +94,7 @@ namespace osuTK.Platform
 
             else if (Egl.Egl.IsSupported)
             {
-                if (Configuration.RunningOnLinux)
+                if (Configuration.RunningOnLinux && !Configuration.RunningOnAndroid)
                 {
                     Embedded = Default;
                 }
