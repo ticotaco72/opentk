@@ -582,14 +582,14 @@ TestResults.xml
 
 ### OpenTK Binding files ###
 .bindingsGenerated
-src/osuTK/Graphics/ES11/ES11.cs
-src/osuTK/Graphics/ES11/ES11Enums.cs
-src/osuTK/Graphics/ES20/ES20.cs
-src/osuTK/Graphics/ES20/ES20Enums.cs
-src/osuTK/Graphics/OpenGL/GL.cs
-src/osuTK/Graphics/OpenGL/GLEnums.cs
-src/osuTK/Graphics/OpenGL4/GL4.cs
-src/osuTK/Graphics/OpenGL4/GL4Enums.cs
+#src/osuTK/Graphics/ES11/ES11.cs
+#src/osuTK/Graphics/ES11/ES11Enums.cs
+#src/osuTK/Graphics/ES20/ES20.cs
+#src/osuTK/Graphics/ES20/ES20Enums.cs
+#src/osuTK/Graphics/OpenGL/GL.cs
+#src/osuTK/Graphics/OpenGL/GLEnums.cs
+#src/osuTK/Graphics/OpenGL4/GL4.cs
+#src/osuTK/Graphics/OpenGL4/GL4Enums.cs 
 
 ### OpenTK AssemblyInfo files ###
 **/AssemblyInfo.cs
