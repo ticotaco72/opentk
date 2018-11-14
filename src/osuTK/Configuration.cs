@@ -263,13 +263,9 @@ namespace osuTK
 
         private static bool DetectX11()
         {
-            #if X11
             // Detect whether X is present.
             try { return osuTK.Platform.X11.API.DefaultDisplay != IntPtr.Zero; }
             catch { return false; }
-            #else
-            return false;
-            #endif
         }
 
         // Detects the underlying OS and runtime.

@@ -173,30 +173,27 @@ namespace osuTK.Platform
 
         internal static GraphicsContext.GetAddressDelegate CreateGetAddress()
         {
-            #if SDL2
+            
             if (Configuration.RunningOnSdl2)
             {
                 return Platform.SDL2.SDL.GL.GetProcAddress;
             }
-            #endif
-            #if WIN32
+            
             if (Configuration.RunningOnWindows)
             {
                 return Platform.Windows.Wgl.GetAddress;
             }
-            #endif
-            #if X11
+            
             if (Configuration.RunningOnX11)
             {
                 return Platform.X11.Glx.GetProcAddress;
             }
-            #endif
-            #if CARBON
+            
             if (Configuration.RunningOnMacOS)
             {
                 return Platform.MacOS.NS.GetAddress;
             }
-            #endif
+            
 
             // Other platforms: still allow dummy contexts to be created (if no Loader is required)
             return EmptyGetAddress;
@@ -261,7 +258,7 @@ namespace osuTK.Platform
             #endif
         }
 
-        #if CARBON
+        
         /// <summary>
         /// Creates an IWindowInfo instance for the Mac OS X platform with an X and Y offset for the GL viewport location.
         /// </summary>
@@ -276,7 +273,7 @@ namespace osuTK.Platform
         {
             return new osuTK.Platform.MacOS.CarbonWindowInfo(windowHandle, false, isControl, xOffset, yOffset);
         }
-        #endif
+        
 
         /// <summary>
         /// Creates an IWindowInfo instance for the Mac OS X platform.
