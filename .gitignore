@@ -592,5 +592,5 @@ TestResults.xml
 #src/osuTK/Graphics/OpenGL4/GL4Enums.cs 
 
 ### OpenTK AssemblyInfo files ###
-**/AssemblyInfo.cs
-**/AssemblyInfo.fs
+#**/AssemblyInfo.cs
+#**/AssemblyInfo.fs
