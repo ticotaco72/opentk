@@ -1,6 +1,6 @@
 ﻿namespace osuTK.Input
 {
-    internal interface IKeyboardDriver2
+    public interface IKeyboardDriver2
     {
         /// <summary>
         /// Retrieves the combined <see cref="osuTK.Input.KeyboardState"/> for all keyboard devices.

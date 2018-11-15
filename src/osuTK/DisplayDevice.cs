@@ -57,12 +57,12 @@ namespace osuTK
             implementation = Platform.Factory.Default.CreateDisplayDeviceDriver();
         }
 
-        internal DisplayDevice()
+        public DisplayDevice()
         {
             available_resolutions_readonly = available_resolutions.AsReadOnly();
         }
 
-        internal DisplayDevice(DisplayResolution currentResolution, bool primary,
+        public DisplayDevice(DisplayResolution currentResolution, bool primary,
             IEnumerable<DisplayResolution> availableResolutions, Rectangle bounds,
             object id)
             : this()
@@ -83,7 +83,7 @@ namespace osuTK
         public Rectangle Bounds
         {
             get { return bounds; }
-            internal set
+            set
             {
                 bounds = value;
                 current_resolution.Height = bounds.Height;
@@ -101,7 +101,7 @@ namespace osuTK
         public int BitsPerPixel
         {
             get { return current_resolution.BitsPerPixel; }
-            internal set { current_resolution.BitsPerPixel = value; }
+            set { current_resolution.BitsPerPixel = value; }
         }
 
         /// <summary>
@@ -110,14 +110,14 @@ namespace osuTK
         public float RefreshRate
         {
             get { return current_resolution.RefreshRate; }
-            internal set { current_resolution.RefreshRate = value; }
+            set { current_resolution.RefreshRate = value; }
         }
 
         /// <summary>Gets a System.Boolean that indicates whether this Display is the primary Display in systems with multiple Displays.</summary>
         public bool IsPrimary
         {
             get { return primary; }
-            internal set
+            set
             {
                 if (value && primary_display != null && primary_display != this)
                     primary_display.IsPrimary = false;
@@ -165,7 +165,7 @@ namespace osuTK
         public IList<DisplayResolution> AvailableResolutions
         {
             get { return available_resolutions_readonly; }
-            internal set
+            set
             {
                 available_resolutions = (List<DisplayResolution>)value;
                 available_resolutions_readonly = available_resolutions.AsReadOnly();

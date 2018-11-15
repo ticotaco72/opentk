@@ -25,6 +25,8 @@
 
 using System;
 using System.Diagnostics;
+using System.Reflection;
+using System.Linq;
 
 namespace osuTK.Platform
 {
@@ -71,7 +73,7 @@ namespace osuTK.Platform
                 Embedded = Default;
             }
             else if (Configuration.RunningOnIOS)
-                Embedded = new UnsupportedPlatform();//iPhoneOS.iPhoneFactory();
+                Embedded = CreateFactoryForType("osuTK.iOS.iOSFactory");
             else if (Egl.Egl.IsSupported)
             {
                 if (Configuration.RunningOnLinux && !Configuration.RunningOnAndroid)
@@ -83,7 +85,7 @@ namespace osuTK.Platform
                 else if (Configuration.RunningOnMacOS)
                     Embedded = new Egl.EglMacPlatformFactory();
                 else if (Configuration.RunningOnAndroid)
-                    Embedded = new UnsupportedPlatform(); //Android.AndroidFactory();
+                    Embedded = CreateFactoryForType("osuTK.Android.AndroidFactory");
                 else
                     Embedded = new UnsupportedPlatform();
 
@@ -101,6 +103,24 @@ namespace osuTK.Platform
 
             if (Default is UnsupportedPlatform && !(Embedded is UnsupportedPlatform))
                 Default = Embedded;
+        }
+
+        private static IPlatformFactory CreateFactoryForType(string typeName)
+        {
+            try
+            {
+                foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies().Where(x => x.GetName().Name.StartsWith("osuTK")))
+                {
+                    Type type = assembly.GetExportedTypes().FirstOrDefault(x => x.FullName == typeName);
+                    if (type != null)
+                        return type.GetConstructor(new Type[0]).Invoke(new object[0]) as IPlatformFactory;
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine($"Error instantiating type: {typeName}");
+            }
+            return new UnsupportedPlatform();
         }
 
         public static IPlatformFactory Default { get; private set; }
