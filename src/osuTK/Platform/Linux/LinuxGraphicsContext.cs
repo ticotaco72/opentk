@@ -54,9 +54,7 @@ namespace osuTK.Platform.Linux
             : base(mode, window, sharedContext, major, minor, flags)
         {
             if (mode.Buffers < 1)
-            {
                 throw new ArgumentException();
-            }
             fd = window.FD;
 
             PageFlip = HandlePageFlip;
@@ -129,23 +127,15 @@ namespace osuTK.Platform.Linux
             {
                 fds.revents = 0;
                 if (Libc.poll(ref fds, 1, timeout) < 0)
-                {
                     break;
-                }
 
                 if ((fds.revents & (PollFlags.Hup | PollFlags.Error)) != 0)
-                {
                     break;
-                }
 
                 if ((fds.revents & PollFlags.In) != 0)
-                {
                     Drm.HandleEvent(fd, ref evctx);
-                }
                 else
-                {
                     break;
-                }
             }
 
             // Page flip has taken place, update buffer objects
@@ -161,9 +151,7 @@ namespace osuTK.Platform.Linux
         {
             LinuxWindowInfo wnd = WindowInfo as LinuxWindowInfo;
             if (wnd == null)
-            {
                 throw new InvalidOperationException();
-            }
 
             unsafe
             {
@@ -171,9 +159,7 @@ namespace osuTK.Platform.Linux
                     PageFlipFlags.FlipEvent, IntPtr.Zero);
 
                 if (ret < 0)
-                {
                     Debug.Print("[KMS] Failed to enqueue framebuffer flip. Error: {0}", ret);
-                }
 
                 is_flip_queued = true;
             }
@@ -183,9 +169,7 @@ namespace osuTK.Platform.Linux
         {
             LinuxWindowInfo wnd = WindowInfo as LinuxWindowInfo;
             if (wnd == null)
-            {
                 throw new InvalidOperationException();
-            }
 
             unsafe
             {
@@ -200,10 +184,8 @@ namespace osuTK.Platform.Linux
                     &connector_id, connector_count, mode);
 
                 if (ret != 0)
-                {
                     Debug.Print("[KMS] Drm.ModeSetCrtc{0}, {1}, {2}, {3}, {4:x}, {5}, {6:x}) failed. Error: {7}",
                         fd, crtc_id, buffer, x, y, (IntPtr)connector_id, connector_count, (IntPtr)mode, ret);
-                }
             }
         }
 
@@ -216,9 +198,7 @@ namespace osuTK.Platform.Linux
         private int GetFramebuffer(BufferObject bo)
         {
             if (bo == BufferObject.Zero)
-            {
                 goto fail;
-            }
 
             int bo_handle = bo.Handle;
             if (bo_handle == 0)
@@ -281,9 +261,7 @@ namespace osuTK.Platform.Linux
             Debug.Print("[KMS] Destroying framebuffer {0}", fb);
 
             if (fb != 0)
-            {
                 Drm.ModeRmFB(Gbm.DeviceGetFD(gbm), fb);
-            }
         }
 
         protected override void Dispose(bool manual)

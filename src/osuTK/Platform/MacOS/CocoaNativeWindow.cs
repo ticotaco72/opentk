@@ -252,9 +252,7 @@ namespace osuTK.Platform.MacOS
                 Selector.Get("initWithFrame:"),
                 Cocoa.SendRect(viewPtr, selBounds));
             if (viewPtr != IntPtr.Zero)
-            {
                 Cocoa.SendVoid(windowPtr, Selector.Get("setContentView:"), viewPtr);
-            }
             else
             {
                 Debug.Print("[Error] Failed to initialize content view with frame {0}.", selBounds);
@@ -339,9 +337,7 @@ namespace osuTK.Platform.MacOS
             int mask = Cocoa.SendInt(sender, Selector.Get("draggingSourceOperationMask"));
 
             if ((mask & (int)NSDragOperation.Generic) == (int)NSDragOperation.Generic)
-            {
                 return new IntPtr((int)NSDragOperation.Generic);
-            }
 
             return new IntPtr((int)NSDragOperation.None);
         }
@@ -382,20 +378,14 @@ namespace osuTK.Platform.MacOS
         private void OnResize(bool resetTracking)
         {
             if (resetTracking)
-            {
                 ResetTrackingArea();
-            }
 
             var context = GraphicsContext.CurrentContext;
             if (context != null)
-            {
                 context.Update(windowInfo);
-            }
 
             if (suppressResize == 0)
-            {
                 OnResize(EventArgs.Empty);
-            }
         }
 
         private void ApplicationQuit(object sender, CancelEventArgs e)
@@ -497,9 +487,7 @@ namespace osuTK.Platform.MacOS
             try
             {
                 if (windowState == WindowState.Maximized)
-                {
                     WindowState = WindowState.Normal;
-                }
                 else
                 {
                     previousBounds = InternalBounds;
@@ -593,38 +581,24 @@ namespace osuTK.Platform.MacOS
         {
             osuTK.Input.KeyModifiers modifiers = 0;
             if ((mask & NSEventModifierMask.ControlKeyMask) != 0)
-            {
                 modifiers |= osuTK.Input.KeyModifiers.Control;
-            }
             if ((mask & NSEventModifierMask.ShiftKeyMask) != 0)
-            {
                 modifiers |= osuTK.Input.KeyModifiers.Shift;
-            }
             if ((mask & NSEventModifierMask.AlternateKeyMask) != 0)
-            {
                 modifiers |= osuTK.Input.KeyModifiers.Alt;
-            }
             return modifiers;
         }
 
         private MouseButton GetMouseButton(int cocoaButtonIndex)
         {
             if (cocoaButtonIndex == 0)
-            {
                 return MouseButton.Left;
-            }
             if (cocoaButtonIndex == 1)
-            {
                 return MouseButton.Right;
-            }
             if (cocoaButtonIndex == 2)
-            {
                 return MouseButton.Middle;
-            }
             if (cocoaButtonIndex >= (int)MouseButton.LastButton)
-            {
                 return MouseButton.LastButton;
-            }
 
             return (MouseButton)cocoaButtonIndex;
         }
@@ -638,9 +612,7 @@ namespace osuTK.Platform.MacOS
                 var e = Cocoa.SendIntPtr(NSApplication.Handle, selNextEventMatchingMask, uint.MaxValue, IntPtr.Zero, NSDefaultRunLoopMode, true);
 
                 if (e == IntPtr.Zero)
-                {
                     break;
-                }
 
                 var type = (NSEventType)Cocoa.SendInt(e, selType);
                 switch (type)
@@ -658,11 +630,9 @@ namespace osuTK.Platform.MacOS
                             {
                                 int intVal = (int)c;
                                 if (!Char.IsControl(c) && (intVal < 63232 || intVal > 63235))
-                                {
                                     // For some reason, arrow keys (mapped 63232-63235)
                                     // are seen as non-control characters, so get rid of those.
                                     OnKeyPress(c);
-                                }
                             }
                         }
                         break;
@@ -745,15 +715,11 @@ namespace osuTK.Platform.MacOS
                             //       MathHelper.Clamp((int)Math.Round(p.Y + dy), 0, Height);
 
                             if (cursorGrabbed)
-                            {
                                 MoveCursorInWindow(p);
-                            }
 
                             // Only raise events when the mouse has actually moved
                             if (MouseState.X != p.X || MouseState.Y != p.Y)
-                            {
                                 OnMouseMove(p.X, p.Y);
-                            }
                         }
                         break;
 
@@ -777,12 +743,10 @@ namespace osuTK.Platform.MacOS
 
                             // Only raise wheel events when the user has actually scrolled
                             if (dx != 0 || dy != 0)
-                            {
                                 // Note: osuTK follows the win32 convention, where
                                 // (+h, +v) = (right, up). MacOS reports (+h, +v) = (left, up)
                                 // so we need to flip the horizontal scroll direction.
                                 OnMouseWheel(-dx, dy, isPrecise);
-                            }
                         }
                         break;
 
@@ -847,9 +811,7 @@ namespace osuTK.Platform.MacOS
                     {
                         nsimg = Cocoa.ToNSImage(img);
                         if (nsimg != IntPtr.Zero)
-                        {
                             Cocoa.SendVoid(NSApplication.Handle, selSetApplicationIconImage, nsimg);
-                        }
                         else
                         {
                             Debug.Print("[Mac] Failed to create NSImage for {0}", value);
@@ -859,9 +821,7 @@ namespace osuTK.Platform.MacOS
 
                     // Release previous icon
                     if (current_icon_handle != IntPtr.Zero)
-                    {
                         Cocoa.SendVoid(current_icon_handle, Selector.Release);
-                    }
 
                     // Raise IconChanged event
                     current_icon_handle = nsimg;
@@ -941,9 +901,7 @@ namespace osuTK.Platform.MacOS
                 InternalBounds = previousBounds;
             }
             else if (windowState == WindowState.Minimized)
-            {
                 Cocoa.SendVoid(windowInfo.Handle, selDeminiaturize, windowInfo.Handle);
-            }
 
             windowState = WindowState.Normal;
             suppressResize--;
@@ -997,9 +955,7 @@ namespace osuTK.Platform.MacOS
             {
                 var oldState = windowState;
                 if (oldState == value)
-                {
                     return;
-                }
 
                 RestoreWindowState();
 
@@ -1025,13 +981,9 @@ namespace osuTK.Platform.MacOS
                     OnWindowStateChanged(EventArgs.Empty);
                 }
                 else if (value == WindowState.Maximized)
-                {
                     WindowShouldZoomToFrame(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, GetCurrentScreenVisibleFrame());
-                }
                 else if (value == WindowState.Minimized)
-                {
                     Cocoa.SendVoid(windowInfo.Handle, selMiniaturize, windowInfo.Handle);
-                }
                 else if (value == WindowState.Normal)
                 {
                     windowState = value;
@@ -1057,9 +1009,7 @@ namespace osuTK.Platform.MacOS
                 }
 
                 if (windowBorder == value)
-                {
                     return;
-                }
 
                 SetWindowBorder(value);
                 OnWindowBorderChanged(EventArgs.Empty);
@@ -1144,9 +1094,7 @@ namespace osuTK.Platform.MacOS
             set
             {
                 if (value == selectedCursor)
-                {
                     return;
-                }
                 selectedCursor = value;
                 InvalidateCursorRects();
             }
@@ -1238,23 +1186,15 @@ namespace osuTK.Platform.MacOS
             // Inside this rectangle, the following NSCursor will be used
             var cursor = IntPtr.Zero;
             if (!CursorVisible)
-            {
                 cursor = ToNSCursor(MouseCursor.Empty);
-            }
             else if (selectedCursor == MouseCursor.Default)
-            {
                 cursor = Cocoa.SendIntPtr(NSCursor, selArrowCursor);
-            }
             else
-            {
                 cursor = ToNSCursor(selectedCursor);
-            }
 
             // Setup the cursor rectangle
             if (cursor != IntPtr.Zero)
-            {
                 Cocoa.SendVoid(sender, selAddCursorRect, rect, cursor);
-            }
         }
 
         private void InvalidateCursorRects()
@@ -1271,9 +1211,7 @@ namespace osuTK.Platform.MacOS
             set
             {
                 if (value == cursorGrabbed)
-                {
                     return;
-                }
                 SetCursorGrab(value);
                 cursorGrabbed = value;
             }
@@ -1288,9 +1226,7 @@ namespace osuTK.Platform.MacOS
             set
             {
                 if (value == cursorVisible)
-                {
                     return;
-                }
                 cursorVisible = value;
                 // Another approach will be use of hide and unhide methods
                 // of NSCursor
@@ -1301,16 +1237,12 @@ namespace osuTK.Platform.MacOS
         protected override void Dispose(bool disposing)
         {
             if (disposed)
-            {
                 return;
-            }
 
             Debug.Print("Disposing of CocoaNativeWindow (disposing={0}).", disposing);
 
             if (!NSApplication.IsUIThread)
-            {
                 return;
-            }
 
             NSApplication.Quit -= ApplicationQuit;
 
@@ -1318,9 +1250,7 @@ namespace osuTK.Platform.MacOS
             {
                 CursorVisible = true;
                 if (exists)
-                {
                     CloseWindow(true);
-                }
 
                 if (trackingArea != IntPtr.Zero)
                 {
@@ -1333,9 +1263,7 @@ namespace osuTK.Platform.MacOS
                 windowInfo.Dispose();
             }
             else
-            {
                 Debug.Print("{0} leaked, did you forget to call Dispose()?", GetType().FullName);
-            }
 
             disposed = true;
             OnDisposed(EventArgs.Empty);
@@ -1383,13 +1311,9 @@ namespace osuTK.Platform.MacOS
             var changedOptions = NSApplicationPresentationOptions.HideMenuBar | NSApplicationPresentationOptions.HideDock;
 
             if (!visible)
-            {
                 options |= changedOptions;
-            }
             else
-            {
                 options &= ~changedOptions;
-            }
 
             Cocoa.SendVoid(NSApplication.Handle, selSetPresentationOptions, (int)options);
         }
@@ -1400,9 +1324,7 @@ namespace osuTK.Platform.MacOS
 
             Cocoa.SendIntPtr(windowInfo.Handle, selSetTitle, Cocoa.ToNSString(title));
             if (callEvent)
-            {
                 OnTitleChanged(EventArgs.Empty);
-            }
         }
 
         private void UpdateWindowBorder()
@@ -1419,9 +1341,7 @@ namespace osuTK.Platform.MacOS
         private void CloseWindow(bool shutdown)
         {
             if (!Exists)
-            {
                 return;
-            }
 
             exists = false;
 
@@ -1430,14 +1350,10 @@ namespace osuTK.Platform.MacOS
             if (GetStyleMask() == NSWindowStyle.Borderless || shutdown)
             {
                 if (WindowShouldClose(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero))
-                {
                     Cocoa.SendVoid(windowInfo.Handle, selClose);
-                }
             }
             else
-            {
                 Cocoa.SendVoid(windowInfo.Handle, selPerformClose, windowInfo.Handle);
-            }
         }
 
     }

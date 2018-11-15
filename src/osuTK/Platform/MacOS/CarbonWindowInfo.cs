@@ -93,19 +93,14 @@ namespace osuTK.Platform.MacOS
         private void Dispose(bool disposing)
         {
             if (disposed)
-            {
                 return;
-            }
 
-            if (disposing)
-            {
-
-            }
+            //if (disposing)
+            //{
+            //}
 
             if (ownHandle)
-            {
                 Handle = IntPtr.Zero;
-            }
 
             disposed = true;
         }

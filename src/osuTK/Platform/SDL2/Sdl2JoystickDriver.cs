@@ -107,9 +107,7 @@ namespace osuTK.Platform.SDL2
                     joystick.Details.HatCount, joystick.Details.BallCount);
             }
             else
-            {
                 Debug.Print("[SDL2] Failed to open joystick device {0}", id);
-            }
 
             return joystick;
         }
@@ -127,44 +125,28 @@ namespace osuTK.Platform.SDL2
         private osuTK.Input.HatPosition TranslateHat(HatPosition value)
         {
             if ((value & HatPosition.LeftUp) == HatPosition.LeftUp)
-            {
                 return osuTK.Input.HatPosition.UpLeft;
-            }
 
             if ((value & HatPosition.RightUp) == HatPosition.RightUp)
-            {
                 return osuTK.Input.HatPosition.UpRight;
-            }
 
             if ((value & HatPosition.LeftDown) == HatPosition.LeftDown)
-            {
                 return osuTK.Input.HatPosition.DownLeft;
-            }
 
             if ((value & HatPosition.RightDown) == HatPosition.RightDown)
-            {
                 return osuTK.Input.HatPosition.DownRight;
-            }
 
             if ((value & HatPosition.Up) == HatPosition.Up)
-            {
                 return osuTK.Input.HatPosition.Up;
-            }
 
             if ((value & HatPosition.Right) == HatPosition.Right)
-            {
                 return osuTK.Input.HatPosition.Right;
-            }
 
             if ((value & HatPosition.Down) == HatPosition.Down)
-            {
                 return osuTK.Input.HatPosition.Down;
-            }
 
             if ((value & HatPosition.Left) == HatPosition.Left)
-            {
                 return osuTK.Input.HatPosition.Left;
-            }
 
             return osuTK.Input.HatPosition.Centered;
         }
@@ -336,13 +318,9 @@ namespace osuTK.Platform.SDL2
                             {
                                 joystick.Details.IsConnected = true;
                                 if (device_id < joysticks.Count)
-                                {
                                     joysticks[device_id] = joystick;
-                                }
                                 else
-                                {
                                     joysticks.Add(joystick);
-                                }
 
                                 sdl_instanceid_to_joysticks.Add(instance_id, device_id);
                             }
@@ -362,9 +340,7 @@ namespace osuTK.Platform.SDL2
                         sdl_instanceid_to_joysticks.Remove(instance_id);
                     }
                     else
-                    {
                         Debug.Print("[SDL2] Invalid joystick id {0} in {1}", id, ev.Type);
-                    }
                     break;
             }
         }
@@ -381,9 +357,7 @@ namespace osuTK.Platform.SDL2
                 joystick.Details.PacketNumber = Math.Max(0, unchecked(joystick.Details.PacketNumber + 1));
             }
             else
-            {
                 Debug.Print("[SDL2] Invalid joystick id {0} in {1}", id, ev.Type);
-            }
         }
 
         public void ProcessJoystickEvent(JoyBallEvent ev)
@@ -397,9 +371,7 @@ namespace osuTK.Platform.SDL2
                 joystick.Details.PacketNumber = Math.Max(0, unchecked(joystick.Details.PacketNumber + 1));
             }
             else
-            {
                 Debug.Print("[SDL2] Invalid joystick id {0} in {1}", id, ev.Type);
-            }
         }
 
         public void ProcessJoystickEvent(JoyButtonEvent ev)
@@ -413,9 +385,7 @@ namespace osuTK.Platform.SDL2
                 joystick.Details.PacketNumber = Math.Max(0, unchecked(joystick.Details.PacketNumber + 1));
             }
             else
-            {
                 Debug.Print("[SDL2] Invalid joystick id {0} in {1}", id, ev.Type);
-            }
         }
 
         public void ProcessJoystickEvent(JoyHatEvent ev)
@@ -426,19 +396,13 @@ namespace osuTK.Platform.SDL2
                 int index = sdl_instanceid_to_joysticks[id];
                 JoystickDevice<Sdl2JoystickDetails> joystick = (JoystickDevice<Sdl2JoystickDetails>)joysticks[index];
                 if (ev.Hat >= 0 && ev.Hat < JoystickState.MaxHats)
-                {
                     joystick.Details.Hat[ev.Hat] = new JoystickHatState(TranslateHat(ev.Value));
-                }
                 else
-                {
                     Debug.Print("[SDL2] Hat {0} out of range [0, {1}]", ev.Hat, JoystickState.MaxHats);
-                }
                 joystick.Details.PacketNumber = Math.Max(0, unchecked(joystick.Details.PacketNumber + 1));
             }
             else
-            {
                 Debug.Print("[SDL2] Invalid joystick id {0} in {1}", id, ev.Type);
-            }
         }
 
 #if USE_SDL2_GAMECONTROLLER
@@ -608,19 +572,13 @@ namespace osuTK.Platform.SDL2
                     (JoystickDevice<Sdl2JoystickDetails>)joysticks[index];
 
                 for (int i = 0; i < joystick.Axis.Count; i++)
-                {
                     state.SetAxis(i, (short)(joystick.Axis[i] * short.MaxValue + 0.5f));
-                }
 
                 for (int i = 0; i < joystick.Button.Count; i++)
-                {
                     state.SetButton(i, joystick.Button[i]);
-                }
 
                 for (int i = 0; i < joystick.Details.HatCount; i++)
-                {
                     state.SetHat(JoystickHat.Hat0 + i, joystick.Details.Hat[i]);
-                }
 
                 state.SetIsConnected(joystick.Details.IsConnected);
                 state.SetPacketNumber(joystick.Details.PacketNumber);
@@ -681,9 +639,7 @@ namespace osuTK.Platform.SDL2
                     joysticks.Clear();
                 }
                 else
-                {
                     Debug.Print("{0} leaked, did you forget to call Dispose()?", GetType());
-                }
                 disposed = true;
             }
         }

@@ -66,9 +66,7 @@ namespace osuTK.Platform.Linux
 
             display_device = display_device ?? DisplayDevice.Default;
             if (display_device == null)
-            {
                 throw new NotSupportedException("[KMS] Driver does not currently support headless systems");
-            }
 
             window = new LinuxWindowInfo(display, fd, gbm, display_device.Id as LinuxDisplay);
 
@@ -81,9 +79,7 @@ namespace osuTK.Platform.Linux
             client_size = bounds.Size;
 
             if (!mode.Index.HasValue)
-            {
                 mode = new EglGraphicsMode().SelectGraphicsMode(window, mode, 0);
-            }
             Debug.Print("[KMS] Selected EGL mode {0}", mode);
 
             SurfaceFormat format = GetSurfaceFormat(display, mode);
@@ -99,9 +95,7 @@ namespace osuTK.Platform.Linux
             IntPtr gbm_surface =  Gbm.CreateSurface(gbm,
                     width, height, format, usage);
             if (gbm_surface == IntPtr.Zero)
-            {
                 throw new NotSupportedException("[KMS] Failed to create GBM surface for rendering");
-            }
 
             window.Handle = gbm_surface;
                 Debug.Print("[KMS] Created GBM surface {0:x}", window.Handle);
@@ -162,19 +156,13 @@ namespace osuTK.Platform.Linux
         {
             BufferObject bo = default(BufferObject);
             if (cursor == MouseCursor.Default)
-            {
                 bo = cursor_default;
-            }
             else if (cursor == MouseCursor.Empty)
-            {
                 bo = cursor_empty;
-            }
             else
             {
                 if (cursor_custom != BufferObject.Zero)
-                {
                     cursor_custom.Dispose();
-                }
                 cursor_custom = CreateCursor(window.BufferManager, cursor);
                 bo = cursor_custom;
             }
@@ -182,15 +170,11 @@ namespace osuTK.Platform.Linux
             // If we failed to create a proper cursor, try falling back
             // to the empty cursor. We do not want to crash here!
             if (bo == BufferObject.Zero)
-            {
                 bo = cursor_empty;
-            }
 
             if (bo != BufferObject.Zero)
-            {
                 Drm.SetCursor(window.FD, window.DisplayDevice.Id,
                     bo.Handle, bo.Width, bo.Height, cursor.X, cursor.Y);
-            }
         }
 
         private static SurfaceFormat GetSurfaceFormat(IntPtr display, GraphicsMode mode)
@@ -202,9 +186,7 @@ namespace osuTK.Platform.Linux
             Egl.GetConfigAttrib(display, mode.Index.Value,
                 Egl.NATIVE_VISUAL_ID, out format);
             if ((SurfaceFormat)format != 0)
-            {
                 return (SurfaceFormat)format;
-            }
 
             Debug.Print("[KMS] Failed to retrieve EGL visual from GBM surface. Error: {0}",
                 Egl.GetError());
@@ -216,41 +198,23 @@ namespace osuTK.Platform.Linux
             int a = mode.ColorFormat.Alpha;
 
             if (mode.ColorFormat.IsIndexed)
-            {
                 return SurfaceFormat.C8;
-            }
             if (r == 3 && g == 3 && b == 2 && a == 0)
-            {
                 return SurfaceFormat.RGB332;
-            }
             if (r == 5 && g == 6 && b == 5 && a == 0)
-            {
                 return SurfaceFormat.RGB565;
-            }
             if (r == 5 && g == 6 && b == 5 && a == 0)
-            {
                 return SurfaceFormat.RGB565;
-            }
             if (r == 8 && g == 8 && b == 8 && a == 0)
-            {
                 return SurfaceFormat.RGB888;
-            }
             if (r == 5 && g == 5 && b == 5 && a == 1)
-            {
                 return SurfaceFormat.RGBA5551;
-            }
             if (r == 10 && g == 10 && b == 10 && a == 2)
-            {
                 return SurfaceFormat.RGBA1010102;
-            }
             if (r == 4 && g == 4 && b == 4 && a == 4)
-            {
                 return SurfaceFormat.RGBA4444;
-            }
             if (r == 8 && g == 8 && b == 8 && a == 8)
-            {
                 return SurfaceFormat.RGBA8888;
-            }
 
             return SurfaceFormat.RGBA8888;
         }
@@ -260,15 +224,11 @@ namespace osuTK.Platform.Linux
             for (Key i = 0; i < Key.LastKey; i++)
             {
                 if (keyboard[i])
-                {
                     OnKeyDown(i, previous_keyboard[i]);
                     // Todo: implement libxkb-common binding for text input
-                }
 
                 if (!keyboard[i] && previous_keyboard[i])
-                {
                     OnKeyUp(i);
-                }
             }
             return keyboard;
         }
@@ -279,14 +239,10 @@ namespace osuTK.Platform.Linux
             for (MouseButton i = 0; i < MouseButton.LastButton; i++)
             {
                 if (mouse[i] && !previous_mouse[i])
-                {
                     OnMouseDown(i);
-                }
 
                 if (!mouse[i] && previous_mouse[i])
-                {
                     OnMouseUp(i);
-                }
             }
 
             // Handle mouse movement
@@ -300,15 +256,11 @@ namespace osuTK.Platform.Linux
                     x = MathHelper.Clamp(mouse.X, Bounds.Left, Bounds.Right - 1);
                     y = MathHelper.Clamp(mouse.Y, Bounds.Top, Bounds.Bottom - 1);
                     if (x != mouse.X || y != mouse.Y)
-                    {
                         Mouse.SetPosition(x, y);
-                    }
                 }
 
                 if (x != previous_mouse.X || y != previous_mouse.Y)
-                {
                     OnMouseMove(x, y);
-                }
             }
 
             // Handle mouse scroll
@@ -382,9 +334,7 @@ namespace osuTK.Platform.Linux
                 Gbm.DestroySurface(window.Handle);
             }
             else
-            {
                 Debug.Print("[KMS] {0} leaked. Did you forget to call Dispose()?", GetType().FullName);
-            }
         }
 
         public override Icon Icon
@@ -507,13 +457,11 @@ namespace osuTK.Platform.Linux
             set
             {
                 if (value == false)
-                {
                     throw new PlatformNotSupportedException
                     (
                         $"{ nameof(LinuxNativeWindow) } doesn't support ungrabbing cursor - " +
                         $"{ nameof(CursorGrabbed) } is implied to always be true due to missing an actual window"
                     );
-                }
             }
         }
 
@@ -526,9 +474,7 @@ namespace osuTK.Platform.Linux
             set
             {
                 if (value == is_cursor_visible)
-                {
                     return;
-                }
                 SetCursor(value ? cursor_current : MouseCursor.Empty);
                 is_cursor_visible = value;
             }
@@ -543,17 +489,11 @@ namespace osuTK.Platform.Linux
             set
             {
                 if (value == cursor_current)
-                {
                     return;
-                }
                 if (cursor_custom != BufferObject.Zero)
-                {
                     cursor_custom.Dispose();
-                }
                 if (CursorVisible)
-                {
                     SetCursor(value);
-                }
                 cursor_current = value;
             }
         }

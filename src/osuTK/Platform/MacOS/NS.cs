@@ -90,9 +90,7 @@ namespace osuTK.Platform.MacOS
             {
                 Marshal.WriteByte(ptr, (byte)'_');
                 for (int i = 0; i < function.Length; i++)
-                {
                     Marshal.WriteByte(ptr, i + 1, (byte)function[i]);
-                }
                 Marshal.WriteByte(ptr, function.Length + 1, 0); // null-terminate
 
                 IntPtr symbol = GetAddressInternal(ptr);
@@ -116,16 +114,12 @@ namespace osuTK.Platform.MacOS
 
                 *ptr++ = (byte)'_';
                 while (*cur != 0 && ++i < max)
-                {
                     *ptr++ = *cur++;
-                }
 
                 if (i >= max - 1)
-                {
                     throw new NotSupportedException(String.Format(
                         "Function {0} is too long. Please report a bug at https://github.com/opentk/issues/issues",
                         Marshal.PtrToStringAnsi(function)));
-                }
 
                 return GetAddressInternal(new IntPtr(symbol));
             }
@@ -138,9 +132,7 @@ namespace osuTK.Platform.MacOS
             {
                 symbol = LookupAndBindSymbol(function);
                 if (symbol != IntPtr.Zero)
-                {
                     symbol = AddressOfSymbol(symbol);
-                }
             }
             return symbol;
         }

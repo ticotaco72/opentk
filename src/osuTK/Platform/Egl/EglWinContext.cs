@@ -50,26 +50,18 @@ namespace osuTK.Platform.Egl
         protected override IntPtr GetStaticAddress(IntPtr function, RenderableFlags renderable)
         {
             if ((renderable & (RenderableFlags.ES2 | RenderableFlags.ES3)) != 0 && ES2 != IntPtr.Zero)
-            {
                 return Windows.Functions.GetProcAddress(ES2, function);
-            }
             else if ((renderable & RenderableFlags.ES) != 0 && ES1 != IntPtr.Zero)
-            {
                 return Windows.Functions.GetProcAddress(ES1, function);
-            }
             return IntPtr.Zero;
         }
 
         protected override void Dispose(bool manual)
         {
             if (ES1 != IntPtr.Zero)
-            {
                 Windows.Functions.FreeLibrary(ES1);
-            }
             if (ES2 != IntPtr.Zero)
-            {
                 Windows.Functions.FreeLibrary(ES2);
-            }
 
             ES1 = ES2 = IntPtr.Zero;
 

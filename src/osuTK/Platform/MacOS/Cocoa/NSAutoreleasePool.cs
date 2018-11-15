@@ -26,9 +26,7 @@ namespace osuTK.Platform.MacOS
         public void Dispose()
         {
             if (_autoreleasePool != IntPtr.Zero)
-            {
                 Cocoa.SendVoid(_autoreleasePool, Selector.Get("drain"));
-            }
         }
     }
 }

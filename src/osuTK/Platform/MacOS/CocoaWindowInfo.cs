@@ -87,18 +87,12 @@ namespace osuTK.Platform.MacOS
         private void Dispose(bool disposing)
         {
             if (disposed)
-            {
                 return;
-            }
 
             if (disposing)
-            {
                 Cocoa.SendVoid(Handle, Selector.Release);
-            }
             else
-            {
                 Debug.Print("CocoaWindowInfo:{0} leaked, did you forget to call Dispose()?", Handle);
-            }
 
             disposed = true;
         }

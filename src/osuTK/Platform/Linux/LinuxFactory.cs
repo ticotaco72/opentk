@@ -60,9 +60,7 @@ namespace osuTK.Platform.Linux
                 lock (this)
                 {
                     if (_fd == 0)
-                    {
                         _fd = CreateDisplay(out gbm_device, out egl_display);
-                    }
                     return _fd;
                 }
             }
@@ -133,16 +131,12 @@ namespace osuTK.Platform.Linux
 
             gbm_device = Gbm.CreateDevice(fd);
             if (gbm_device == IntPtr.Zero)
-            {
                 throw new NotSupportedException("[KMS] Failed to create GBM device");
-            }
             Debug.Print("[KMS] GBM {0:x} created successfully; ", gbm_device);
 
             egl_display = Egl.GetDisplay(gbm_device);
             if (egl_display == IntPtr.Zero)
-            {
                 throw new NotSupportedException("[KMS] Failed to create EGL display");
-            }
             Debug.Print("[KMS] EGL display {0:x} created successfully", egl_display);
 
             int major, minor;

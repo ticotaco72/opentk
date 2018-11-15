@@ -40,9 +40,7 @@ namespace osuTK.Platform.Linux
             : base(IntPtr.Zero, display, IntPtr.Zero)
         {
             if (display_device == null)
-            {
                 throw new ArgumentNullException();
-            }
 
             FD = fd;
             BufferManager = gbm;

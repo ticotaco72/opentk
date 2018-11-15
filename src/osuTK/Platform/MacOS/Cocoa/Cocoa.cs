@@ -144,18 +144,15 @@ namespace osuTK.Platform.MacOS
 
         public static float SendFloat(IntPtr receiver, IntPtr selector)
         {
-            #if IOS
-            return SendFloat_ios(receiver, selector);
-            #else
-            if (IntPtr.Size == 4)
-            {
-                return SendFloat_i386(receiver, selector);
-            }
+            if (Configuration.RunningOnIOS)
+                return SendFloat_ios(receiver, selector);
             else
             {
-                return (float)SendFloat_x64(receiver, selector);
+                if (IntPtr.Size == 4)
+                    return SendFloat_i386(receiver, selector);
+                else
+                    return (float)SendFloat_x64(receiver, selector);
             }
-            #endif
         }
 
         [DllImport (LibObjC, EntryPoint="objc_msgSend")]
@@ -184,9 +181,7 @@ namespace osuTK.Platform.MacOS
         public static IntPtr ToNSString(string str)
         {
             if (str == null)
-            {
                 return IntPtr.Zero;
-            }
 
             unsafe
             {
@@ -226,15 +221,11 @@ namespace osuTK.Platform.MacOS
         {
             var indirect = NS.GetSymbol(handle, symbol);
             if (indirect == IntPtr.Zero)
-            {
                 return IntPtr.Zero;
-            }
 
             var actual = Marshal.ReadIntPtr(indirect);
             if (actual == IntPtr.Zero)
-            {
                 return IntPtr.Zero;
-            }
 
             return actual;
         }
@@ -245,9 +236,7 @@ namespace osuTK.Platform.MacOS
         public static void Initialize()
         {
             if (AppKitLibrary != IntPtr.Zero)
-            {
                 return;
-            }
 
             AppKitLibrary = NS.LoadLibrary("/System/Library/Frameworks/AppKit.framework/AppKit");
             FoundationLibrary = NS.LoadLibrary("/System/Library/Frameworks/Foundation.framework/Foundation");

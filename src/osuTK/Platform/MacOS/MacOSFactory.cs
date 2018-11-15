@@ -99,9 +99,7 @@ namespace osuTK.Platform.MacOS
             if (!IsDisposed)
             {
                 if (manual)
-                {
                     InputDriver.Dispose();
-                }
 
                 base.Dispose(manual);
             }

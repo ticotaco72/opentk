@@ -110,10 +110,8 @@ namespace osuTK.Platform.MacOS
                 int thread_id = Thread.CurrentThread.ManagedThreadId;
                 bool is_ui_thread = thread_id == NSApplication.ThreadId;
                 if (!is_ui_thread)
-                {
                     Debug.Print("[Warning] UI resources must be disposed in the UI thread #{0}, not #{1}.",
                         NSApplication.ThreadId, thread_id);
-                }
                 return is_ui_thread;
             }
         }
@@ -130,9 +128,7 @@ namespace osuTK.Platform.MacOS
             var e = new CancelEventArgs();
             Quit(null, e);
             if (!e.Cancel)
-            {
                 Cocoa.SendVoid(Handle, Selector.Get("terminate:"), Handle);
-            }
         }
     }
 }

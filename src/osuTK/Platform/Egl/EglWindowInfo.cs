@@ -46,17 +46,13 @@ namespace osuTK.Platform.Egl
             Surface = surface;
 
             if (display == IntPtr.Zero)
-            {
                 display = Egl.GetDisplay(IntPtr.Zero);
-            }
 
             Display = display;
 
             int dummyMajor, dummyMinor;
             if (!Egl.Initialize(Display, out dummyMajor, out dummyMinor))
-            {
                 throw new GraphicsContextException(String.Format("Failed to initialize EGL, error {0}.", Egl.GetError()));
-            }
         }
 
         public IntPtr Handle { get; set; }
@@ -69,10 +65,8 @@ namespace osuTK.Platform.Egl
         {
             Surface = Egl.CreateWindowSurface(Display, config, Handle, IntPtr.Zero);
             if (Surface == IntPtr.Zero)
-            {
                 throw new GraphicsContextException(String.Format(
                     "[EGL] Failed to create window surface, error {0}.", Egl.GetError()));
-            }
         }
 
         //public void CreatePixmapSurface(EGLConfig config)
@@ -85,18 +79,14 @@ namespace osuTK.Platform.Egl
             int[] attribs = new int[]{Egl.NONE};
             Surface = Egl.CreatePbufferSurface(Display, config, attribs);
             if (Surface == IntPtr.Zero)
-            {
                 throw new GraphicsContextException(String.Format(
                     "[EGL] Failed to create pbuffer surface, error {0}.", Egl.GetError()));
-            }
         }
 
         public void CreatePbufferSurface(IntPtr config, int width, int height)
         {
             if (surface != IntPtr.Zero)
-            {
                 DestroySurface();
-            }
             CreatePbufferSurface(config, width, height, out surface);
         }
 
@@ -112,10 +102,8 @@ namespace osuTK.Platform.Egl
             };
             bufferSurface = Egl.CreatePbufferSurface(Display, config, attribs);
             if (bufferSurface == IntPtr.Zero)
-            {
                 throw new GraphicsContextException(String.Format(
                     "[EGL] Failed to create pbuffer surface, error {0}.", Egl.GetError()));
-            }
         }
 
         public void DestroySurface()
@@ -126,14 +114,10 @@ namespace osuTK.Platform.Egl
         public void DestroySurface(ref IntPtr bufferSurface)
         {
             if (bufferSurface == IntPtr.Zero)
-            {
                 return;
-            }
 
             if (Egl.GetCurrentSurface(Egl.DRAW) == Surface)
-            {
                 Egl.MakeCurrent(Display, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
-            }
             if (Egl.DestroySurface(Display, bufferSurface))
             {
                 bufferSurface = IntPtr.Zero;
@@ -149,9 +133,7 @@ namespace osuTK.Platform.Egl
             if (Display != IntPtr.Zero)
             {
                 if (!Egl.Terminate(Display))
-                {
                     Debug.Print("[Warning] Failed to terminate display {0}.", Display);
-                }
                 Display = IntPtr.Zero;
             }
         }
@@ -172,9 +154,7 @@ namespace osuTK.Platform.Egl
                     disposed = true;
                 }
                 else
-                {
                     Debug.Print("[Warning] Failed to destroy {0}:{1}.", this.GetType().Name, Handle);
-                }
             }
         }
 

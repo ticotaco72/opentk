@@ -66,13 +66,9 @@ namespace osuTK.Platform.SDL2
         private void SetButtonState(MouseButton button, bool pressed)
         {
             if (pressed)
-            {
                 state.EnableBit((int)button);
-            }
             else
-            {
                 state.DisableBit((int)button);
-            }
         }
 
         internal static float Scale = 1.0f;
@@ -108,13 +104,9 @@ namespace osuTK.Platform.SDL2
         public MouseState GetState(int index)
         {
             if (index == 0)
-            {
                 return GetState();
-            }
             else
-            {
                 return new MouseState();
-            }
         }
 
         public MouseState[] GetStates()
@@ -128,10 +120,8 @@ namespace osuTK.Platform.SDL2
             var buttons = SDL.GetGlobalMouseState(out x, out y);
 
             if (Configuration.RunningOnMacOS)
-            {
                 x = (int)Math.Round(x * Scale);
                 y = (int)Math.Round(y * Scale);
-            }
 
             var c = new MouseState();
             c.SetIsConnected(true);

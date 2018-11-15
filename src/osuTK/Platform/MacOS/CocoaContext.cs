@@ -67,9 +67,7 @@ namespace osuTK
             cocoaWindow = (CocoaWindowInfo)window;
 
             if (shareContext is CocoaContext)
-            {
                 shareContextRef = ((CocoaContext)shareContext).Handle.Handle;
-            }
 
             if (shareContext is GraphicsContext)
             {
@@ -78,9 +76,7 @@ namespace osuTK
             }
 
             if (shareContextRef == IntPtr.Zero)
-            {
                 Debug.Print("No context sharing will take place.");
-            }
 
             CreateContext(mode, cocoaWindow, shareContextRef, majorVersion, minorVersion, true);
         }
@@ -88,13 +84,9 @@ namespace osuTK
         public CocoaContext(ContextHandle handle, IWindowInfo window, IGraphicsContext shareContext, int majorVersion, int minorVersion)
         {
             if (handle == ContextHandle.Zero)
-            {
                 throw new ArgumentException("handle");
-            }
             if (window == null)
-            {
                 throw new ArgumentNullException("window");
-            }
 
             Handle = handle;
             cocoaWindow = (CocoaWindowInfo)window;
@@ -120,21 +112,17 @@ namespace osuTK
             // Prepare attributes
             IntPtr pixelFormat = SelectPixelFormat(mode, majorVersion, minorVersion);
             if (pixelFormat == IntPtr.Zero)
-            {
                 throw new GraphicsException(String.Format(
                     "Failed to contruct NSOpenGLPixelFormat for GraphicsMode '{0}'",
                     mode));
-            }
 
             // Create context
             var context = Cocoa.SendIntPtr(NSOpenGLContext, Selector.Alloc);
             context = Cocoa.SendIntPtr(context, Selector.Get("initWithFormat:shareContext:"), pixelFormat, shareContextRef);
             if (context == IntPtr.Zero)
-            {
                 throw new GraphicsException(String.Format(
                     "Failed to construct NSOpenGLContext",
                     mode));
-            }
 
             // Release pixel format
             Cocoa.SendVoid(pixelFormat, Selector.Release);
@@ -162,9 +150,7 @@ namespace osuTK
                 Debug.Print("Running the OpenGL core profile.");
             }
             else
-            {
                 Debug.Print("Running the legacy OpenGL profile. Start with version major=3, minor=2 or later for the 3.2 profile.");
-            }
 
             Debug.Print("NSGL pixel format attributes:");
             Debug.Indent();
@@ -172,24 +158,16 @@ namespace osuTK
             AddPixelAttrib(attributes, NSOpenGLPixelFormatAttribute.OpenGLProfile, (int)profile);
 
             if (mode.ColorFormat.BitsPerPixel > 0)
-            {
                 AddPixelAttrib(attributes, NSOpenGLPixelFormatAttribute.ColorSize, mode.ColorFormat.BitsPerPixel);
-            }
 
             if (mode.Depth > 0)
-            {
                 AddPixelAttrib(attributes, NSOpenGLPixelFormatAttribute.DepthSize, mode.Depth);
-            }
 
             if (mode.Stencil > 0)
-            {
                 AddPixelAttrib(attributes, NSOpenGLPixelFormatAttribute.StencilSize, mode.Stencil);
-            }
 
             if (mode.AccumulatorFormat.BitsPerPixel > 0)
-            {
                 AddPixelAttrib(attributes, NSOpenGLPixelFormatAttribute.AccumSize, mode.AccumulatorFormat.BitsPerPixel);
-            }
 
             if (mode.Samples > 1)
             {
@@ -198,17 +176,13 @@ namespace osuTK
             }
 
             if (mode.Buffers > 1)
-            {
                 AddPixelAttrib(attributes, NSOpenGLPixelFormatAttribute.DoubleBuffer);
-            }
 
             // If at least a single accelerated pixel format is available,
             // then use that. If no accelerated formats are available, fall
             // back to software rendering.
             if (IsAccelerationSupported())
-            {
                 AddPixelAttrib(attributes, NSOpenGLPixelFormatAttribute.Accelerated);
-            }
 
             AddPixelAttrib(attributes, (NSOpenGLPixelFormatAttribute)0);
 
@@ -216,9 +190,7 @@ namespace osuTK
 
             Debug.Write("Attribute array:  ");
             for (int i = 0; i < attributes.Count; i++)
-            {
                 Debug.Write(attributes[i].ToString() + "  ");
-            }
             Debug.WriteLine("");
 
             // Create pixel format
@@ -243,9 +215,7 @@ namespace osuTK
                 ref pf, ref count);
 
             if (pf != IntPtr.Zero)
-            {
                 Cgl.DestroyPixelFormat(pf);
-            }
 
             return pf != IntPtr.Zero;
         }
@@ -318,10 +288,8 @@ namespace osuTK
             set
             {
                 if (value < 0)
-                {
                     // NSOpenGL does not offer EXT_swap_control_tear yet
                     value = 1;
-                }
                 SetContextValue(value, NSOpenGLContextParameter.SwapInterval);
             }
         }
@@ -334,23 +302,17 @@ namespace osuTK
         protected override void Dispose(bool disposing)
         {
             if (IsDisposed || Handle.Handle == IntPtr.Zero)
-            {
                 return;
-            }
 
             Debug.Print("Disposing of Cocoa context.");
 
             if (!NSApplication.IsUIThread)
-            {
                 return;
-            }
 
             using (var pool = new NSAutoreleasePool())
             {
                 if (IsCurrent)
-                {
                     Cocoa.SendVoid(NSOpenGLContext, Selector.Get("clearCurrentContext"));
-                }
 
                 Cocoa.SendVoid(Handle.Handle, Selector.Get("clearDrawable"));
                 Cocoa.SendVoid(Handle.Handle, Selector.Get("release"));
@@ -375,33 +337,27 @@ namespace osuTK
                 int i = 0;
 
                 *ptr++ = (byte)'_';
+
                 while (*cur != 0 && ++i < max)
-                {
                     *ptr++ = *cur++;
-                }
 
                 if (i >= max - 1)
-                {
                     Debug.Print("Function {0} too long. Loading will fail.",
                         Marshal.PtrToStringAnsi(function));
-                }
 
                 IntPtr address = IntPtr.Zero;
                 IntPtr symbol = IntPtr.Zero;
                 if (opengl != IntPtr.Zero)
-                {
                     symbol = NS.LookupSymbolInImage(opengl, new IntPtr(fun),
                         SymbolLookupFlags.Bind | SymbolLookupFlags.ReturnOnError);
-                }
+
                 if (symbol == IntPtr.Zero && opengles != IntPtr.Zero)
-                {
                     symbol = NS.LookupSymbolInImage(opengles, new IntPtr(fun),
                         SymbolLookupFlags.Bind | SymbolLookupFlags.ReturnOnError);
-                }
+
                 if (symbol != IntPtr.Zero)
-                {
                     address = NS.AddressOfSymbol(symbol);
-                }
+
                 return address;
             }
         }

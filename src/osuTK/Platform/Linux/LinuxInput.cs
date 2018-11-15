@@ -184,9 +184,7 @@ namespace osuTK.Platform.Linux
                 // Once we do that, we can remove all separate input threads.
                 ready.WaitOne();
                 if (exit != 0)
-                {
                     throw new NotSupportedException();
-                }
             }
             finally
             {
@@ -204,13 +202,9 @@ namespace osuTK.Platform.Linux
             int ret = Libc.close(fd);
 
             if (ret < 0)
-            {
                 Debug.Print("[Input] Failed to close fd {0}. Error: {1}", fd, ret);
-            }
             else
-            {
                 Interlocked.Decrement(ref DeviceFDCount);
-            }
         }
 
         private static OpenRestrictedCallback OpenRestricted = OpenRestrictedHandler;
@@ -222,9 +216,7 @@ namespace osuTK.Platform.Linux
                 Marshal.PtrToStringAnsi(path), (OpenFlags)flags, fd);
 
             if (fd >= 0)
-            {
                 Interlocked.Increment(ref DeviceFDCount);
-            }
 
             return fd;
         }
@@ -260,9 +252,7 @@ namespace osuTK.Platform.Linux
                 UpdateDisplayBounds();
 
                 if (ret > 0 && (poll_fd.revents & (PollFlags.In | PollFlags.Pri)) != 0)
-                {
                     ProcessEvents(input_context);
-                }
 
                 if (is_error)
                 {
@@ -281,9 +271,7 @@ namespace osuTK.Platform.Linux
             {
                 DisplayDevice display = DisplayDevice.GetDisplay(i);
                 if (display != null)
-                {
                     bounds = Rectangle.Union(bounds, display.Bounds);
-                }
             }
         }
 
@@ -369,9 +357,7 @@ namespace osuTK.Platform.Linux
 
                 IntPtr pevent = LibInput.GetEvent(input_context);
                 if (pevent == IntPtr.Zero)
-                {
                     break;
-                }
 
                 IntPtr device = LibInput.GetDevice(pevent);
                 InputEventType type = LibInput.GetEventType(pevent);
@@ -433,9 +419,7 @@ namespace osuTK.Platform.Linux
             }
 
             if (LibInput.DeviceHasCapability(device, DeviceCapability.Touch))
-            {
                 Debug.Print("[Input] Todo: touch device.");
-            }
         }
 
         private void HandleDeviceRemoved(IntPtr context, IntPtr device)
@@ -465,14 +449,10 @@ namespace osuTK.Platform.Linux
                 Key key = Key.Unknown;
                 uint raw = e.Key;
                 if (raw >= 0 && raw < KeyMap.Length)
-                {
                     key = KeyMap[raw];
-                }
 
                 if (key == Key.Unknown)
-                {
                     Debug.Print("[Linux] Unknown key with code '{0}'", raw);
-                }
 
                 device.State.SetKeyState(key, e.KeyState == KeyState.Pressed);
             }
@@ -485,13 +465,9 @@ namespace osuTK.Platform.Linux
                 mouse.State.SetIsConnected(true);
 
                 if (e.HasAxis(PointerAxis.HorizontalScroll))
-                {
                     mouse.State.SetScrollRelative((float)e.AxisValue(PointerAxis.HorizontalScroll), 0);
-                }
                 if (e.HasAxis(PointerAxis.VerticalScroll))
-                {
                     mouse.State.SetScrollRelative(0, (float)e.AxisValue(PointerAxis.VerticalScroll));
-                }
             }
         }
 
@@ -546,13 +522,9 @@ namespace osuTK.Platform.Linux
             int id = GetId(device);
             KeyboardDevice keyboard = KeyboardCandidates.FromHardwareId(id);
             if (keyboard != null)
-            {
                 Keyboards.Add(id, keyboard);
-            }
             else
-            {
                 Debug.Print("[Input] Keyboard {0} does not exist in device list.", id);
-            }
             return keyboard;
         }
 
@@ -561,13 +533,9 @@ namespace osuTK.Platform.Linux
             int id = GetId(device);
             MouseDevice mouse = MouseCandidates.FromHardwareId(id);
             if (mouse != null)
-            {
                 Mice.Add(id, mouse);
-            }
             else
-            {
                 Debug.Print("[Input] Mouse {0} does not exist in device list.", id);
-            }
             return mouse;
         }
 
@@ -577,9 +545,7 @@ namespace osuTK.Platform.Linux
             {
                 KeyboardState state = new KeyboardState();
                 foreach (KeyboardDevice keyboard in Keyboards)
-                {
                     state.MergeBits(keyboard.State);
-                }
                 return state;
             }
         }
@@ -590,13 +556,9 @@ namespace osuTK.Platform.Linux
             {
                 KeyboardDevice device = Keyboards.FromIndex(index);
                 if (device != null)
-                {
                     return device.State;
-                }
                 else
-                {
                     return new KeyboardState();
-                }
             }
         }
 
@@ -614,13 +576,9 @@ namespace osuTK.Platform.Linux
             {
                 KeyboardDevice device = Keyboards.FromIndex(index);
                 if (device != null)
-                {
                     return device.Name;
-                }
                 else
-                {
                     return String.Empty;
-                }
             }
         }
 
@@ -630,9 +588,7 @@ namespace osuTK.Platform.Linux
             {
                 MouseState state = new MouseState();
                 foreach (MouseDevice mouse in Mice)
-                {
                     state.MergeBits(mouse.State);
-                }
                 return state;
             }
         }
@@ -643,13 +599,9 @@ namespace osuTK.Platform.Linux
             {
                 MouseDevice device = Mice.FromIndex(index);
                 if (device != null)
-                {
                     return device.State;
-                }
                 else
-                {
                     return new MouseState();
-                }
             }
         }
 

@@ -34,9 +34,7 @@ namespace osuTK.Platform.Dummy
             : this()
         {
             if (handle != ContextHandle.Zero)
-            {
                 Handle = handle;
-            }
             Loader = loader;
             Mode = new GraphicsMode(new IntPtr(2), 32, 16, 0, 0, 0, 2, false);
         }
@@ -48,19 +46,13 @@ namespace osuTK.Platform.Dummy
             Thread new_thread = Thread.CurrentThread;
             // A context may be current only on one thread at a time.
             if (current_thread != null && new_thread != current_thread)
-            {
                 throw new GraphicsContextException(
                     "Cannot make context current on two threads at the same time");
-            }
 
             if (info != null)
-            {
                 current_thread = Thread.CurrentThread;
-            }
             else
-            {
                 current_thread = null;
-            }
         }
 
         public override bool IsCurrent

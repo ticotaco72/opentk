@@ -99,13 +99,11 @@ namespace osuTK.Platform.SDL2
             if (!IsDisposed)
             {
                 if (manual)
-                {
                     if (inputDriver != null)
                     {
                         inputDriver.Dispose();
                         inputDriver = null;
                     }
-                }
 
                 base.Dispose(manual);
             }
@@ -113,17 +111,13 @@ namespace osuTK.Platform.SDL2
 
         private Sdl2InputDriver GetInputDriver()
         {
-            if (inputDriver == null)
-            {
+            if (inputDriver == null){
                 lock (inputDriverLock)
                 {
                     // Check again inside the lock
                     if (inputDriver == null)
-                    {
                         inputDriver = new Sdl2InputDriver();
-                    }
                 }
-            }
 
             return inputDriver;
         }

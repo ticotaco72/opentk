@@ -59,9 +59,7 @@ namespace osuTK.Platform.MacOS
         {
             var id = objc_getClass(name);
             if (id == IntPtr.Zero)
-            {
                 throw new ArgumentException("Unknown class: " + name);
-            }
             return id;
         }
 
@@ -89,9 +87,7 @@ namespace osuTK.Platform.MacOS
             bool r = class_addMethod(handle, Selector.Get(selector), p, typeString);
 
             if (!r)
-            {
                 throw new ArgumentException("Could not register method " + d + " in class + " + class_getName(handle));
-            }
         }
     }
 }

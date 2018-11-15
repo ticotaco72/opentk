@@ -115,9 +115,7 @@ namespace osuTK.Platform.MacOS
                         opentk_dev_available_res.Add(thisRes);
 
                         if (current)
-                        {
                             opentk_dev_current_res = thisRes;
-                        }
                     }
 
                     NSRect bounds = CG.DisplayBounds(currentDisplay);
@@ -131,9 +129,7 @@ namespace osuTK.Platform.MacOS
                     AvailableDevices.Add(opentk_dev);
 
                     if (primary)
-                    {
                         Primary = opentk_dev;
-                    }
                 }
 
                 Debug.Unindent();
@@ -154,9 +150,7 @@ namespace osuTK.Platform.MacOS
             IntPtr currentModePtr = CG.DisplayCurrentMode(display);
 
             if (storedModes.ContainsKey(display) == false)
-            {
                 storedModes.Add(display, currentModePtr);
-            }
 
             IntPtr displayModesPtr = CG.DisplayAvailableModes(display);
             CFArray displayModes = new CFArray(displayModesPtr);

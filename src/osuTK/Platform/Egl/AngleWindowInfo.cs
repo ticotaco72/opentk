@@ -73,9 +73,7 @@ namespace osuTK.Platform.Egl
             {
                 var win_win = PlatformWindow as WinWindowInfo;
                 if (win_win != null)
-                {
                     return win_win.DeviceContext;
-                }
                 return IntPtr.Zero;
             }
         }
@@ -111,13 +109,9 @@ namespace osuTK.Platform.Egl
         private void Dispose(bool called_from_finalizer)
         {
             if (_disposed)
-            {
                 return;
-            }
             if (!called_from_finalizer)
-            {
                 PlatformWindow.Dispose();
-            }
             // dispose unmanaged
 
             _disposed = true;
@@ -152,10 +146,8 @@ namespace osuTK.Platform.Egl
         public IntPtr QuerySurfacePointer(IntPtr surface)
         {
             if (UsesDirect3DBackend())
-            {
                 return QuerySurfacePointer(surface, 
                     Egl.EGL_D3D_TEXTURE_2D_SHARE_HANDLE_ANGLE);
-            }
             return IntPtr.Zero;
         }
 
@@ -164,9 +156,7 @@ namespace osuTK.Platform.Egl
             IntPtr surface_pointer;
             if (Egl.QuerySurfacePointerANGLE(
                 Display, surface, attrib, out surface_pointer))
-            {
                 return surface_pointer;
-            }
             return IntPtr.Zero;
         }
 

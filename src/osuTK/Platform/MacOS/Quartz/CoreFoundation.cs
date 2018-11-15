@@ -56,9 +56,7 @@ namespace osuTK.Platform.MacOS.Carbon
             get
             {
                 if (index >= Count || index < 0)
-                {
                     throw new IndexOutOfRangeException();
-                }
 
                 return CF.CFArrayGetValueAtIndex(Ref, index);
             }
@@ -144,9 +142,7 @@ namespace osuTK.Platform.MacOS.Carbon
             {
                 byte[] utf8_chars = new byte[length.ToInt32() + 1];
                 if (CFStringGetCString(cfstr, utf8_chars, new IntPtr(utf8_chars.Length), CFStringEncoding.UTF8))
-                {
                     return Encoding.UTF8.GetString(utf8_chars);
-                }
             }
             return String.Empty;
         }

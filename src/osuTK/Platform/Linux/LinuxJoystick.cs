@@ -106,9 +106,7 @@ namespace osuTK.Platform.Linux
                 {
                     LinuxJoystickDetails stick = OpenJoystick(file);
                     if (stick != null)
-                    {
                         Sticks.Add(stick.PathIndex, stick);
-                    }
                 }
             }
         }
@@ -120,9 +118,7 @@ namespace osuTK.Platform.Linux
             {
                 int num;
                 if (Int32.TryParse(path.Substring(evdev.Length), out num))
-                {
                     return num;
-                }
             }
             return -1;
         }
@@ -145,9 +141,7 @@ namespace osuTK.Platform.Linux
                 {
                     var stick = Sticks.FromHardwareId(number);
                     if (stick != null)
-                    {
                         CloseJoystick(stick);
-                    }
                 }
             }
         }
@@ -188,12 +182,8 @@ namespace osuTK.Platform.Linux
                 bytes[i++] = 0;
             }
             else
-            {
                 for (int j = 0; j < bytes.Length - i; j++)
-                {
                     bytes[i + j] = (byte)name[j];
-                }
-            }
 
             return new Guid(bytes);
         }
@@ -246,12 +236,8 @@ namespace osuTK.Platform.Linux
             }
 
             for (EvdevButton button = 0; button < EvdevButton.Last && (int)button < keybytes * 8; button++)
-            {
                 if (TestBit(keybit, (int)button))
-                {
                     stick.ButtonMap.Add(button, buttons++);
-                }
-            }
         }
 
         private LinuxJoystickDetails OpenJoystick(string path)
@@ -266,9 +252,7 @@ namespace osuTK.Platform.Linux
                 {
                     fd = Libc.open(path, OpenFlags.NonBlock);
                     if (fd == -1)
-                    {
                         return null;
-                    }
 
                     unsafe
                     {
@@ -328,10 +312,8 @@ namespace osuTK.Platform.Linux
                 finally
                 {
                     if (stick == null && fd != -1)
-                    {
                         // Not a joystick
                         Libc.close(fd);
-                    }
                 }
             }
 
@@ -365,9 +347,7 @@ namespace osuTK.Platform.Linux
                 {
                     length = (long)Libc.read(js.FileDescriptor, (void*)events, (UIntPtr)(sizeof(InputEvent) * EventCount));
                     if (length <= 0)
-                    {
                         break;
-                    }
 
                     // Only mark the joystick as connected when we actually start receiving events.
                     // Otherwise, the Xbox wireless receiver will register 4 joysticks even if no
@@ -460,15 +440,13 @@ namespace osuTK.Platform.Linux
         {
             if (!disposed)
             {
-                if (manual)
-                {
-                }
+                //if (manual)
+                //{
+                //}
 
                 watcher.Dispose();
                 foreach (LinuxJoystickDetails js in Sticks)
-                {
                     CloseJoystick(js);
-                }
 
                 disposed = true;
             }
@@ -499,9 +477,7 @@ namespace osuTK.Platform.Linux
         {
             LinuxJoystickDetails js = Sticks.FromIndex(index);
             if (js != null)
-            {
                 return js.Caps;
-            }
             return new JoystickCapabilities();
         }
 
@@ -509,9 +485,7 @@ namespace osuTK.Platform.Linux
         {
             LinuxJoystickDetails js = Sticks.FromIndex(index);
             if (js != null)
-            {
                 return js.Guid;
-            }
             return Guid.Empty;
         }
     }

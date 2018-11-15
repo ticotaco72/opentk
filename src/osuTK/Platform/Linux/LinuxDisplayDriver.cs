@@ -66,9 +66,7 @@ namespace osuTK.Platform.Linux
             get
             {
                 if (Crtc == IntPtr.Zero)
-                {
                     throw new InvalidOperationException();
-                }
 
                 unsafe
                 {
@@ -129,9 +127,7 @@ namespace osuTK.Platform.Linux
             {
                 bool has_displays = false;
                 if (displays != null)
-                {
                     displays.Clear();
-                }
 
                 ModeRes* resources = (ModeRes*)Drm.ModeGetResources(fd);
                 if (resources == null)
@@ -166,9 +162,7 @@ namespace osuTK.Platform.Linux
                         }
 
                         if (success && displays != null)
-                        {
                             displays.Add(display);
-                        }
                         else
                         {
                             Drm.ModeFreeConnector((IntPtr)connector);
@@ -194,15 +188,11 @@ namespace osuTK.Platform.Linux
                     if (QueryDisplays(fd, displays))
                     {
                         foreach (LinuxDisplay display in displays)
-                        {
                             AddDisplay(display);
-                        }
                     }
 
                     if (AvailableDevices.Count == 0)
-                    {
                         Debug.Print("[KMS] Failed to find any active displays");
-                    }
                 }
             }
         }
@@ -217,25 +207,17 @@ namespace osuTK.Platform.Linux
                 if (e != null)
                 {
                     if (e->encoder_id == c->encoder_id)
-                    {
                         encoder = e;
-                    }
                     else
-                    {
                         Drm.ModeFreeEncoder((IntPtr)e);
-                    }
                 }
             }
 
             if (encoder != null)
-            {
                 Debug.Print("[KMS] Encoder {0} found for connector {1}",
                     encoder->encoder_id, c->connector_id);
-            }
             else
-            {
                 Debug.Print("[KMS] Failed to find encoder for connector {0}", c->connector_id);
-            }
 
             return encoder;
         }
@@ -244,15 +226,11 @@ namespace osuTK.Platform.Linux
         {
             ModeCrtc* crtc = (ModeCrtc*)Drm.ModeGetCrtc(fd, encoder->crtc_id);
             if (crtc != null)
-            {
                 Debug.Print("[KMS] CRTC {0} found for encoder {1}",
                     encoder->crtc_id, encoder->encoder_id);
-            }
             else
-            {
                 Debug.Print("[KMS] Failed to find crtc {0} for encoder {1}",
                     encoder->crtc_id, encoder->encoder_id);
-            }
             return crtc;
         }
 
@@ -278,9 +256,7 @@ namespace osuTK.Platform.Linux
                 current = GetDisplayResolution(&cmode);
             }
             else
-            {
                 current = GetDisplayResolution(display.pConnector->modes);
-            }
             Debug.Print("Current mode: {0}", current.ToString());
         }
 
@@ -307,13 +283,9 @@ namespace osuTK.Platform.Linux
             }
             int index = DisplayIds[display.Id];
             if (index >= AvailableDevices.Count)
-            {
                 AvailableDevices.Add(device);
-            }
             else
-            {
                 AvailableDevices[index] = device;
-            }
         }
 
         private unsafe static bool QueryDisplay(int fd, ModeConnector* c, out LinuxDisplay display)
@@ -323,15 +295,11 @@ namespace osuTK.Platform.Linux
             // Find corresponding encoder
             ModeEncoder* encoder = GetEncoder(fd, c);
             if (encoder == null)
-            {
                 return false;
-            }
 
             ModeCrtc* crtc = GetCrtc(fd, encoder);
             if (crtc == null)
-            {
                 return false;
-            }
 
             display = new LinuxDisplay(fd, (IntPtr)c, (IntPtr)encoder, (IntPtr)crtc);
             return true;
@@ -348,9 +316,7 @@ namespace osuTK.Platform.Linux
                 modes, GetBounds(current), display);
 
             if (is_primary)
-            {
                 Primary = device;
-            }
 
             UpdateDisplayIndices(display, device);
 
@@ -374,9 +340,7 @@ namespace osuTK.Platform.Linux
                 if (mode != null &&
                     mode->hdisplay == resolution.Width &&
                     mode->vdisplay == resolution.Height)
-                {
                     return mode;
-                }
             }
             return null;
         }
@@ -389,10 +353,8 @@ namespace osuTK.Platform.Linux
                 ModeInfo* mode = GetModeInfo(display, resolution);
                 int connector_id = display.pConnector->connector_id;
                 if (mode != null)
-                {
                     return Drm.ModeSetCrtc(FD, display.Id, 0, 0, 0,
                         &connector_id, 1, mode) == 0;
-                }
                 return false;
             }
         }

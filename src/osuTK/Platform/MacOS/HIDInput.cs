@@ -101,10 +101,8 @@ namespace osuTK.Platform.MacOS
                         e.Cookie, e.Page, e.Usage);
                 }
                 else
-                {
                     Debug.Print("Duplicate joystick element {0:x} ({1}/{2}) ignored.",
                         e.Cookie, e.Page, e.Usage);
-                }
             }
         }
 
@@ -190,9 +188,7 @@ namespace osuTK.Platform.MacOS
 
             RunLoop = CF.CFRunLoopGetMain();
             if (RunLoop == IntPtr.Zero)
-            {
                 RunLoop = CF.CFRunLoopGetCurrent();
-            }
             if (RunLoop == IntPtr.Zero)
             {
                 Debug.Print("[Error] No CFRunLoop found for {0}", GetType().FullName);
@@ -443,17 +439,11 @@ namespace osuTK.Platform.MacOS
                 JoystickData joystick;
                 long id = context.ToInt64();
                 if (MouseDevices.FromHardwareId(id, out mouse))
-                {
                     UpdateMouse(mouse, val);
-                }
                 else if (KeyboardDevices.FromHardwareId(id, out keyboard))
-                {
                     UpdateKeyboard(keyboard, val);
-                }
                 else if (JoystickDevices.FromHardwareId(id, out joystick))
-                {
                     UpdateJoystick(joystick, val);
-                }
                 else
                 {
                     //Debug.Print ("Device {0:x} not found in list of keyboards or mice", sender);
@@ -558,9 +548,7 @@ namespace osuTK.Platform.MacOS
                     case HIDPage.GenericDesktop:
                     case HIDPage.KeyboardOrKeypad:
                         if (usage >= RawKeyMap.Length)
-                        {
                             Debug.Print("[Warning] Key {0} not mapped.", usage);
-                        }
 
                         keyboard.State[RawKeyMap[usage]] = v_int != 0;
                         break;
@@ -578,13 +566,9 @@ namespace osuTK.Platform.MacOS
             IntPtr vendor_id_ref = NativeMethods.IOHIDDeviceGetProperty(device, NativeMethods.IOHIDVendorIDKey);
             IntPtr product_id_ref = NativeMethods.IOHIDDeviceGetProperty(device, NativeMethods.IOHIDProductIDKey);
             if (vendor_id_ref != IntPtr.Zero)
-            {
                 CF.CFNumberGetValue(vendor_id_ref, CF.CFNumberType.kCFNumberLongType, out vendor_id);
-            }
             if (product_id_ref != IntPtr.Zero)
-            {
                 CF.CFNumberGetValue(product_id_ref, CF.CFNumberType.kCFNumberLongType, out product_id);
-            }
 
             if (vendor_id != 0 && product_id != 0)
             {
@@ -678,20 +662,14 @@ namespace osuTK.Platform.MacOS
                 }
 
                 if (axis_elements.Count >= JoystickState.MaxAxes)
-                {
                     Debug.Print("[Mac] JoystickAxis limit reached ({0} > {1}), please report a bug at https://github.com/opentk/opentk/issues",
                         axis_elements.Count, JoystickState.MaxAxes);
-                }
                 if (button_elements.Count > JoystickState.MaxButtons)
-                {
                     Debug.Print("[Mac] JoystickButton limit reached ({0} > {1}), please report a bug at https://github.com/opentk/opentk/issues",
                         button_elements.Count, JoystickState.MaxButtons);
-                }
                 if (hat_elements.Count > JoystickState.MaxHats)
-                {
                     Debug.Print("[Mac] JoystickHat limit reached ({0} > {1}), please report a bug at https://github.com/opentk/opentk/issues",
                         hat_elements.Count, JoystickState.MaxHats);
-                }
 
                 joy.Name = name;
                 joy.Guid = guid;
@@ -747,9 +725,7 @@ namespace osuTK.Platform.MacOS
                                         case HIDUsageGD.Hatswitch:
                                             e = new JoystickElement(element_ref, cookie, page, usage, 0, 0);
                                             if (!hat_elements.Contains(e))
-                                            {
                                                 hat_elements.Add(e);
-                                            }
                                             break;
                                     }
                                     break;
@@ -761,9 +737,7 @@ namespace osuTK.Platform.MacOS
                                         case HIDUsageSim.Throttle:
                                             e = new JoystickElement(element_ref, cookie, page, usage, 0, 0);
                                             if (!axis_elements.Contains(e))
-                                            {
                                                 axis_elements.Add(e);
-                                            }
                                             break;
                                     }
                                     break;
@@ -771,17 +745,13 @@ namespace osuTK.Platform.MacOS
                                 case HIDPage.Button:
                                     e = new JoystickElement(element_ref, cookie, page, usage, 0, 0);
                                     if (!button_elements.Contains(e))
-                                    {
                                         button_elements.Add(e);
-                                    }
                                     break;
 
                                 case HIDPage.VendorDefinedStart:
                                     e = new JoystickElement(element_ref, cookie, page, usage, 0, 0);
                                     if (!vendor_elements.Contains(e))
-                                    {
                                         vendor_elements.Add(e);
-                                    }
                                     break;
                             }
                             break;
@@ -789,9 +759,7 @@ namespace osuTK.Platform.MacOS
                         case IOHIDElementType.Collection:
                             CFArrayRef children_array_ref = NativeMethods.IOHIDElementGetChildren(element_ref);
                             if (children_array_ref != IntPtr.Zero)
-                            {
                                 AddElements(joy, children_array_ref);
-                            }
                             break;
                     }
                 }
@@ -812,9 +780,7 @@ namespace osuTK.Platform.MacOS
             {
                 JoystickData joy = CreateJoystick(sender, device);
                 if (joy != null)
-                {
                     JoystickDevices.Add(device.ToInt64(), joy);
-                }
             }
             finally
             {
@@ -868,9 +834,7 @@ namespace osuTK.Platform.MacOS
                             HatPosition position = GetJoystickHat(val, elem);
                             JoystickHat hat = JoystickHat.Hat0 + joy.Elements[cookie].Index;
                             if (hat >= JoystickHat.Hat0 && hat <= JoystickHat.Last)
-                            {
                                 joy.State.SetHat(hat, new JoystickHatState(position));
-                            }
                             break;
                     }
                     break;
@@ -883,9 +847,7 @@ namespace osuTK.Platform.MacOS
                             short offset = GetJoystickAxis(val, elem);
                             int axis = joy.Elements[cookie].Index;
                             if (axis >= 0 && axis <= JoystickState.MaxAxes)
-                            {
                                 joy.State.SetAxis(axis, offset);
-                            }
                             break;
                     }
                     break;
@@ -895,9 +857,7 @@ namespace osuTK.Platform.MacOS
                         bool pressed = GetJoystickButton(val, elem);
                         int button = joy.Elements[cookie].Index;
                         if (button >= 0 && button <= JoystickState.MaxButtons)
-                        {
                             joy.State.SetButton(button, pressed);
-                        }
                     }
                     break;
             }
@@ -929,12 +889,10 @@ namespace osuTK.Platform.MacOS
             if (value >= 0)
             {
                 if (range == 4)
-                {
                     // 4-position hat (no diagonals)
                     // 0 = up; 1 = right; 2 = down; 3 = left
                     // map to a 8-position hat (processed below)
                     value *= 2;
-                }
 
                 if (range == 8)
                 {
@@ -986,9 +944,7 @@ namespace osuTK.Platform.MacOS
         {
             MouseState master = new MouseState();
             foreach (MouseData item in MouseDevices)
-            {
                 master.MergeBits(item.State);
-            }
 
             return master;
         }
@@ -997,9 +953,7 @@ namespace osuTK.Platform.MacOS
         {
             MouseData mouse;
             if (MouseDevices.FromIndex(index, out mouse))
-            {
                 return mouse.State;
-            }
 
             return new MouseState();
         }
@@ -1024,9 +978,7 @@ namespace osuTK.Platform.MacOS
         {
             KeyboardState master = new KeyboardState();
             foreach (KeyboardData item in KeyboardDevices)
-            {
                 master.MergeBits(item.State);
-            }
 
             return master;
         }
@@ -1035,9 +987,7 @@ namespace osuTK.Platform.MacOS
         {
             KeyboardData keyboard;
             if (KeyboardDevices.FromIndex(index, out keyboard))
-            {
                 return keyboard.State;
-            }
 
             return new KeyboardState();
         }
@@ -1064,9 +1014,7 @@ namespace osuTK.Platform.MacOS
         {
             JoystickData joystick = GetJoystick(index);
             if (joystick != null)
-            {
                 return joystick.State;
-            }
             return new JoystickState();
         }
 
@@ -1079,9 +1027,7 @@ namespace osuTK.Platform.MacOS
         {
             JoystickData joystick = GetJoystick(index);
             if (joystick != null)
-            {
                 return joystick.Capabilities;
-            }
             return new JoystickCapabilities();
         }
 
@@ -1089,9 +1035,7 @@ namespace osuTK.Platform.MacOS
         {
             JoystickData joystick = GetJoystick(index);
             if (joystick != null)
-            {
                 return joystick.Guid;
-            }
             return new Guid();
         }
 
@@ -1671,28 +1615,16 @@ namespace osuTK.Platform.MacOS
                         hidmanager, RunLoop, InputLoopMode);
 
                     for (int i = 0; i < Math.Max(MouseDevices.Count, 4); i++)
-                    {
                         if (MouseDevices[i] != null)
-                        {
                             DeviceRemoved(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, MouseDevices[i].Id);
-                        }
-                    }
 
                     for (int i = 0; i < Math.Max(KeyboardDevices.Count, 4); i++)
-                    {
                         if (KeyboardDevices[i] != null)
-                        {
                             DeviceRemoved(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, KeyboardDevices[i].Id);
-                        }
-                    }
 
                     for (int i = 0; i < Math.Max(JoystickDevices.Count, 4); i++)
-                    {
                         if (JoystickDevices[i] != null)
-                        {
                             DeviceRemoved(IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, JoystickDevices[i].Id);
-                        }
-                    }
 
                     if (hidmanager != IntPtr.Zero)
                     {
@@ -1701,14 +1633,10 @@ namespace osuTK.Platform.MacOS
                     }
 
                     if (RunLoop != IntPtr.Zero)
-                    {
                         CF.CFRelease(RunLoop);
-                    }
                 }
                 else
-                {
                     Debug.Print("{0} leaked, did you forget to call Dispose()?", GetType());
-                }
                 disposed = true;
             }
         }

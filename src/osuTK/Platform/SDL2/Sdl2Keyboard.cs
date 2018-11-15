@@ -69,9 +69,7 @@ namespace osuTK.Platform.SDL2
             Key key = Sdl2KeyMap.GetKey(scancode);
 
             if (key != Key.Unknown)
-            {
                 state[key] = pressed;
-            }
         }
 
         public KeyboardState GetState()
@@ -84,13 +82,9 @@ namespace osuTK.Platform.SDL2
         {
             //UpdateModifiers(); // Fixme
             if (index == 0)
-            {
                 return state;
-            }
             else
-            {
                 return new KeyboardState();
-            }
         }
 
         public KeyboardState[] GetStates()

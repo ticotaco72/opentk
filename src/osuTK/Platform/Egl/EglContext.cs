@@ -43,13 +43,9 @@ namespace osuTK.Platform.Egl
             int major, int minor, GraphicsContextFlags flags)
         {
             if (mode == null)
-            {
                 throw new ArgumentNullException("mode");
-            }
             if (window == null)
-            {
                 throw new ArgumentNullException("window");
-            }
 
             EglContext shared = GetSharedEglContext(sharedContext);
 
@@ -61,7 +57,6 @@ namespace osuTK.Platform.Egl
 
             Renderable = RenderableFlags.GL;
             if ((flags & GraphicsContextFlags.Embedded) != 0)
-            {
                 switch (major)
                 {
                     case 3:
@@ -74,14 +69,11 @@ namespace osuTK.Platform.Egl
                         Renderable = RenderableFlags.ES;
                         break;
                 }
-            }
 
             RenderApi api = (Renderable & RenderableFlags.GL) != 0 ? RenderApi.GL : RenderApi.ES;
             Debug.Print("[EGL] Binding {0} rendering API.", api);
             if (!Egl.BindAPI(api))
-            {
                 Debug.Print("[EGL] Failed to bind rendering API. Error: {0}", Egl.GetError());
-            }
 
             bool offscreen = (flags & GraphicsContextFlags.Offscreen) != 0;
 
@@ -95,21 +87,15 @@ namespace osuTK.Platform.Egl
                     Renderable);
 
             if (!Mode.Index.HasValue)
-            {
                 throw new GraphicsModeException("Invalid or unsupported GraphicsMode.");
-            }
             IntPtr config = Mode.Index.Value;
 
             if (window.Surface == IntPtr.Zero)
             {
                 if (!offscreen)
-                {
                     window.CreateWindowSurface(config);
-                }
                 else
-                {
                     window.CreatePbufferSurface(config);
-                }
             }
 
             int[] attribList = { Egl.CONTEXT_CLIENT_VERSION, major, Egl.NONE };
@@ -123,13 +109,9 @@ namespace osuTK.Platform.Egl
             int major, int minor, GraphicsContextFlags flags)
         {
             if (handle == ContextHandle.Zero)
-            {
                 throw new ArgumentException("handle");
-            }
             if (window == null)
-            {
                 throw new ArgumentNullException("window");
-            }
 
             Handle = handle;
         }
@@ -137,9 +119,7 @@ namespace osuTK.Platform.Egl
         public override void SwapBuffers()
         {
             if (!Egl.SwapBuffers(WindowInfo.Display, WindowInfo.Surface))
-            {
                 throw new GraphicsContextException(string.Format("Failed to swap buffers for context {0} current. Error: {1}", Handle, Egl.GetError()));
-            }
         }
 
         public override void MakeCurrent(IWindowInfo window)
@@ -151,25 +131,15 @@ namespace osuTK.Platform.Egl
             if (window != null)
             {
                 if (window is EglWindowInfo)
-                {
                     WindowInfo = (EglWindowInfo)window;
-                }
-#if !ANDROID
-                else if (window is IAngleWindowInfoInternal)
-                {
+                else if (window is IAngleWindowInfoInternal && !Configuration.RunningOnAndroid)
                     WindowInfo = ((IAngleWindowInfoInternal)window).EglWindowInfo;
-                }
-#endif
 
                 if (!Egl.MakeCurrent(WindowInfo.Display, WindowInfo.Surface, WindowInfo.Surface, HandleAsEGLContext))
-                {
                     throw new GraphicsContextException(string.Format("Failed to make context {0} current. Error: {1}", Handle, Egl.GetError()));
-                }
             }
             else
-            {
                 Egl.MakeCurrent(WindowInfo.Display, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero);
-            }
         }
 
         public override bool IsCurrent
@@ -188,20 +158,14 @@ namespace osuTK.Platform.Egl
             set
             {
                 if (value < 0)
-                {
                     // EGL does not offer EXT_swap_control_tear yet
                     value = 1;
-                }
 
                 if (Egl.SwapInterval(WindowInfo.Display, value))
-                {
                     swap_interval = value;
-                }
                 else
-                {
                     Debug.Print("[Warning] Egl.SwapInterval({0}, {1}) failed. Error: {2}",
                         WindowInfo.Display, value, Egl.GetError());
-                }
             }
         }
 
@@ -213,9 +177,7 @@ namespace osuTK.Platform.Egl
             // was resized.
             // https://bugs.chromium.org/p/angleproject/issues/detail?id=1438
             if (!Egl.WaitClient())
-            {
                 Debug.Print("[Warning] Egl.WaitClient() failed. Error: {0}", Egl.GetError());
-            }
         }
 
         public override IntPtr GetAddress(IntPtr function)
@@ -226,9 +188,7 @@ namespace osuTK.Platform.Egl
             // If a static export is not available, try retrieving an extension
             // function pointer with eglGetProcAddress
             if (address == IntPtr.Zero)
-            {
                 address = Egl.GetProcAddress(function);
-            }
 
             return address;
         }
@@ -244,9 +204,7 @@ namespace osuTK.Platform.Egl
                 if (manual)
                 {
                     if (IsCurrent)
-                    {
                         Egl.MakeCurrent(WindowInfo.Display, WindowInfo.Surface, WindowInfo.Surface, IntPtr.Zero);
-                    }
                     Egl.DestroyContext(WindowInfo.Display, HandleAsEGLContext);
                 }
                 IsDisposed = true;
@@ -256,15 +214,11 @@ namespace osuTK.Platform.Egl
         private EglContext GetSharedEglContext(IGraphicsContext sharedContext)
         {
             if (sharedContext == null)
-            {
                 return null;
-            }
 
             var internalContext = sharedContext as IGraphicsContextInternal;
             if (internalContext != null)
-            {
                 return (EglContext)internalContext.Implementation;
-            }
             return (EglContext)sharedContext;
         }
     }

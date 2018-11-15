@@ -114,19 +114,12 @@ namespace osuTK.Platform.Egl
                 ? Platform.Egl.Egl.PLATFORM_ANGLE_TYPE_D3D9_ANGLE
                 : Platform.Egl.Egl.PLATFORM_ANGLE_TYPE_D3D11_ANGLE;
             if (FlagEnabled(flags, GraphicsContextFlags.AngleD3D11))
-            {
                 platform_type = Platform.Egl.Egl.PLATFORM_ANGLE_TYPE_D3D11_ANGLE;
-            }
             else if (FlagEnabled(flags, GraphicsContextFlags.AngleD3D9))
-            {
                 platform_type = Platform.Egl.Egl.PLATFORM_ANGLE_TYPE_D3D9_ANGLE;
-            }
             else if (FlagEnabled(flags, GraphicsContextFlags.AngleOpenGL))
-            {
                 platform_type = Platform.Egl.Egl.PLATFORM_ANGLE_TYPE_OPENGL_ANGLE;
-            }
             else
-            {
                 // make sure the correct flag is set.
                 switch (platform_type)
                 {
@@ -140,7 +133,6 @@ namespace osuTK.Platform.Egl
                         flags |= GraphicsContextFlags.AngleOpenGL;
                         break;
                 }
-            }
 
             var attribs = new[]
             {

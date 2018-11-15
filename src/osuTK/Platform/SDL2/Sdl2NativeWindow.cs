@@ -73,20 +73,14 @@ namespace osuTK.Platform.SDL2
                 flags |= WindowFlags.OPENGL;
                 flags |= WindowFlags.HIDDEN;
                 if (Toolkit.Options.EnableHighResolution)
-                {
                     flags |= WindowFlags.ALLOW_HIGHDPI;
-                }
 
                 if ((flags & WindowFlags.FULLSCREEN_DESKTOP) != 0 ||
                     (flags & WindowFlags.FULLSCREEN) != 0)
-                {
                     window_state = WindowState.Fullscreen;
-                }
 
                 if ((flags & WindowFlags.RESIZABLE) == 0)
-                {
                     window_border = WindowBorder.Fixed;
-                }
 
                 IntPtr handle;
                 lock (SDL.Sync)
@@ -108,19 +102,13 @@ namespace osuTK.Platform.SDL2
             if ((flags & GameWindowFlags.Fullscreen) != 0)
             {
                 if (Sdl2Factory.UseFullscreenDesktop)
-                {
                     windowFlags |= WindowFlags.FULLSCREEN_DESKTOP;
-                }
                 else
-                {
                     windowFlags |= WindowFlags.FULLSCREEN;
-                }
             }
 
             if ((flags & GameWindowFlags.FixedWindow) == 0)
-            {
                 windowFlags |= WindowFlags.RESIZABLE;
-            }
 
             return windowFlags;
         }
@@ -225,20 +213,14 @@ namespace osuTK.Platform.SDL2
             // We need MouseUp events to be reported even if they occur
             // outside the window. SetWindowGrab ensures we get them.
             if (!window.is_cursor_grabbed)
-            {
                 SDL.SetWindowGrab(window.window.Handle,
                     button_pressed ? true : false);
-            }
 
             MouseButton button = Sdl2Mouse.TranslateButton(ev.Button);
             if (button_pressed)
-            {
                 window.OnMouseDown(button);
-            }
             else
-            {
                 window.OnMouseUp(button);
-            }
         }
 
         private static void ProcessKeyEvent(Sdl2NativeWindow window, Event ev)
@@ -246,13 +228,9 @@ namespace osuTK.Platform.SDL2
             bool key_pressed = ev.Key.State == State.Pressed;
             Key key = TranslateKey(ev.Key.Keysym.Scancode);
             if (key_pressed)
-            {
                 window.OnKeyDown(key, ev.Key.Repeat > 0);
-            }
             else
-            {
                 window.OnKeyUp(key);
-            }
         }
 
         private static unsafe void ProcessTextInputEvent(Sdl2NativeWindow window, TextInputEvent ev)
@@ -267,11 +245,9 @@ namespace osuTK.Platform.SDL2
             // Make sure we have enough space to decode this string
             int decoded_length = Encoding.UTF8.GetCharCount(ev.Text, length);
             if (window.DecodeTextBuffer.Length < decoded_length)
-            {
                 Array.Resize(
                     ref window.DecodeTextBuffer,
                     2 * Math.Max(decoded_length, window.DecodeTextBuffer.Length));
-            }
 
             // Decode the string from UTF8 to .Net UTF16
             fixed (char* pBuffer = window.DecodeTextBuffer)
@@ -284,9 +260,7 @@ namespace osuTK.Platform.SDL2
             }
 
             for (int i = 0; i < decoded_length; i++)
-            {
                 window.OnKeyPress(window.DecodeTextBuffer[i]);
-            }
         }
 
         private static void ProcessMouseMotionEvent(Sdl2NativeWindow window, MouseMotionEvent ev)
@@ -405,9 +379,7 @@ namespace osuTK.Platform.SDL2
                 lock (SDL.Sync)
                 {
                     if (windows.ContainsKey(window_id))
-                    {
                         windows.Remove(window_id);
-                    }
                     SDL.DestroyWindow(window.Handle);
                 }
             }
@@ -530,9 +502,7 @@ namespace osuTK.Platform.SDL2
                                     }
 
                                     if (cursor_surface != IntPtr.Zero)
-                                    {
                                         SDL.FreeSurface(cursor_surface);
-                                    }
                                 }
                             }
                         }
@@ -571,14 +541,10 @@ namespace osuTK.Platform.SDL2
                     SDL.PumpEvents();
                     Event e;
                     while (SDL.PollEvent(out e) > 0)
-                    {
                         ProcessEvent(ref e);
-                    }
 
                     if (must_destroy)
-                    {
                         DestroyWindow();
-                    }
                 }
             }
         }
@@ -633,10 +599,8 @@ namespace osuTK.Platform.SDL2
 
                         }
                         else
-                        {
                             // Clear the window icon
                             SDL.SetWindowIcon(window.Handle, IntPtr.Zero);
-                        }
 
                         icon = value;
                         OnIconChanged(EventArgs.Empty);
@@ -652,9 +616,7 @@ namespace osuTK.Platform.SDL2
                 lock (sync)
                 {
                     if (Exists)
-                    {
                         return SDL.GetWindowTitle(window.Handle);
-                    }
                     return String.Empty;
                 }
             }
@@ -663,9 +625,7 @@ namespace osuTK.Platform.SDL2
                 lock (sync)
                 {
                     if (Exists)
-                    {
                         SDL.SetWindowTitle(window.Handle, value);
-                    }
                 }
             }
         }
@@ -691,13 +651,9 @@ namespace osuTK.Platform.SDL2
                     if (Exists)
                     {
                         if (value)
-                        {
                             SDL.ShowWindow(window.Handle);
-                        }
                         else
-                        {
                             SDL.HideWindow(window.Handle);
-                        }
                     }
                 }
             }
@@ -743,9 +699,7 @@ namespace osuTK.Platform.SDL2
                                         SDL.SetWindowFullscreen(window.Handle, (uint)WindowFlags.FULLSCREEN) < 0;
 
                                     if (!success)
-                                    {
                                             Debug.Print("SDL2 failed to enter fullscreen mode: {0}", SDL.GetError());
-                                    }
 
                                     SDL.RaiseWindow(window.Handle);
                                     // There is no "fullscreen" message in the event loop
@@ -770,9 +724,7 @@ namespace osuTK.Platform.SDL2
                             }
 
                             if (!CursorVisible)
-                            {
                                 SetCursorGrab(true);
-                            }
                         }
                     }
                 }
@@ -792,8 +744,6 @@ namespace osuTK.Platform.SDL2
                     lock (sync)
                     {
                         if (Exists)
-                        {
-
                             switch (value)
                             {
                                 case WindowBorder.Resizable:
@@ -810,13 +760,10 @@ namespace osuTK.Platform.SDL2
                                     Debug.WriteLine("SDL2 cannot change to fixed-size windows at runtime.");
                                     break;
                             }
-                        }
                     }
 
                     if (Exists)
-                    {
                         OnWindowBorderChanged(EventArgs.Empty);
-                    }
                 }
             }
         }
@@ -854,9 +801,7 @@ namespace osuTK.Platform.SDL2
                 lock (sync)
                 {
                     if (Exists)
-                    {
                         SDL.SetWindowPosition(window.Handle, value.X, value.Y);
-                    }
                 }
             }
         }
@@ -881,9 +826,7 @@ namespace osuTK.Platform.SDL2
                 lock (sync)
                 {
                     if (Exists)
-                    {
                         SDL.SetWindowSize(window.Handle, value.Width, value.Height);
-                    }
                 }
             }
         }
@@ -894,15 +837,11 @@ namespace osuTK.Platform.SDL2
             {
                 int w, h;
                 if (SDL.Version.Number > 2000)
-                {
                     // SDL > 2.0.0 supports SDL_GL_GetDrawableSize for
                     // hidpi windows.
                     SDL.GL.GetDrawableSize(window.Handle, out w, out h);
-                }
                 else
-                {
                     SDL.GetWindowSize(window.Handle, out w, out h);
-                }
                 return new Size(w, h);
             }
             set
@@ -923,9 +862,7 @@ namespace osuTK.Platform.SDL2
                 lock (sync)
                 {
                     if (!Exists || value == is_cursor_grabbed)
-                    {
                         return;
-                    }
                     SetCursorGrab(value);
                     is_cursor_grabbed = value;
                 }
@@ -943,9 +880,7 @@ namespace osuTK.Platform.SDL2
                 lock (sync)
                 {
                     if (!Exists || value == is_cursor_visible)
-                    {
                         return;
-                    }
                     SetCursorVisible(value);
                     is_cursor_visible = value;
                 }
@@ -963,9 +898,7 @@ namespace osuTK.Platform.SDL2
                         Debug.Print("Disposing {0}", GetType());
 
                         if (Exists)
-                        {
                             DestroyWindow();
-                        }
 
                         if (sdl_cursor != IntPtr.Zero)
                         {
@@ -977,14 +910,12 @@ namespace osuTK.Platform.SDL2
                     {
                         Debug.WriteLine("Sdl2NativeWindow leaked, did you forget to call Dispose()?");
                         if (Exists)
-                        {
                             // If the main loop is still running, send a close message.
                             // This will raise the Closing/Closed events and then destroy
                             // the window.
                             // Todo: it is probably not safe to raise events once the
                             // finalizer has run. Review this.
                             Close();
-                        }
                     }
                     disposed = true;
                 }

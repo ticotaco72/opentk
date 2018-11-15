@@ -41,15 +41,11 @@ namespace osuTK.Platform.SDL2
             // we need to use SDL_CreateWindowFrom in order to
             // convert the foreign window to a SDL window.
             if (window is Sdl2WindowInfo)
-            {
                 Window = window;
-            }
             else
-            {
                 Window = new Sdl2WindowInfo(
                     SDL.CreateWindowFrom(window.Handle),
                     null);
-            }
         }
 
         public Sdl2GraphicsContext(GraphicsMode mode,
@@ -135,19 +131,13 @@ namespace osuTK.Platform.SDL2
             SDL.GL.GetAttribute(ContextAttribute.CONTEXT_PROFILE_MASK, out profile);
 
             if (egl != 0 && (profile & (int)ContextProfileFlags.ES) != 0)
-            {
                 context_flags |= GraphicsContextFlags.Embedded;
-            }
 
             if ((flags & (int)ContextFlags.DEBUG) != 0)
-            {
                 context_flags |= GraphicsContextFlags.Debug;
-            }
 
             if ((profile & (int)ContextProfileFlags.CORE) != 0)
-            {
                 context_flags |= GraphicsContextFlags.ForwardCompatible;
-            }
 
             return new GraphicsMode(
                 new ColorFormat(red, green, blue, alpha),
@@ -200,9 +190,7 @@ namespace osuTK.Platform.SDL2
             }
 
             if (mode.Buffers > 0)
-            {
                 SDL.GL.SetAttribute(ContextAttribute.DOUBLEBUFFER, mode.Buffers > 1 ? 1 : 0);
-            }
 
             if (mode.ColorFormat > 0)
             {
@@ -213,9 +201,7 @@ namespace osuTK.Platform.SDL2
             }
 
             if (mode.Depth > 0)
-            {
                 SDL.GL.SetAttribute(ContextAttribute.DEPTH_SIZE, mode.Depth);
-            }
 
             if (mode.Samples > 0)
             {
@@ -224,14 +210,10 @@ namespace osuTK.Platform.SDL2
             }
 
             if (mode.Stencil > 0)
-            {
                 SDL.GL.SetAttribute(ContextAttribute.STENCIL_SIZE, 1);
-            }
 
             if (mode.Stereo)
-            {
                 SDL.GL.SetAttribute(ContextAttribute.STEREO, 1);
-            }
 
             if (major > 0)
             {
@@ -246,9 +228,7 @@ namespace osuTK.Platform.SDL2
                     // According to https://developer.apple.com/graphicsimaging/opengl/capabilities/GLInfo_1075_Core.html
                     // Mac OS X supports 3.2+. Indeed, requesting 3.0 or 3.1 results in failure.
                     if (major == 3 && minor < 2)
-                    {
                         minor = 2;
-                    }
                 }
 
                 SDL.GL.SetAttribute(ContextAttribute.CONTEXT_MAJOR_VERSION, major);
@@ -256,9 +236,7 @@ namespace osuTK.Platform.SDL2
             }
 
             if ((flags & GraphicsContextFlags.Debug) != 0)
-            {
                 SDL.GL.SetAttribute(ContextAttribute.CONTEXT_FLAGS, ContextFlags.DEBUG);
-            }
 
             /*
             if ((flags & GraphicsContextFlags.Robust) != 0)
@@ -280,26 +258,18 @@ namespace osuTK.Platform.SDL2
                 }
 
                 if ((flags & GraphicsContextFlags.ForwardCompatible) != 0)
-                {
                     cpflags |= ContextProfileFlags.CORE;
-                }
 
                 if (cpflags != 0)
-                {
                     SDL.GL.SetAttribute(ContextAttribute.CONTEXT_PROFILE_MASK, cpflags);
-                }
             }
 
             if (shareContext != null)
             {
                 if (shareContext.IsCurrent)
-                {
                     SDL.GL.SetAttribute(ContextAttribute.SHARE_WITH_CURRENT_CONTEXT, 1);
-                }
                 else
-                {
                     Trace.WriteLine("Warning: SDL2 requires a shared context to be current before sharing. Sharing failed.");
-                }
             }
         }
 
@@ -317,18 +287,12 @@ namespace osuTK.Platform.SDL2
         {
             int result = 0;
             if (window != null)
-            {
                 result = SDL.GL.MakeCurrent(window.Handle, SdlContext.Handle);
-            }
             else
-            {
                 result = SDL.GL.MakeCurrent(IntPtr.Zero, IntPtr.Zero);
-            }
 
             if (result < 0)
-            {
                 Debug.Print("SDL2 MakeCurrent failed with: {0}", SDL.GetError());
-            }
         }
 
         public override IntPtr GetAddress(IntPtr function)
@@ -353,9 +317,7 @@ namespace osuTK.Platform.SDL2
             set
             {
                 if (SDL.GL.SetSwapInterval(value) < 0)
-                {
                     Debug.Print("SDL2 failed to set swap interval: {0}", SDL.GetError());
-                }
             }
         }
 
@@ -372,10 +334,8 @@ namespace osuTK.Platform.SDL2
                     }
                 }
                 else
-                {
                     Debug.Print("Sdl2GraphicsContext (handle: {0}) leaked, did you forget to call Dispose()?",
                         Handle);
-                }
                 IsDisposed = true;
             }
         }
