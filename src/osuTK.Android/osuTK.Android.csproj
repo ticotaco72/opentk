@@ -1,4 +1,4 @@
-<Project Sdk="MSBuild.Sdk.Extras/1.6.55">
+﻿<Project Sdk="MSBuild.Sdk.Extras/1.6.55" ToolsVersion="15.0">
   <Import Project="..\Common.props" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -7,6 +7,7 @@
     <PackageVersion>1.0.8</PackageVersion>
     <PackageId>ppy.osuTK.Android</PackageId>
     <Title>ppy.osuTK.Android</Title>
+    <TargetFramework>monoandroid81</TargetFramework>
     <RootNamespace>osuTK.Android</RootNamespace>
     <AssemblyName>osuTK.Android</AssemblyName>
     <OutputPath>bin/$(Configuration)/</OutputPath>
