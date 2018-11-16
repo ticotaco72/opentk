@@ -563,6 +563,8 @@ namespace osuTK.iOS
             }
             GraphicsContext = new GraphicsContext(GraphicsMode.Default, WindowInfo, major, minor, GraphicsContextFlags.Embedded);
             GraphicsContext.MakeCurrent(WindowInfo);
+            GraphicsContext.LoadAll();
+
             gl = GLCalls.GetGLCalls(ContextRenderingApi);
 
             int oldFramebuffer = 0;

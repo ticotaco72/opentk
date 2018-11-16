@@ -27,10 +27,12 @@ namespace osuTK.iOS
             iOSGraphicsContext shared = sharedContext as iOSGraphicsContext;
 
             EAGLRenderingAPI version = 0;
-            if (major == 1 && minor == 1)
+            if (major == 1)
                 version = EAGLRenderingAPI.OpenGLES1;
-            else if (major == 2 && minor == 0)
+            else if (major == 2)
                 version = EAGLRenderingAPI.OpenGLES2;
+            else if (major == 3)
+                version = EAGLRenderingAPI.OpenGLES3;
             else
                 throw new ArgumentException(string.Format("Unsupported GLES version {0}.{1}.", major, minor));
 
