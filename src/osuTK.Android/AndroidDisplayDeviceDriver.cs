@@ -19,7 +19,7 @@ namespace osuTK.Platform.Android
             dev.BitsPerPixel = 16;
         }
 
-        public List<DisplayDevice> AvailableDevices => new List<DisplayDevice>(new DisplayDevice[] { dev });
+        public List<DisplayDevice> AvailableDevices { get; } = new List<DisplayDevice> { dev };
 
         public DisplayDevice GetDisplay(DisplayIndex displayIndex) =>
             (displayIndex == DisplayIndex.First || displayIndex == DisplayIndex.Primary) ? dev : null;
