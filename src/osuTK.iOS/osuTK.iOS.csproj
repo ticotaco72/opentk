@@ -4,6 +4,9 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Library</OutputType>
+    <PackageVersion>1.0.8</PackageVersion>
+    <PackageId>ppy.osuTK.iOS</PackageId>
+    <Title>ppy.osuTK.iOS</Title>
     <RootNamespace>osuTK.iOS</RootNamespace>
     <AssemblyName>osuTK.iOS</AssemblyName>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>

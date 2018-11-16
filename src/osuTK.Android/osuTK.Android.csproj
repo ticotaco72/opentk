@@ -4,6 +4,9 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <OutputType>Library</OutputType>
+    <PackageVersion>1.0.8</PackageVersion>
+    <PackageId>ppy.osuTK.Android</PackageId>
+    <Title>ppy.osuTK.Android</Title>
     <RootNamespace>osuTK.Android</RootNamespace>
     <AssemblyName>osuTK.Android</AssemblyName>
     <OutputPath>bin/$(Configuration)/</OutputPath>
