@@ -9,7 +9,7 @@ using System;
 using osuTK.Graphics;
 using osuTK.Platform;
 
-namespace osuTK.Android
+namespace osuTK.Platform.Android
 {
     internal sealed class AndroidFactory : PlatformFactoryBase
     {

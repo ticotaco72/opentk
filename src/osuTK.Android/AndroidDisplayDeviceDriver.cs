@@ -12,9 +12,9 @@ namespace osuTK.Platform.Android
     internal class AndroidDisplayDeviceDriver : IDisplayDeviceDriver
     {
         private static DisplayDevice dev;
-        static AndroidDisplayDeviceDriver ()
+        static AndroidDisplayDeviceDriver()
         {
-            dev = new DisplayDevice ();
+            dev = new DisplayDevice();
             dev.IsPrimary = true;
             dev.BitsPerPixel = 16;
         }

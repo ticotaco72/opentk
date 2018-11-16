@@ -27,7 +27,7 @@ using Android.Graphics;
 using osuTK.Platform.Egl;
 using SurfaceType = Android.Views.SurfaceType;
 
-namespace osuTK.Android
+namespace osuTK.Platform.Android
 {
     [Register ("osutk/android/AndroidGameView")]
     public partial class AndroidGameView : GameViewBase, ISurfaceHolderCallback
