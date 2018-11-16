@@ -307,7 +307,7 @@ namespace osuTK.Graphics
                 (this as IGraphicsContextInternal).Context == (obj as IGraphicsContextInternal).Context;
         }
 
-        private static void AddContext(IGraphicsContextInternal context)
+        public static void AddContext(IGraphicsContextInternal context)
         {
             ContextHandle ctx = context.Context;
             if (!available_contexts.ContainsKey(ctx))
@@ -322,7 +322,7 @@ namespace osuTK.Graphics
             }
         }
 
-        private static void RemoveContext(IGraphicsContextInternal context)
+        public static void RemoveContext(IGraphicsContextInternal context)
         {
             ContextHandle ctx = context.Context;
             if (available_contexts.ContainsKey(ctx))
@@ -367,7 +367,7 @@ namespace osuTK.Graphics
             }
         }
 
-        internal static GetCurrentContextDelegate GetCurrentContext;
+        public static GetCurrentContextDelegate GetCurrentContext;
 
         /// <summary>
         /// Gets the handle of the current GraphicsContext in the calling thread.

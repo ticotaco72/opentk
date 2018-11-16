@@ -25,6 +25,8 @@
 
 using System;
 using System.Diagnostics;
+using System.Reflection;
+using System.Linq;
 
 namespace osuTK.Platform
 {
@@ -89,12 +91,10 @@ namespace osuTK.Platform
                 // using the same API.
                 Embedded = Default;
             }
-#if IPHONE
             else if (Configuration.RunningOnIOS)
             {
-                Embedded = new iPhoneOS.iPhoneFactory();
+                Embedded = CreateFactoryForType("osuTK.iOS.iOSFactory");
             }
-#else
             else if (Egl.Egl.IsSupported)
             {
                 if (Configuration.RunningOnLinux)
@@ -119,9 +119,10 @@ namespace osuTK.Platform
                     Embedded = new Egl.EglMacPlatformFactory();
                 }
 #endif
-#if ANDROID
-                else if (Configuration.RunningOnAndroid) Embedded = new Android.AndroidFactory();
-#endif
+                else if (Configuration.RunningOnAndroid)
+                {
+                    Embedded = CreateFactoryForType("osuTK.Android.AndroidFactory");
+                }
                 else
                 {
                     Embedded = new UnsupportedPlatform();
@@ -133,7 +134,6 @@ namespace osuTK.Platform
                 Angle = new Egl.EglAnglePlatformFactory(Embedded);
 #endif
             }
-#endif
             else
             {
                 Embedded = new UnsupportedPlatform();
@@ -144,6 +144,24 @@ namespace osuTK.Platform
             {
                 Default = Embedded;
             }
+        }
+
+        private static IPlatformFactory CreateFactoryForType(string typeName)
+        {
+            try
+            {
+                foreach (Assembly assembly in AppDomain.CurrentDomain.GetAssemblies().Where(x => x.GetName().Name.StartsWith("osuTK")))
+                {
+                    Type type = assembly.GetExportedTypes().FirstOrDefault(x => x.FullName == typeName);
+                    if (type != null)
+                        return type.GetConstructor(new Type[0]).Invoke(new object[0]) as IPlatformFactory;
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine($"Error instantiating type: {typeName}");
+            }
+            return new UnsupportedPlatform();
         }
 
         public static IPlatformFactory Default { get; private set; }

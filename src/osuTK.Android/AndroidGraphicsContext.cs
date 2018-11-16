@@ -5,8 +5,6 @@
  * See license.txt for licensing detailed licensing details.
  */
 
-#if ANDROID
-
 using System;
 using System.Runtime.InteropServices;
 using Android.Util;
@@ -17,7 +15,7 @@ using Javax.Microedition.Khronos.Egl;
 using osuTK.Graphics;
 using osuTK.Platform.Egl;
 
-namespace osuTK.Platform.Android {
+namespace osuTK.Android {
     internal class AndroidGraphicsContext : EglContext
     {
         public AndroidGraphicsContext(GraphicsMode mode, EglWindowInfo window, IGraphicsContext sharedContext,
@@ -156,5 +154,3 @@ namespace osuTK.Platform.Android {
         }
     }
 }
-
-#endif

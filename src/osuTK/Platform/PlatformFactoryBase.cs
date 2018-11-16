@@ -39,7 +39,7 @@ namespace osuTK.Platform
     /// for all platform backends. IPlatformFactory implementations
     /// should inherit from this class.
     /// </summary>
-    internal abstract class PlatformFactoryBase : IPlatformFactory
+    public abstract class PlatformFactoryBase : IPlatformFactory
     {
         private static readonly object sync = new object();
         private readonly List<IDisposable> Resources = new List<IDisposable>();

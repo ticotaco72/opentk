@@ -5,12 +5,11 @@
  * See license.txt for licensing detailed licensing details.
  */
 
-#if ANDROID
-
 using System;
 using osuTK.Graphics;
+using osuTK.Platform;
 
-namespace osuTK.Platform.Android
+namespace osuTK.Android
 {
     internal sealed class AndroidFactory : PlatformFactoryBase
     {
@@ -60,5 +59,3 @@ namespace osuTK.Platform.Android
         }
     }
 }
-
-#endif
