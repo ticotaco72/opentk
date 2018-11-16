@@ -29,7 +29,7 @@ using osuTK.Graphics;
 
 namespace osuTK.Platform.Egl
 {
-    internal abstract class EglContext : EmbeddedGraphicsContext
+    public abstract class EglContext : EmbeddedGraphicsContext
     {
         protected readonly RenderableFlags Renderable;
         internal EglWindowInfo WindowInfo;

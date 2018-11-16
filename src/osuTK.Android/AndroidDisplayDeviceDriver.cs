@@ -1,15 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using osuTK.Platform;
+/* Licensed under the MIT/X11 license.
+ * Copyright (c) 2011 Xamarin, Inc.
+ * Copyright 2013 Xamarin Inc
+ * This notice may not be removed from any source distribution.
+ * See license.txt for licensing detailed licensing details.
+ */
 
-namespace osuTK.Android
+using System.Collections.Generic;
+
+namespace osuTK.Platform.Android
 {
-    public class AndroidDisplayDeviceDriver : IDisplayDeviceDriver
+    internal class AndroidDisplayDeviceDriver : IDisplayDeviceDriver
     {
         private static DisplayDevice dev;
-        static AndroidDisplayDeviceDriver()
+        static AndroidDisplayDeviceDriver ()
         {
-            dev = new DisplayDevice();
+            dev = new DisplayDevice ();
             dev.IsPrimary = true;
             dev.BitsPerPixel = 16;
         }

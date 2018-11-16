@@ -1,93 +1,156 @@
-﻿using System;
+/* Licensed under the MIT/X11 license.
+ * Copyright (c) 2011 Xamarin, Inc.
+ * Copyright 2013 Xamarin Inc
+ * This notice may not be removed from any source distribution.
+ * See license.txt for licensing detailed licensing details.
+ */
+
+using System;
+using System.Runtime.InteropServices;
+using Android.Util;
+using Android.Views;
+using Android.Runtime;
+using Javax.Microedition.Khronos.Egl;
+
 using osuTK.Graphics;
-using osuTK.Platform;
+using osuTK.Platform.Egl;
 
-namespace osuTK.Android
-{
-    public class AndroidGraphicsContext : IGraphicsContext, IGraphicsContextInternal
+namespace osuTK.Android {
+    internal class AndroidGraphicsContext : EglContext
     {
-        internal AndroidGraphicsContext(ContextHandle h)
+        public AndroidGraphicsContext(GraphicsMode mode, EglWindowInfo window, IGraphicsContext sharedContext,
+            int major, int minor, GraphicsContextFlags flags)
+            : base(mode, window, sharedContext, major, minor, flags)
         {
-            // TODO: assign handle for existing context
         }
 
-        internal AndroidGraphicsContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext sharedContext, int major, int minor, GraphicsContextFlags flags)
+        public AndroidGraphicsContext(ContextHandle handle, EglWindowInfo window, IGraphicsContext sharedContext,
+            int major, int minor, GraphicsContextFlags flags)
+            : base(handle, window, sharedContext, major, minor, flags)
         {
-            // TODO: create new opengles context
         }
 
-        // TODO: check whether the context is current
-        public bool IsCurrent => throw new NotImplementedException();
-
-        // TODO: check whether the context is disposed
-        public bool IsDisposed => throw new NotImplementedException();
-
-        public int SwapInterval
+        protected override IntPtr GetStaticAddress(IntPtr function, RenderableFlags renderable)
         {
-            get => throw new NotSupportedException();
-            set => throw new NotSupportedException();
-        }
-
-        public GraphicsMode GraphicsMode => throw new NotImplementedException();
-
-        public bool ErrorChecking
-        {
-            get => false;
-            set { }
-        }
-
-        public IGraphicsContext Implementation => this;
-
-        public ContextHandle Context { get; }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            // TODO: free opengles context
-        }
-
-        ~AndroidGraphicsContext()
-        {
-            Dispose(false);
-        }
-
-        public IntPtr GetAddress(string function)
-        {
-            // TODO: get opengles function address
             return IntPtr.Zero;
         }
+    }
 
-        public IntPtr GetAddress(IntPtr function)
+    public class AndroidWindow : IWindowInfo, IDisposable
+    {
+        private bool disposed;
+        private WeakReference refHolder;
+        private EglWindowInfo eglWindowInfo;
+
+        // Get native window from surface
+        [DllImport("android")]
+        private static extern IntPtr ANativeWindow_fromSurface(IntPtr jni, IntPtr surface);
+
+        // Get native window from surface
+        [DllImport("android")]
+        private static extern void ANativeWindow_release(IntPtr surface);
+
+        public IntPtr Handle { get { return eglWindowInfo != null ? eglWindowInfo.Handle : IntPtr.Zero; } }
+
+        public bool HasSurface
         {
-            // TODO: get opengles function address
-            return IntPtr.Zero;
+            get { return eglWindowInfo != null && eglWindowInfo.Surface != IntPtr.Zero; }
         }
 
-        public void LoadAll()
+        public ISurfaceHolder Holder {
+            get {
+                return refHolder.Target as ISurfaceHolder;
+            }
+        }
+        public AndroidWindow (ISurfaceHolder holder)
         {
+            refHolder = new WeakReference (holder);
         }
 
-        public void MakeCurrent(IWindowInfo window)
+        internal EglWindowInfo CreateEglWindowInfo()
         {
-            // TODO: make opengles context current
-            throw new NotImplementedException();
+            UpdateEglWindowInfo();
+            return eglWindowInfo;
         }
 
-        public void SwapBuffers()
+        public void CreateSurface(IntPtr config)
         {
-            // TODO: swap/present renderbuffer
-            throw new NotImplementedException();
+            UpdateEglWindowInfo();
+
+            if (refHolder.Target == null) {
+                eglWindowInfo.CreatePbufferSurface(config);
+                return;
+            }
+
+            eglWindowInfo.CreateWindowSurface(config);
         }
 
-        public void Update(IWindowInfo window)
+        private void UpdateEglWindowInfo()
         {
-            // TODO: not sure if necessary for android
-            throw new NotSupportedException();
+            if (eglWindowInfo == null)
+                eglWindowInfo = new EglWindowInfo(IntPtr.Zero, IntPtr.Zero);
+
+            var newHandle = IntPtr.Zero;
+            var holder = Holder;
+            if (holder != null && holder.Surface != null)
+            {
+                newHandle = ANativeWindow_fromSurface(JNIEnv.Handle, holder.Surface.Handle);
+            }
+
+            // Do we need to recreate eglWindowInfo?
+            if (eglWindowInfo != null && eglWindowInfo.Handle == newHandle)
+            {
+                // Same, we can release this reference
+                if (newHandle != IntPtr.Zero)
+                    ANativeWindow_release(newHandle);
+            }
+            else
+            {
+                DestroySurface();
+
+                eglWindowInfo.Handle = newHandle;
+            }
+        }
+
+        public void DestroySurface ()
+        {
+            eglWindowInfo.DestroySurface();
+
+            // Release window handle
+            if (eglWindowInfo.Handle != IntPtr.Zero)
+            {
+                ANativeWindow_release(eglWindowInfo.Handle);
+                eglWindowInfo.Handle = IntPtr.Zero;
+            }
+        }
+
+        public void TerminateDisplay ()
+        {
+            eglWindowInfo.TerminateDisplay();
+        }
+
+        public void Dispose ()
+        {
+            Dispose (true);
+            GC.SuppressFinalize (this);
+        }
+
+        private void Dispose (bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing) {
+                    DestroySurface ();
+                    TerminateDisplay ();
+                    refHolder = null;
+                    disposed = true;
+                }
+            }
+        }
+
+        ~AndroidWindow ()
+        {
+            Dispose (false);
         }
     }
 }
