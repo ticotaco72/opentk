@@ -586,6 +586,10 @@ src/osuTK/Graphics/ES11/ES11.cs
 src/osuTK/Graphics/ES11/ES11Enums.cs
 src/osuTK/Graphics/ES20/ES20.cs
 src/osuTK/Graphics/ES20/ES20Enums.cs
+src/osuTK/Graphics/ES30/ES30.cs
+src/osuTK/Graphics/ES30/ES30Enums.cs
+src/osuTK/Graphics/ES31/ES31.cs
+src/osuTK/Graphics/ES31/ES31.Enums.cs
 src/osuTK/Graphics/OpenGL/GL.cs
 src/osuTK/Graphics/OpenGL/GLEnums.cs
 src/osuTK/Graphics/OpenGL4/GL4.cs
