@@ -1,12 +1,10 @@
-/* Licensed under the MIT/X11 license.
+﻿/* Licensed under the MIT/X11 license.
  * Copyright (c) 2009 Novell, Inc.
  * Copyright 2013 Xamarin Inc
  * This notice may not be removed from any source distribution.
  * See license.txt for licensing detailed licensing details.
  */
 // Copyright 2011 Xamarin Inc. All rights reserved.
-
-#if IPHONE
 
 using System;
 using System.ComponentModel;
@@ -19,18 +17,16 @@ using OpenGLES;
 using UIKit;
 using ObjCRuntime;
 
-using osuTK;
 using osuTK.Graphics;
 using osuTK.Input;
 using osuTK.Platform;
-using osuTK.Platform.iPhoneOS;
 
 using All  = osuTK.Graphics.ES11.All;
 using ES11 = osuTK.Graphics.ES11;
 using ES20 = osuTK.Graphics.ES20;
 using ES30 = osuTK.Graphics.ES30;
 
-namespace osuTK.Platform.iPhoneOS
+namespace osuTK.iOS
 {
     internal sealed class GLCalls {
         public delegate void glBindFramebuffer(All target, int framebuffer);
@@ -141,10 +137,10 @@ namespace osuTK.Platform.iPhoneOS
         private const string selectorName = "runIteration:";
         private static Selector selRunIteration = new Selector (selectorName);
 
-        private iPhoneOSGameView view;
+        private iOSGameView view;
         private CADisplayLink displayLink;
 
-        public CADisplayLinkTimeSource (iPhoneOSGameView view, int frameInterval)
+        public CADisplayLinkTimeSource (iOSGameView view, int frameInterval)
         {
             this.view = view;
 
@@ -189,9 +185,9 @@ namespace osuTK.Platform.iPhoneOS
         private TimeSpan timeout;
         private NSTimer timer;
 
-        private iPhoneOSGameView view;
+        private iOSGameView view;
 
-        public NSTimerTimeSource (iPhoneOSGameView view, double updatesPerSecond)
+        public NSTimerTimeSource (iOSGameView view, double updatesPerSecond)
         {
             this.view = view;
 
@@ -226,7 +222,7 @@ namespace osuTK.Platform.iPhoneOS
         }
     }
 
-    public class iPhoneOSGameView : UIView, IGameWindow
+    public class iOSGameView : UIView, IGameWindow
     {
         private bool suspended;
         private bool disposed;
@@ -243,14 +239,14 @@ namespace osuTK.Platform.iPhoneOS
         private IWindowInfo windowInfo = Utilities.CreateDummyWindowInfo();
 
         [Export("initWithCoder:")]
-        public iPhoneOSGameView(NSCoder coder)
+        public iOSGameView(NSCoder coder)
             : base(coder)
         {
             stopwatch = new System.Diagnostics.Stopwatch ();
         }
 
         [Export("initWithFrame:")]
-        public iPhoneOSGameView(System.Drawing.RectangleF frame)
+        public iOSGameView(RectangleF frame)
             : base(frame)
         {
             stopwatch = new System.Diagnostics.Stopwatch ();
@@ -299,14 +295,14 @@ namespace osuTK.Platform.iPhoneOS
             get {
                 AssertValid();
                 if (GraphicsContext != null) {
-                    iPhoneOSGraphicsContext c = GraphicsContext as iPhoneOSGraphicsContext;
+                    iOSGraphicsContext c = GraphicsContext as iOSGraphicsContext;
                     if (c != null)
                     {
                         return c.EAGLContext;
                     }
                     var i = GraphicsContext as IGraphicsContextInternal;
                     IGraphicsContext ic = i == null ? null : i.Implementation;
-                    c = ic as iPhoneOSGraphicsContext;
+                    c = ic as iOSGraphicsContext;
                     if (c != null)
                     {
                         return c.EAGLContext;
@@ -398,14 +394,7 @@ namespace osuTK.Platform.iPhoneOS
             }
         }
 
-        protected virtual void OnTitleChanged(EventArgs e)
-        {
-            var h = TitleChanged;
-            if (h != null)
-            {
-                h (this, EventArgs.Empty);
-            }
-        }
+        protected virtual void OnTitleChanged(EventArgs e) => TitleChanged?.Invoke(this, EventArgs.Empty);
 
         bool INativeWindow.Focused {
             get {throw new NotImplementedException(); }
@@ -425,14 +414,7 @@ namespace osuTK.Platform.iPhoneOS
             }
         }
 
-        protected virtual void OnVisibleChanged(EventArgs e)
-        {
-            var h = VisibleChanged;
-            if (h != null)
-            {
-                h (this, EventArgs.Empty);
-            }
-        }
+        protected virtual void OnVisibleChanged(EventArgs e) => VisibleChanged?.Invoke(this, EventArgs.Empty);
 
         bool INativeWindow.Exists {
             get {throw new NotImplementedException(); }
@@ -479,14 +461,7 @@ namespace osuTK.Platform.iPhoneOS
             }
         }
 
-        protected virtual void OnWindowStateChanged(EventArgs e)
-        {
-            var h = WindowStateChanged;
-            if (h != null)
-            {
-                h (this, EventArgs.Empty);
-            }
-        }
+        protected virtual void OnWindowStateChanged(EventArgs e) => WindowStateChanged?.Invoke(this, EventArgs.Empty);
 
         public virtual WindowBorder WindowBorder {
             get {
@@ -496,68 +471,70 @@ namespace osuTK.Platform.iPhoneOS
             set {}
         }
 
-        Rectangle INativeWindow.Bounds {
-            get {throw new NotSupportedException(); }
-            set {throw new NotSupportedException(); }
-        }
-
-        Point INativeWindow.Location {
-            get {throw new NotSupportedException(); }
-            set {throw new NotSupportedException(); }
-        }
-
-        private Size size;
-        public Size Size {
-            get {
-                AssertValid();
-                return size;
-            }
-            set {
-                AssertValid();
-                if (size != value) {
-                    size = value;
-                    OnResize(EventArgs.Empty);
-                }
-            }
-        }
-
-        protected virtual void OnResize(EventArgs e)
+        Rectangle INativeWindow.Bounds
         {
-            var h = Resize;
-            if (h != null)
+            get => new Rectangle((int)Layer.Frame.X, (int)Layer.Frame.Y, (int)Layer.Frame.Width, (int)Layer.Frame.Height);
+            set { }
+        }
+
+
+        public Point Location
+        {
+            get => new Point((int)Layer.Frame.X, (int)Layer.Frame.Y);
+            set { }
+        }
+
+
+        public Size Size
+        {
+            get => new Size((int)Layer.Frame.Width, (int)Layer.Frame.Height);
+            set
             {
-                h (this, e);
+                if (value.Width == Layer.Frame.Width && value.Height == Layer.Frame.Height)
+                    return;
+                // TODO: resize layer
+                OnResize(EventArgs.Empty);
             }
         }
 
-        int INativeWindow.X {
-            get {throw new NotSupportedException(); }
-            set {throw new NotSupportedException(); }
+
+        protected virtual void OnResize(EventArgs e) => Resize?.Invoke(this, e);
+
+        public int X
+        {
+            get => (int)Layer.Frame.X;
+            set { }
         }
 
-        int INativeWindow.Y {
-            get {throw new NotSupportedException(); }
-            set {throw new NotSupportedException(); }
+        public int Y
+        {
+            get => (int)Layer.Frame.Y;
+            set { }
         }
 
-        int INativeWindow.Width {
-            get {throw new NotSupportedException(); }
-            set {throw new NotSupportedException(); }
+        public int Width
+        {
+            get => (int)Layer.Frame.Width;
+            set { }
         }
 
-        int INativeWindow.Height {
-            get {throw new NotSupportedException(); }
-            set {throw new NotSupportedException(); }
+        public int Height
+        {
+            get => (int)Layer.Frame.Height;
+            set { }
         }
 
-        Rectangle INativeWindow.ClientRectangle {
-            get {throw new NotSupportedException(); }
-            set {throw new NotSupportedException(); }
+
+        public Rectangle ClientRectangle
+        {
+            get => new Rectangle(0, 0, (int)Layer.Bounds.Size.Width, (int)Layer.Bounds.Size.Height);
+            set { }
         }
 
-        Size INativeWindow.ClientSize {
-            get {throw new NotSupportedException(); }
-            set {throw new NotSupportedException(); }
+        public Size ClientSize
+        {
+            get => new Size((int)Layer.Frame.Width, (int)Layer.Frame.Height);
+            set { }
         }
 
         protected virtual void CreateFrameBuffer()
@@ -586,6 +563,8 @@ namespace osuTK.Platform.iPhoneOS
             }
             GraphicsContext = new GraphicsContext(GraphicsMode.Default, WindowInfo, major, minor, GraphicsContextFlags.Embedded);
             GraphicsContext.MakeCurrent(WindowInfo);
+            GraphicsContext.LoadAll();
+
             gl = GLCalls.GetGLCalls(ContextRenderingApi);
 
             int oldFramebuffer = 0;
@@ -683,14 +662,7 @@ namespace osuTK.Platform.iPhoneOS
             OnClosed(EventArgs.Empty);
         }
 
-        protected virtual void OnClosed(EventArgs e)
-        {
-            var h = Closed;
-            if (h != null)
-            {
-                h (this, e);
-            }
-        }
+        protected virtual void OnClosed(EventArgs e) => Closed?.Invoke(this, e);
 
         protected override void Dispose(bool disposing)
         {
@@ -719,29 +691,9 @@ namespace osuTK.Platform.iPhoneOS
             }
         }
 
-        protected virtual void OnDisposed(EventArgs e)
-        {
-            var h = Disposed;
-            if (h != null)
-            {
-                h (this, e);
-            }
-        }
+        protected virtual void OnDisposed(EventArgs e) => Disposed?.Invoke(this, e);
 
-        void INativeWindow.ProcessEvents()
-        {
-            throw new NotSupportedException();
-        }
-
-        Point INativeWindow.PointToClient(Point point)
-        {
-            return point;
-        }
-
-        Point INativeWindow.PointToScreen(Point point)
-        {
-            return point;
-        }
+        void INativeWindow.ProcessEvents() => throw new NotSupportedException();
 
         public override void LayoutSubviews()
         {
@@ -782,7 +734,7 @@ namespace osuTK.Platform.iPhoneOS
             RunWithFrameInterval (1);
         }
 
-        public void Run (double updatesPerSecond)
+        public void Run(double updatesPerSecond)
         {
             if (updatesPerSecond < 0.0)
             {
@@ -794,25 +746,25 @@ namespace osuTK.Platform.iPhoneOS
                 return;
             }
 
-        if (timesource != null)
-        {
-            timesource.Invalidate ();
-        }
+            if (timesource != null)
+            {
+                timesource.Invalidate ();
+            }
 
             timesource = new NSTimerTimeSource (this, updatesPerSecond);
 
             CreateFrameBuffer ();
             OnLoad (EventArgs.Empty);
-        Start ();
+            Start ();
         }
 
-    [Obsolete ("Use either Run (float updatesPerSecond) or RunWithFrameInterval (int frameInterval)")]
-    public void Run (int frameInterval)
-    {
-        RunWithFrameInterval (frameInterval);
-    }
+        [Obsolete ("Use either Run (float updatesPerSecond) or RunWithFrameInterval (int frameInterval)")]
+        public void Run(int frameInterval)
+        {
+            RunWithFrameInterval (frameInterval);
+        }
 
-        public void RunWithFrameInterval (int frameInterval)
+        public void RunWithFrameInterval(int frameInterval)
         {
             AssertValid ();
 
@@ -834,11 +786,11 @@ namespace osuTK.Platform.iPhoneOS
         }
 
         private void Start ()
-    {
-        prevUpdateTime = TimeSpan.Zero;
-        prevRenderTime = TimeSpan.Zero;
-        Resume ();
-    }
+        {
+            prevUpdateTime = TimeSpan.Zero;
+            prevRenderTime = TimeSpan.Zero;
+            Resume ();
+        }
 
         public void Stop()
         {
@@ -954,183 +906,92 @@ namespace osuTK.Platform.iPhoneOS
         private FrameEventArgs updateEventArgs = new FrameEventArgs();
         private FrameEventArgs renderEventArgs = new FrameEventArgs();
 
+        protected virtual bool ShouldCallOnUpdate => true;
+        protected virtual bool ShouldCallOnRender => true;
+
         internal void RunIteration (NSTimer timer)
         {
-            var curUpdateTime = stopwatch.Elapsed;
-            if (prevUpdateTime.Ticks != 0) {
-                var t = (curUpdateTime - prevUpdateTime).TotalSeconds;
-                updateEventArgs.Time = t;
-            }
-            OnUpdateFrame(updateEventArgs);
-            prevUpdateTime = curUpdateTime;
-
-            gl.BindFramebuffer(All.FramebufferOes, framebuffer);
-
-            var curRenderTime = stopwatch.Elapsed;
-            if (prevRenderTime.Ticks == 0) {
-                var t = (curRenderTime - prevRenderTime).TotalSeconds;
-                renderEventArgs.Time = t;
-            }
-            OnRenderFrame(renderEventArgs);
-            prevRenderTime = curRenderTime;
-        }
-
-        protected virtual void OnLoad(EventArgs e)
-        {
-            var h = Load;
-            if (h != null)
+            if (ShouldCallOnUpdate)
             {
-                h (this, e);
+                var curUpdateTime = stopwatch.Elapsed;
+                if (prevUpdateTime.Ticks != 0)
+                {
+                    var t = (curUpdateTime - prevUpdateTime).TotalSeconds;
+                    updateEventArgs.Time = t;
+                }
+                OnUpdateFrame(updateEventArgs);
+                prevUpdateTime = curUpdateTime;
+            }
+
+            if (ShouldCallOnRender)
+            {
+                gl.BindFramebuffer(All.FramebufferOes, framebuffer);
+
+                var curRenderTime = stopwatch.Elapsed;
+                if (prevRenderTime.Ticks == 0)
+                {
+                    var t = (curRenderTime - prevRenderTime).TotalSeconds;
+                    renderEventArgs.Time = t;
+                }
+                OnRenderFrame(renderEventArgs);
+                prevRenderTime = curRenderTime;
             }
         }
+
+        protected virtual void OnLoad(EventArgs e) => Load?.Invoke(this, e);
 
         protected virtual void OnUnload(EventArgs e)
         {
             var h = Unload;
             DestroyFrameBuffer();
-            if (h != null)
-            {
-                h (this, e);
-            }
+            h?.Invoke(this, e);
         }
 
-        protected virtual void OnUpdateFrame(FrameEventArgs e)
-        {
-            var h = UpdateFrame;
-            if (h != null)
-            {
-                h (this, e);
-            }
-        }
+        protected virtual void OnUpdateFrame(FrameEventArgs e) => UpdateFrame?.Invoke(this, e);
 
-        protected virtual void OnRenderFrame(FrameEventArgs e)
-        {
-            var h = RenderFrame;
-            if (h != null)
-            {
-                h (this, e);
-            }
-        }
+        protected virtual void OnRenderFrame(FrameEventArgs e) => RenderFrame?.Invoke(this, e);
 
-        event EventHandler<EventArgs> INativeWindow.Move {
-            add {throw new NotSupportedException(); }
-            remove {throw new NotSupportedException(); }
-        }
+        public Point PointToClient(Point point) => point;
+        public Point PointToScreen(Point point) => point;
+
+        public event EventHandler<EventArgs> Move;
         public event EventHandler<EventArgs> Resize;
-        event EventHandler<CancelEventArgs> INativeWindow.Closing {
-            add {throw new NotSupportedException(); }
-            remove {throw new NotSupportedException(); }
-        }
+        public event EventHandler<CancelEventArgs> Closing;
         public event EventHandler<EventArgs> Closed;
         public event EventHandler<EventArgs> Disposed;
+        public event EventHandler<EventArgs> IconChanged;
         public event EventHandler<EventArgs> TitleChanged;
         public event EventHandler<EventArgs> VisibleChanged;
-        event EventHandler<EventArgs> INativeWindow.FocusedChanged {
-            add {throw new NotSupportedException(); }
-            remove {throw new NotSupportedException(); }
-        }
-        event EventHandler<EventArgs> INativeWindow.WindowBorderChanged {
-            add {throw new NotSupportedException(); }
-            remove {throw new NotSupportedException(); }
-        }
+        public event EventHandler<EventArgs> FocusedChanged;
+        public event EventHandler<EventArgs> WindowBorderChanged;
         public event EventHandler<EventArgs> WindowStateChanged;
-        event EventHandler<KeyPressEventArgs> INativeWindow.KeyPress {
-            add {throw new NotSupportedException(); }
-            remove {throw new NotSupportedException(); }
-        }
+        public event EventHandler<KeyboardKeyEventArgs> KeyDown;
+        public event EventHandler<KeyPressEventArgs> KeyPress;
+        public event EventHandler<KeyboardKeyEventArgs> KeyUp;
+        public event EventHandler<EventArgs> MouseLeave;
+        public event EventHandler<EventArgs> MouseEnter;
+        public event EventHandler<MouseButtonEventArgs> MouseDown;
+        public event EventHandler<MouseButtonEventArgs> MouseUp;
+        public event EventHandler<MouseMoveEventArgs> MouseMove;
+        public event EventHandler<MouseWheelEventArgs> MouseWheel;
+        public event EventHandler<FileDropEventArgs> FileDrop;
 
         public event EventHandler<EventArgs> Load;
         public event EventHandler<EventArgs> Unload;
         public event EventHandler<FrameEventArgs> UpdateFrame;
         public event EventHandler<FrameEventArgs> RenderFrame;
 
-        MouseCursor INativeWindow.Cursor
+        public MouseCursor Cursor { get; set; }
+        public bool CursorVisible { get; set; }
+
+        public bool CursorGrabbed
         {
-            get { throw new NotSupportedException(); }
-            set { throw new NotSupportedException(); }
+            get => true;
+            set { }
         }
 
-        bool INativeWindow.CursorVisible
-        {
-            get { throw new NotSupportedException(); }
-            set { throw new NotSupportedException(); }
-        }
-
-        bool INativeWindow.CursorGrabbed
-        {
-            get { throw new NotSupportedException(); }
-            set { throw new NotSupportedException(); }
-        }
-
-        Icon INativeWindow.Icon
-        {
-            get { throw new NotSupportedException(); }
-            set { throw new NotSupportedException(); }
-        }
-
-        event EventHandler<EventArgs> INativeWindow.IconChanged
-        {
-            add { throw new NotSupportedException(); }
-            remove { throw new NotSupportedException(); }
-        }
-
-        event EventHandler<KeyboardKeyEventArgs> INativeWindow.KeyDown
-        {
-            add { throw new NotSupportedException(); }
-            remove { throw new NotSupportedException(); }
-        }
-
-        event EventHandler<KeyboardKeyEventArgs> INativeWindow.KeyUp
-        {
-            add { throw new NotSupportedException(); }
-            remove { throw new NotSupportedException(); }
-        }
-
-        event EventHandler<MouseButtonEventArgs> INativeWindow.MouseDown
-        {
-            add { throw new NotSupportedException(); }
-            remove { throw new NotSupportedException(); }
-        }
-
-        event EventHandler<MouseMoveEventArgs> INativeWindow.MouseMove
-        {
-            add { throw new NotSupportedException(); }
-            remove { throw new NotSupportedException(); }
-        }
-
-        event EventHandler<MouseButtonEventArgs> INativeWindow.MouseUp
-        {
-            add { throw new NotSupportedException(); }
-            remove { throw new NotSupportedException(); }
-        }
-
-        event EventHandler<MouseWheelEventArgs> INativeWindow.MouseWheel
-        {
-            add { throw new NotSupportedException(); }
-            remove { throw new NotSupportedException(); }
-        }
-
-        public event EventHandler<EventArgs> MouseEnter
-        {
-            add { throw new NotSupportedException(); }
-            remove { throw new NotSupportedException(); }
-        }
-
-        public event EventHandler<EventArgs> MouseLeave
-        {
-            add { throw new NotSupportedException(); }
-            remove { throw new NotSupportedException(); }
-        }
-
-        public event EventHandler<FileDropEventArgs> FileDrop
-        {
-            add { throw new NotSupportedException(); }
-            remove { throw new NotSupportedException(); }
-        }
-
+        public Icon Icon { get; set; }
     }
 }
 
 // vim: et ts=4 sw=4
-
-#endif

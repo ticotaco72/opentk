@@ -5,8 +5,6 @@
  * See license.txt for licensing detailed licensing details.
  */
 
-#if ANDROID
-
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -29,9 +27,9 @@ using Android.Graphics;
 using osuTK.Platform.Egl;
 using SurfaceType = Android.Views.SurfaceType;
 
-namespace osuTK.Platform.Android
+namespace osuTK.Android
 {
-    [Register ("opentk_1_1/platform/android/AndroidGameView")]
+    [Register ("osutk/android/AndroidGameView")]
     public partial class AndroidGameView : GameViewBase, ISurfaceHolderCallback
     {
         private bool disposed;
@@ -668,5 +666,3 @@ namespace osuTK.Platform.Android
         }
     }
 }
-
-#endif

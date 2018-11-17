@@ -5,9 +5,7 @@
  * See license.txt for licensing detailed licensing details.
  */
 
-#if ANDROID
-
-using System;
+using System.Collections.Generic;
 
 namespace osuTK.Platform.Android
 {
@@ -23,22 +21,11 @@ namespace osuTK.Platform.Android
 
         public List<DisplayDevice> AvailableDevices { get; } = new List<DisplayDevice> { dev };
 
-        public DisplayDevice GetDisplay(DisplayIndex displayIndex)
-        {
-            return (displayIndex == DisplayIndex.First || displayIndex == DisplayIndex.Primary) ? dev : null;
-        }
+        public DisplayDevice GetDisplay(DisplayIndex displayIndex) =>
+            (displayIndex == DisplayIndex.First || displayIndex == DisplayIndex.Primary) ? dev : null;
 
+        public bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution) => false;
 
-        public bool TryChangeResolution (DisplayDevice device, DisplayResolution resolution)
-        {
-            return false;
-        }
-
-        public bool TryRestoreResolution (DisplayDevice device)
-        {
-            return false;
-        }
+        public bool TryRestoreResolution(DisplayDevice device) => false;
     }
 }
-
-#endif

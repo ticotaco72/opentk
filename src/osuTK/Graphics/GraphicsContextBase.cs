@@ -32,7 +32,7 @@ using osuTK.Platform;
 namespace osuTK.Graphics
 {
     // Provides the foundation for all IGraphicsContext implementations.
-    internal abstract class GraphicsContextBase : IGraphicsContext, IGraphicsContextInternal, IEquatable<IGraphicsContextInternal>
+    public abstract class GraphicsContextBase : IGraphicsContext, IGraphicsContextInternal, IEquatable<IGraphicsContextInternal>
     {
         protected ContextHandle Handle;
         protected GraphicsMode Mode;
@@ -58,7 +58,7 @@ namespace osuTK.Graphics
                 {
                     SwapInterval = 0;
                 }
-            }
+        }
         }
 
         public abstract int SwapInterval { get; set; }

@@ -5,8 +5,6 @@
  * See license.txt for licensing detailed licensing details.
  */
 
-#if ANDROID
-
 using System;
 using System.ComponentModel;
 using System.Drawing;
@@ -1190,5 +1188,3 @@ namespace osuTK
         }
     }
 }
-
-#endif
