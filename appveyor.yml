@@ -5,6 +5,6 @@ build_script:
 after_build:
   - cmd: dotnet pack src/osuTK/osuTK.NS20.csproj -c:Release --include-symbols /p:Version=%APPVEYOR_BUILD_VERSION%
 test: off
-version: 0.0.1.{build}
+version: 1.0.{build}
 artifacts:
   - path: 'src\osuTK\bin\Release\*.nupkg'
