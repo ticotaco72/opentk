@@ -88,13 +88,9 @@ let runtimeProjects =
             f
         else
             f
-            -- "**/osuTK.GLControl.csproj"
-            -- "**/osuTK.GLWidget.csproj"
             -- "**/osuTK.Tests.fsproj"
             -- "**/osuTK.Tests.Math.csproj"
             -- "**/osuTK.Tests.Integration.fsproj"
-            -- "**/osuTK.Android.csproj"
-            -- "**/osuTK.iOS.csproj"
 
     !! "src/osuTK/osuTK.NS20.csproj"
     -- "src/Generator.*/**.csproj"
