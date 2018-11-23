@@ -96,40 +96,40 @@ namespace osuTK.Platform.MacOS.Carbon
 
     internal class CF
     {
-        private const string appServices = "/System/Library/Frameworks/ApplicationServices.framework/Versions/Current/ApplicationServices";
+        private const string cfl = "/System/Library/Frameworks/CoreFoundation.framework/Versions/Current/CoreFoundation";
 
-        [DllImport(appServices)]
+        [DllImport(cfl)]
         internal static extern int CFArrayGetCount(IntPtr theArray);
 
-        [DllImport(appServices)]
+        [DllImport(cfl)]
         internal static extern IntPtr CFArrayGetValueAtIndex(IntPtr theArray, int idx);
 
-        [DllImport(appServices)]
+        [DllImport(cfl)]
         internal static extern int CFDictionaryGetCount(IntPtr theDictionary);
 
-        [DllImport(appServices)]
+        [DllImport(cfl)]
         internal static extern IntPtr CFDictionaryGetValue(IntPtr theDictionary, IntPtr theKey);
 
-        [DllImport(appServices)]
+        [DllImport(cfl)]
         internal static extern IntPtr CFGetTypeID(IntPtr v);
 
-        [DllImport(appServices)]
+        [DllImport(cfl)]
         internal static extern IntPtr CFRetain(CFTypeRef cf);
 
-        [DllImport(appServices)]
+        [DllImport(cfl)]
         internal static extern void CFRelease(CFTypeRef cf);
 
         // this mirrors the definition in CFString.h.
         // I don't know why, but __CFStringMakeConstantString is marked as "private and should not be used directly"
         // even though the CFSTR macro just calls it.
-        [DllImport(appServices)]
+        [DllImport(cfl)]
         private static extern IntPtr __CFStringMakeConstantString(string cStr);
         internal static IntPtr CFSTR(string cStr)
         {
             return __CFStringMakeConstantString(cStr);
         }
 
-        [DllImport(appServices)]
+        [DllImport(cfl)]
         internal static extern Boolean CFStringGetCString(
             CFStringRef theString,
             byte[] buffer,
@@ -151,16 +151,16 @@ namespace osuTK.Platform.MacOS.Carbon
             return String.Empty;
         }
 
-        [DllImport(appServices)]
+        [DllImport(cfl)]
         internal static extern CFIndex CFStringGetLength(
             CFStringRef theString
         );
 
-        [DllImport(appServices)]
+        [DllImport(cfl)]
         internal static extern bool CFNumberGetValue (IntPtr number, CFNumberType theType, out int valuePtr);
-        [DllImport(appServices)]
+        [DllImport(cfl)]
         internal static extern bool CFNumberGetValue (IntPtr number, CFNumberType theType, out long valuePtr);
-        [DllImport(appServices)]
+        [DllImport(cfl)]
         internal static extern bool CFNumberGetValue(IntPtr number, CFNumberType theType, out double valuePtr);
 
         internal enum CFNumberType
@@ -213,29 +213,29 @@ namespace osuTK.Platform.MacOS.Carbon
 
         public static readonly IntPtr RunLoopModeDefault = CF.CFSTR("kCFRunLoopDefaultMode");
 
-        [DllImport(appServices)]
+        [DllImport(cfl)]
         internal static extern CFRunLoop CFRunLoopGetCurrent();
 
-        [DllImport(appServices)]
+        [DllImport(cfl)]
         internal static extern CFRunLoop CFRunLoopGetMain();
 
-        [DllImport(appServices)]
+        [DllImport(cfl)]
         internal static extern CFRunLoopExitReason CFRunLoopRunInMode(
             IntPtr cfstrMode, double interval, bool returnAfterSourceHandled);
 
-        [DllImport(appServices, EntryPoint = "CFMachPortCreateRunLoopSource")]
+        [DllImport(cfl, EntryPoint = "CFMachPortCreateRunLoopSource")]
         internal static extern CFRunLoopSourceRef MachPortCreateRunLoopSource(
             CFAllocatorRef allocator,
             CFMachPortRef port,
             CFIndex order);
 
-        [DllImport(appServices, EntryPoint = "CFRunLoopAddSource")]
+        [DllImport(cfl, EntryPoint = "CFRunLoopAddSource")]
         internal static extern void RunLoopAddSource(
             CFRunLoopRef rl,
             CFRunLoopSourceRef source,
             CFStringRef mode);
 
-        [DllImport(appServices, EntryPoint = "CFRunLoopRemoveSource")]
+        [DllImport(cfl, EntryPoint = "CFRunLoopRemoveSource")]
         internal static extern void RunLoopRemoveSource(
             CFRunLoopRef rl,
             CFRunLoopSourceRef source,

@@ -1,0 +1,9 @@
+<Project>
+  <PropertyGroup>
+    <PackageProjectUrl>https://github.com/ppy/opentk/tree/netstandard</PackageProjectUrl>
+    <Authors>ppy Pty Ltd &amp; The Open Toolkit Team</Authors>
+    <Description>A build of osuTK geared towards netstandard20 deploys.</Description>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+</Project>

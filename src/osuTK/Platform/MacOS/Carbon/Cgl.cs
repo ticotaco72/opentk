@@ -91,51 +91,86 @@ namespace osuTK.Platform.MacOS
             None = 0x000,
         }
 
+        // OpenGL
+
         private const string cgl = "/System/Library/Frameworks/OpenGL.framework/Versions/Current/OpenGL";
+        private static readonly Dylib cglLibrary = Dylib.Load(cgl);
+
+        private delegate Error CGLGetErrorDelegate();
+        private static readonly CGLGetErrorDelegate cglGetError = cglLibrary?.GetFunction<CGLGetErrorDelegate>("glGetError");
+        internal static Error GetError() => cglGetError();
+
+        private delegate IntPtr CGLErrorStringDelegate(Error code);
+        private static readonly CGLErrorStringDelegate cglErrorString = cglLibrary?.GetFunction<CGLErrorStringDelegate>("CGLErrorString");
+        internal static string ErrorString(Error code) => Marshal.PtrToStringAnsi(cglErrorString(code));
+
+        private delegate Error CGLChoosePixelFormatDelegate(int[] attribs, ref CGLPixelFormat format, ref int numPixelFormats);
+        private static readonly CGLChoosePixelFormatDelegate cglChoosePixelFormat = cglLibrary?.GetFunction<CGLChoosePixelFormatDelegate>("CGLChoosePixelFormat");
+        internal static Error ChoosePixelFormat(int[] attribs, ref CGLPixelFormat format, ref int numPixelFormats) => cglChoosePixelFormat(attribs, ref format, ref numPixelFormats);
+
+        private delegate Error CGLDescribePixelFormatIntDelegate(CGLPixelFormat pix, int pix_num, PixelFormatInt attrib, out int value);
+        private static readonly CGLDescribePixelFormatIntDelegate cglDescribePixelFormatInt = cglLibrary?.GetFunction<CGLDescribePixelFormatIntDelegate>("CGLDescribePixelFormat");
+        internal static Error DescribePixelFormat(CGLPixelFormat pix, int pix_num, PixelFormatInt attrib, out int value) => cglDescribePixelFormatInt(pix, pix_num, attrib, out value);
+
+        private delegate Error CGLDescribePixelFormatBoolDelegate(CGLPixelFormat pix, int pix_num, PixelFormatBool attrib, out bool value);
+        private static readonly CGLDescribePixelFormatBoolDelegate cglDescribePixelFormatBool = cglLibrary?.GetFunction<CGLDescribePixelFormatBoolDelegate>("CGLDescribePixelFormat");
+        internal static Error DescribePixelFormat(CGLPixelFormat pix, int pix_num, PixelFormatBool attrib, out bool value) => cglDescribePixelFormatBool(pix, pix_num, attrib, out value);
+
+        private delegate CGLPixelFormat CGLGetPixelFormatDelegate(CGLContext context);
+        private static readonly CGLGetPixelFormatDelegate cglGetPixelFormat = cglLibrary?.GetFunction<CGLGetPixelFormatDelegate>("CGLGetPixelFormat");
+        internal static CGLPixelFormat GetPixelFormat(CGLContext context) => cglGetPixelFormat(context);
+
+        private delegate Error CGLCreateContextDelegate(CGLPixelFormat format, CGLContext share, ref CGLContext context);
+        private static readonly CGLCreateContextDelegate cglCreateContext = cglLibrary?.GetFunction<CGLCreateContextDelegate>("CGLCreateContext");
+        internal static Error CreateContext(CGLPixelFormat format, CGLContext share, ref CGLContext context) => cglCreateContext(format, share, ref context);
+
+        private delegate Error CGLDestroyPixelFormatDelegate(CGLPixelFormat format);
+        private static readonly CGLDestroyPixelFormatDelegate cglDestroyPixelFormat = cglLibrary?.GetFunction<CGLDestroyPixelFormatDelegate>("CGLDestroyPixelFormat");
+        internal static Error DestroyPixelFormat(CGLPixelFormat format) => cglDestroyPixelFormat(format);
+
+        private delegate CGLContext CGLGetCurrentContextDelegate();
+        private static readonly CGLGetCurrentContextDelegate cglGetCurrentContext = cglLibrary?.GetFunction<CGLGetCurrentContextDelegate>("CGLGetCurrentContext");
+        internal static CGLContext GetCurrentContext() => cglGetCurrentContext();
+
+        private delegate Error CGLSetCurrentContextDelegate(CGLContext context);
+        private static readonly CGLSetCurrentContextDelegate cglSetCurrentContext = cglLibrary?.GetFunction<CGLSetCurrentContextDelegate>("CGLSetCurrentContext");
+        internal static Error SetCurrentContext(CGLContext context) => cglSetCurrentContext(context);
+
+        private delegate Error CGLDestroyContextDelegate(CGLContext context);
+        private static readonly CGLDestroyContextDelegate cglDestroyContext = cglLibrary?.GetFunction<CGLDestroyContextDelegate>("CGLDestroyContext");
+        internal static Error DestroyContext(CGLContext context) => cglDestroyContext(context);
+
+        private delegate Error CGLSetParameterDelegate(CGLContext context, int parameter, ref int value);
+        private static readonly CGLSetParameterDelegate cglSetParameter = cglLibrary?.GetFunction<CGLSetParameterDelegate>("CGLSetParameter");
+        internal static Error SetParameter(CGLContext context, int parameter, ref int value) => cglSetParameter(context, parameter, ref value);
+
+        private delegate Error CGLFlushDrawableDelegate(CGLContext context);
+        private static readonly CGLFlushDrawableDelegate cglFlushDrawable = cglLibrary?.GetFunction<CGLFlushDrawableDelegate>("CGLFlushDrawable");
+        internal static Error FlushDrawable(CGLContext context) => cglFlushDrawable(context);
+
+        private delegate Error CGLSetSurfaceDelegate(CGLContext context, int conId, int winId, int surfId);
+        private static readonly CGLSetSurfaceDelegate cglSetSurface = cglLibrary?.GetFunction<CGLSetSurfaceDelegate>("CGLSetSurface");
+        internal static Error SetSurface(CGLContext context, int conId, int winId, int surfId) => cglSetSurface(context, conId, winId, surfId);
+
+        private delegate Error CGLUpdateContextDelegate(CGLContext context);
+        private static readonly CGLUpdateContextDelegate cglUpdateContext = cglLibrary?.GetFunction<CGLUpdateContextDelegate>("CGLUpdateContext");
+        internal static Error UpdateContext(CGLContext context) => cglUpdateContext(context);
+
+        // Carbon
+
         private const string cgs = "/System/Library/Frameworks/Carbon.framework/Versions/Current/Carbon";
+        private static readonly Dylib cgsLibrary = Dylib.Load(cgs);
 
-        [DllImport(cgl, EntryPoint = "CGLGetError")]
-        internal static extern Error GetError();
-        [DllImport(cgl, EntryPoint = "CGLErrorString")]
-        private static extern IntPtr CGLErrorString(Error code);
-        internal static string ErrorString(Error code)
-        {
-            return Marshal.PtrToStringAnsi(CGLErrorString(code));
-        }
+        private delegate int CGSMainConnectionIDDelegate();
+        private static readonly CGSMainConnectionIDDelegate cgsMainConnection = cgsLibrary?.GetFunction<CGSMainConnectionIDDelegate>("CGSMainConnectionID");
+        internal static int MainConnectionID() => cgsMainConnection();
 
-        [DllImport(cgl, EntryPoint = "CGLChoosePixelFormat")]
-        internal static extern Error ChoosePixelFormat(int []attribs, ref CGLPixelFormat format, ref int numPixelFormats);
-        [DllImport(cgl, EntryPoint = "CGLDescribePixelFormat")]
-        internal static extern Error DescribePixelFormat(CGLPixelFormat pix, int pix_num, PixelFormatInt attrib, out int value);
-        [DllImport(cgl, EntryPoint = "CGLDescribePixelFormat")]
-        internal static extern Error DescribePixelFormat(CGLPixelFormat pix, int pix_num, PixelFormatBool attrib, out bool value);
-        [DllImport(cgl, EntryPoint = "CGLGetPixelFormat")]
-        internal static extern CGLPixelFormat GetPixelFormat(CGLContext context);
-        [DllImport(cgl, EntryPoint = "CGLCreateContext")]
-        internal static extern Error CreateContext(CGLPixelFormat format, CGLContext share, ref CGLContext context);
-        [DllImport(cgl, EntryPoint = "CGLDestroyPixelFormat")]
-        internal static extern Error DestroyPixelFormat(CGLPixelFormat format);
-        [DllImport(cgl, EntryPoint = "CGLGetCurrentContext")]
-        internal static extern CGLContext GetCurrentContext();
-        [DllImport(cgl, EntryPoint = "CGLSetCurrentContext")]
-        internal static extern Error SetCurrentContext(CGLContext context);
-        [DllImport(cgl, EntryPoint = "CGLDestroyContext")]
-        internal static extern Error DestroyContext(CGLContext context);
-        [DllImport(cgl, EntryPoint = "CGLSetParameter")]
-        internal static extern Error SetParameter(CGLContext context, int parameter, ref int value);
-        [DllImport(cgl, EntryPoint = "CGLFlushDrawable")]
-        internal static extern Error FlushDrawable(CGLContext context);
+        private delegate Error CGSGetSurfaceCountDelegate(int conId, int winId, ref int count);
+        private static readonly CGSGetSurfaceCountDelegate cgsGetSurfaceCount = cgsLibrary?.GetFunction<CGSGetSurfaceCountDelegate>("CGSGetSurfaceCount");
+        internal static Error GetSurfaceCount(int conId, int winId, ref int count) => cgsGetSurfaceCount(conId, winId, ref count);
 
-        [DllImport(cgl, EntryPoint = "CGLSetSurface")]
-        internal static extern Error SetSurface(CGLContext context, int conId, int winId, int surfId);
-        [DllImport(cgl, EntryPoint = "CGLUpdateContext")]
-        internal static extern Error UpdateContext(CGLContext context);
-
-        [DllImport(cgs, EntryPoint = "CGSMainConnectionID")]
-        internal static extern int MainConnectionID();
-        [DllImport(cgs, EntryPoint = "CGSGetSurfaceCount")]
-        internal static extern Error GetSurfaceCount(int conId, int winId, ref int count);
-        [DllImport(cgs, EntryPoint = "CGSGetSurfaceList")]
-        internal static extern Error GetSurfaceList(int conId, int winId, int count, ref int ids, ref int filled);
+        private delegate Error CGSGetSurfaceListDelegate(int conId, int winId, int count, ref int ids, ref int filled);
+        private static readonly CGSGetSurfaceListDelegate cgsGetSurfaceList = cgsLibrary?.GetFunction<CGSGetSurfaceListDelegate>("CGSGetSurfaceList");
+        internal static Error GetSurfaceList(int conId, int winId, int count, ref int ids, ref int filled) => cgsGetSurfaceList(conId, winId, count, ref ids, ref filled);
     }
 }

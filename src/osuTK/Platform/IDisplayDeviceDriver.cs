@@ -27,7 +27,7 @@ using System.Collections.Generic;
 
 namespace osuTK.Platform
 {
-    internal interface IDisplayDeviceDriver
+    public interface IDisplayDeviceDriver
     {
         bool TryChangeResolution(DisplayDevice device, DisplayResolution resolution);
         bool TryRestoreResolution(DisplayDevice device);

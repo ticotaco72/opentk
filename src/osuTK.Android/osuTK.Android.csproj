@@ -1,0 +1,24 @@
+<Project Sdk="MSBuild.Sdk.Extras/1.6.55">
+  <Import Project="..\Common.props" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <OutputType>Library</OutputType>
+    <PackageVersion>1.0.8</PackageVersion>
+    <PackageId>ppy.osuTK.Android</PackageId>
+    <Title>ppy.osuTK.Android</Title>
+    <RootNamespace>osuTK.Android</RootNamespace>
+    <AssemblyName>osuTK.Android</AssemblyName>
+    <OutputPath>bin/$(Configuration)/</OutputPath>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Mono.Android" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\osuTK\osuTK.NS20.csproj" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+</Project>
