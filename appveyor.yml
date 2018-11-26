@@ -4,7 +4,9 @@ build_script:
   - cmd: build.cmd
 after_build:
   - cmd: dotnet pack src/osuTK/osuTK.NS20.csproj -c:Release --include-symbols /p:Version=%APPVEYOR_BUILD_VERSION%
+  - cmd: msbuild /t:pack src/osuTK.iOS/osuTK.iOS.csproj /p:Configuration=Release /p:IncludeSymbols=True /p:Version=%APPVEYOR_BUILD_VERSION%
 test: off
 version: 1.0.{build}
 artifacts:
   - path: 'src\osuTK\bin\Release\*.nupkg'
+  - path: 'src\osuTK.iOS\bin\Release\*.nupkg'
