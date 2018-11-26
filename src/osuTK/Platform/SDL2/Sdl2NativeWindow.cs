@@ -303,9 +303,12 @@ namespace osuTK.Platform.SDL2
             window.OnMouseWheel(ev.X, ev.Y, false);
         }
 
+        private static string PtrToStringAuto(IntPtr ptr)
+            => RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? Marshal.PtrToStringUni(ptr) : Marshal.PtrToStringAnsi(ptr);
+
         private static unsafe void ProcessDropEvent(Sdl2NativeWindow window, DropEvent ev)
         {
-            string dropString = Marshal.PtrToStringAuto(ev.File);
+            string dropString = PtrToStringAuto(ev.File);
             window.OnFileDrop(dropString);
         }
 
