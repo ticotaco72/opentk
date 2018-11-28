@@ -25,6 +25,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 namespace osuTK
@@ -82,14 +83,7 @@ namespace osuTK
         /// </summary>
         public static bool RunningOnAndroid
         {
-            get
-            {
-#if ANDROID
-                return true;
-#else
-                return false;
-#endif
-            }
+            get; private set;
         }
 
         /// <summary>
@@ -264,6 +258,23 @@ namespace osuTK
             #endif
         }
 
+        private static bool DetectAndroid()
+        {
+            AppDomain currentDomain = AppDomain.CurrentDomain;
+
+            Assembly[] assems = currentDomain.GetAssemblies();
+
+            //List the assemblies in the current application domain.
+            foreach (Assembly assem in assems)
+            {
+                if (assem.ToString().Contains("Mono.Android"))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         // Detects the underlying OS and runtime.
         internal static void Init(ToolkitOptions options)
         {
@@ -273,12 +284,19 @@ namespace osuTK
                 {
                     RunningOnMono = DetectMono();
                     RunningOnWindows = DetectWindows();
+                    RunningOnAndroid = DetectAndroid();
                     if (!RunningOnWindows)
                     {
                         DetectUnix(out runningOnUnix, out runningOnLinux, out runningOnMacOS, out runningOnIOS);
                     }
 
-                    if (options.Backend == PlatformBackend.Default)
+                    // This will stop the LinuxFactory from loading on Android.
+                    if (RunningOnAndroid)
+                    {
+                        runningOnLinux = false;
+                    }
+
+                    if (!RunningOnAndroid && (options.Backend == PlatformBackend.Default))
                     {
                         RunningOnSdl2 = DetectSdl2();
                     }
