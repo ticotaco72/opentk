@@ -8,10 +8,11 @@
 using System;
 using osuTK.Graphics;
 using osuTK.Platform;
+using osuTK.Platform.Egl;
 
 namespace osuTK.Android
 {
-    internal sealed class AndroidFactory : PlatformFactoryBase
+    public class AndroidFactory : PlatformFactoryBase
     {
         public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {
@@ -29,7 +30,7 @@ namespace osuTK.Android
         {
             return (GraphicsContext.GetCurrentContextDelegate)delegate
             {
-                return new ContextHandle(Egl.Egl.GetCurrentContext());
+                return new ContextHandle(Egl.GetCurrentContext());
             };
         }
 

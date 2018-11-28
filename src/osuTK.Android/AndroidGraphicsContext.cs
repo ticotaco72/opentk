@@ -14,9 +14,10 @@ using Javax.Microedition.Khronos.Egl;
 
 using osuTK.Graphics;
 using osuTK.Platform.Egl;
+using osuTK.Platform;
 
 namespace osuTK.Android {
-    internal class AndroidGraphicsContext : EglContext
+    public class AndroidGraphicsContext : EglContext
     {
         public AndroidGraphicsContext(GraphicsMode mode, EglWindowInfo window, IGraphicsContext sharedContext,
             int major, int minor, GraphicsContextFlags flags)

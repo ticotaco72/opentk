@@ -5,11 +5,12 @@
  * See license.txt for licensing detailed licensing details.
  */
 
+using osuTK.Platform;
 using System.Collections.Generic;
 
-namespace osuTK.Platform.Android
+namespace osuTK.Android
 {
-    internal class AndroidDisplayDeviceDriver : IDisplayDeviceDriver
+    public class AndroidDisplayDeviceDriver : IDisplayDeviceDriver
     {
         private static DisplayDevice dev;
         static AndroidDisplayDeviceDriver ()

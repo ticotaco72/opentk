@@ -1139,6 +1139,8 @@ namespace osuTK
             set { throw new NotSupportedException(); }
         }
 
+        public bool CursorGrabbed { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
         event EventHandler<EventArgs> INativeWindow.IconChanged
         {
             add { throw new NotSupportedException(); }
