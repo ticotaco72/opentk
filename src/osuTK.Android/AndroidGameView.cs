@@ -26,6 +26,7 @@ using Android.Runtime;
 using Android.Graphics;
 using osuTK.Platform.Egl;
 using SurfaceType = Android.Views.SurfaceType;
+using Size = System.Drawing.Size;
 
 namespace osuTK.Android
 {

@@ -122,17 +122,18 @@ namespace osuTK.Platform
                 else if (Configuration.RunningOnAndroid)
                 {
                     Embedded = CreateFactoryForType("osuTK.Android.AndroidFactory");
+                    Angle = new UnsupportedPlatform();
                 }
                 else
                 {
                     Embedded = new UnsupportedPlatform();
                 }
 
-#if ANDROID
-                Angle = new UnsupportedPlatform();
-#else
-                Angle = new Egl.EglAnglePlatformFactory(Embedded);
-#endif
+                if (!Configuration.RunningOnAndroid)
+                {
+                    Angle = new Egl.EglAnglePlatformFactory(Embedded);
+                }
+                
             }
             else
             {
