@@ -260,12 +260,8 @@ namespace osuTK
 
         private static bool DetectAndroid()
         {
-            AppDomain currentDomain = AppDomain.CurrentDomain;
-
-            Assembly[] assems = currentDomain.GetAssemblies();
-
             //List the assemblies in the current application domain.
-            foreach (Assembly assem in assems)
+            foreach (Assembly assem in AppDomain.CurrentDomain.GetAssemblies())
             {
                 if (assem.ToString().Contains("Mono.Android"))
                 {
@@ -285,6 +281,7 @@ namespace osuTK
                     RunningOnMono = DetectMono();
                     RunningOnWindows = DetectWindows();
                     RunningOnAndroid = DetectAndroid();
+
                     if (!RunningOnWindows)
                     {
                         DetectUnix(out runningOnUnix, out runningOnLinux, out runningOnMacOS, out runningOnIOS);
