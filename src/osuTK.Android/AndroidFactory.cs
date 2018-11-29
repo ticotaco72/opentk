@@ -12,7 +12,7 @@ using osuTK.Platform.Egl;
 
 namespace osuTK.Android
 {
-    public class AndroidFactory : PlatformFactoryBase
+    public sealed class AndroidFactory : PlatformFactoryBase
     {
         public override IGraphicsContext CreateGLContext(GraphicsMode mode, IWindowInfo window, IGraphicsContext shareContext, bool directRendering, int major, int minor, GraphicsContextFlags flags)
         {

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace osuTK.Android
 {
-    public class AndroidDisplayDeviceDriver : IDisplayDeviceDriver
+    public sealed class AndroidDisplayDeviceDriver : IDisplayDeviceDriver
     {
         private static DisplayDevice dev;
         static AndroidDisplayDeviceDriver ()

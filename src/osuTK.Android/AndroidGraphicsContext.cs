@@ -17,7 +17,7 @@ using osuTK.Platform.Egl;
 using osuTK.Platform;
 
 namespace osuTK.Android {
-    public class AndroidGraphicsContext : EglContext
+    public sealed class AndroidGraphicsContext : EglContext
     {
         public AndroidGraphicsContext(GraphicsMode mode, EglWindowInfo window, IGraphicsContext sharedContext,
             int major, int minor, GraphicsContextFlags flags)
