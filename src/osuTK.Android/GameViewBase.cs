@@ -23,6 +23,8 @@ using Android.Runtime;
 using Java.Util;
 using osuTK.Input;
 
+using Size = System.Drawing.Size;
+
 namespace osuTK
 {
     [Register ("opentk_1_1/GameViewBase")]
@@ -1138,6 +1140,8 @@ namespace osuTK
             get { throw new NotSupportedException(); }
             set { throw new NotSupportedException(); }
         }
+
+        public bool CursorGrabbed { get => true; set { } }
 
         event EventHandler<EventArgs> INativeWindow.IconChanged
         {
