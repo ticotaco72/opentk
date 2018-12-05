@@ -72,7 +72,8 @@ namespace osuTK.Input
         /// Retrives <see cref="osuTK.Input.KeyboardState"/> for all keyboard devices.
         /// </summary>
         /// <param name="result">All states of the keyboard devices are populated into this list.</param>
-        public static void GetStates(List<KeyboardState> result) {
+        public static void GetStates(List<KeyboardState> result)
+        {
             lock (SyncRoot)
             {
                 driver.GetStates(result);
