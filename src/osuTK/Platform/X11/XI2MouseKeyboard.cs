@@ -246,7 +246,7 @@ namespace osuTK.Platform.X11
             lock (Sync)
             {
                 result.Clear();
-                for (int i = 0; i < keyboards.Count; i++)
+                for (int i = 0; i < devices.Count; i++)
                 {
                     result.Add(((IMouseDriver2)this).GetState(i));
                 }
