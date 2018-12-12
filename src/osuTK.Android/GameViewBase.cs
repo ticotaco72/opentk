@@ -1099,12 +1099,8 @@ namespace osuTK
         ///   </para>
         /// </remarks>
         public Rectangle ClientRectangle {
-            get {
-                throw new NotSupportedException ();
-            }
-            set {
-                throw new NotSupportedException ();
-            }
+            get => new Rectangle(0, 0, Width, Height);
+            set { }
         }
 
         /// <summary>This member is not supported.</summary>
@@ -1115,12 +1111,8 @@ namespace osuTK
         ///   </para>
         /// </remarks>
         public Size ClientSize {
-            get {
-                throw new NotSupportedException ();
-            }
-            set {
-                throw new NotSupportedException ();
-            }
+            get => new Size(Width, Height);
+            set { }
         }
 
         MouseCursor INativeWindow.Cursor
