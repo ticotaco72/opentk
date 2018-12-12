@@ -377,7 +377,6 @@ namespace osuTK.Android
                 GraphicsMode = GraphicsMode.Default;
 
             GraphicsContext = new GraphicsContext(GraphicsMode, WindowInfo, (int)ContextRenderingApi, 0, GraphicsContextFlags.Embedded);
-            GraphicsContext.LoadAll();
         }
 
         private void DestroyContext ()
