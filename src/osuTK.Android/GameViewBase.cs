@@ -1099,11 +1099,9 @@ namespace osuTK
         ///   </para>
         /// </remarks>
         public Rectangle ClientRectangle {
-            get {
-                throw new NotSupportedException ();
-            }
+            get => new Rectangle(0, 0, Width, Height);
             set {
-                throw new NotSupportedException ();
+                throw new NotSupportedException();
             }
         }
 
@@ -1115,11 +1113,9 @@ namespace osuTK
         ///   </para>
         /// </remarks>
         public Size ClientSize {
-            get {
-                throw new NotSupportedException ();
-            }
+            get => new Size(Width, Height);
             set {
-                throw new NotSupportedException ();
+                throw new NotSupportedException(); 
             }
         }
 

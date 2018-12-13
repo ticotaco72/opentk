@@ -160,6 +160,39 @@ namespace osuTK.Android
             base.Dispose (disposing);
         }
 
+        protected override void CreateFrameBuffer()
+        {
+            EnsureUndisposed();
+
+            int major = 0, minor = 0;
+            switch(ContextRenderingApi)
+            {
+                case GLVersion.ES1:
+                    major = 1;
+                    minor = 1;
+                    break;
+                case GLVersion.ES2:
+                    major = 2;
+                    minor = 0;
+                    break;
+                case GLVersion.ES3:
+                    major = 3;
+                    minor = 0;
+                    break;
+                default:
+                    throw new ArgumentException("Unsupported ContextRenderingApi version: " + ContextRenderingApi);
+            }
+
+            GraphicsMode = GraphicsMode.Default;
+            GraphicsContext = new GraphicsContext(GraphicsMode, WindowInfo, major, minor, GraphicsContextFlags.Embedded);
+            GraphicsContext.MakeCurrent(WindowInfo);
+            GraphicsContext.LoadAll();
+
+            gl = GLCalls.GetGLCalls(ContextRenderingApi);
+            if (renderOnUIThread)
+                MakeCurrent();
+        }
+
         protected virtual void DestroyFrameBuffer ()
         {
             // TODO: Somehow DestroySurface is being called twice (once by SurfaceDestroyed and once by UnloadInternal->DestroyFrameBuffer)
