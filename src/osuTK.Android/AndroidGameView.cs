@@ -167,9 +167,18 @@ namespace osuTK.Android
             int major = 0, minor = 0;
             switch(ContextRenderingApi)
             {
-                case GLVersion.ES1: major = 1; minor = 1; break;
-                case GLVersion.ES2: major = 2; minor = 0; break;
-                case GLVersion.ES3: major = 3; minor = 0; break;
+                case GLVersion.ES1:
+                    major = 1;
+                    minor = 1;
+                    break;
+                case GLVersion.ES2:
+                    major = 2;
+                    minor = 0;
+                    break;
+                case GLVersion.ES3:
+                    major = 3;
+                    minor = 0;
+                    break;
                 default:
                     throw new ArgumentException("Unsupported ContextRenderingApi version: " + ContextRenderingApi);
             }
