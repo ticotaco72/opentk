@@ -1,12 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="Common.props" />
+  <Import Project="..\Common.props" />
   <PropertyGroup>
-    <PackageVersion>1.0.8</PackageVersion>
+    <AssemblyName>osuTK</AssemblyName>
     <PackageId>ppy.osuTK.NS20</PackageId>
     <Title>ppy.osuTK.NS20</Title>
+    <RootNamespace>osuTK</RootNamespace>
     <TargetFramework>netstandard2.0</TargetFramework>
     <DefineConstants>$(DefineConstants);WIN32;CARBON;X11;SDL2;OPENGL;OPENGLES;MINIMAL</DefineConstants>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\..\osuTK.snk">
+      <Link>osuTK.snk</Link>
+    </None>
+    <EmbeddedResource Include="osuTK.dll.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="$(MSBuildThisFileDirectory)..\Generator.Rewrite\bin\Debug\Rewrite.exe -a $(OutputPath)osuTK.dll -k $(MSBuildThisFileDirectory)..\..\osuTK.snk --debug --netstandard" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Debug'" />
     <Exec Command="$(MSBuildThisFileDirectory)..\Generator.Rewrite\bin\Release\Rewrite.exe -a $(OutputPath)osuTK.dll -k $(MSBuildThisFileDirectory)..\..\osuTK.snk --netstandard" Condition="$(OS) == 'Windows_NT' and $(Configuration) == 'Release'" />

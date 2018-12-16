@@ -43,7 +43,7 @@ namespace osuTK.Platform.Egl
     using EGLSurface = IntPtr;
     using EGLClientBuffer = IntPtr;
 
-    internal enum RenderApi
+    public enum RenderApi
     {
         ES = Egl.OPENGL_ES_API,
         GL = Egl.OPENGL_API,
@@ -51,7 +51,7 @@ namespace osuTK.Platform.Egl
     }
 
     [Flags]
-    internal enum RenderableFlags
+    public enum RenderableFlags
     {
         ES = Egl.OPENGL_ES_BIT,
         ES2 = Egl.OPENGL_ES2_BIT,
@@ -79,7 +79,7 @@ namespace osuTK.Platform.Egl
         CONTEXT_LOST = 12302,
     }
 
-    internal enum SurfaceType
+    public enum SurfaceType
     {
         PBUFFER_BIT = 0x0001,
         PIXMAP_BIT = 0x0002,
@@ -90,7 +90,7 @@ namespace osuTK.Platform.Egl
         SWAP_BEHAVIOR_PRESERVED_BIT = 0x0400,
     }
 
-    internal static partial class Egl
+    public static partial class Egl
     {
         public const int VERSION_1_0 = 1;
         public const int VERSION_1_1 = 1;

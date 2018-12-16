@@ -54,7 +54,7 @@ namespace osuTK.Platform.MacOS
 
     internal partial class CG
     {
-        private const string lib = "/System/Library/Frameworks/ApplicationServices.framework/Versions/Current/ApplicationServices";
+        private const string lib = "/System/Library/Frameworks/CoreGraphics.framework/Versions/Current/CoreGraphics";
 
         // CGPoint -> NSPoint
         // CGSize -> NSSize

@@ -1,6 +1,8 @@
-﻿namespace osuTK.Input
+﻿using System.Collections.Generic;
+
+namespace osuTK.Input
 {
-    internal interface IKeyboardDriver2
+    public interface IKeyboardDriver2
     {
         /// <summary>
         /// Retrieves the combined <see cref="osuTK.Input.KeyboardState"/> for all keyboard devices.
@@ -18,8 +20,8 @@
         /// <summary>
         /// Retrives <see cref="osuTK.Input.KeyboardState"/> for all keyboard devices.
         /// </summary>
-        /// <returns>An array of <see cref="osuTK.Input.KeyboardState"/> representing the state for the keyboard devices.</returns>
-        KeyboardState[] GetStates();
+        /// <param name="result">All states of the keyboard devices are populated into this list.</param>
+        void GetStates(List<KeyboardState> result);
 
         /// <summary>
         /// Retrieves the device name for the keyboard device.

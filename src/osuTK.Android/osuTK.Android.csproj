@@ -1,0 +1,20 @@
+﻿<Project Sdk="MSBuild.Sdk.Extras/1.6.55">
+  <Import Project="..\Common.props" />
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <PackageId>ppy.osuTK.Android</PackageId>
+    <Title>ppy.osuTK.Android</Title>
+    <RootNamespace>osuTK.Android</RootNamespace>
+    <AssemblyName>osuTK.Android</AssemblyName>
+    <TargetFramework>monoandroid50</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="Mono.Android" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\osuTK\osuTK.NS20.csproj" />
+  </ItemGroup>
+</Project>
