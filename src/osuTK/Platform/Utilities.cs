@@ -173,33 +173,27 @@ namespace osuTK.Platform
 
         internal static GraphicsContext.GetAddressDelegate CreateGetAddress()
         {
-            #if SDL2
             if (Configuration.RunningOnSdl2)
             {
                 return Platform.SDL2.SDL.GL.GetProcAddress;
             }
-            #endif
-            #if WIN32
-            if (Configuration.RunningOnWindows)
+            else if (Configuration.RunningOnWindows)
             {
                 return Platform.Windows.Wgl.GetAddress;
             }
-            #endif
-            #if X11
-            if (Configuration.RunningOnX11)
+            else if (Configuration.RunningOnX11)
             {
                 return Platform.X11.Glx.GetProcAddress;
             }
-            #endif
-            #if CARBON
-            if (Configuration.RunningOnMacOS)
+            else if (Configuration.RunningOnMacOS)
             {
                 return Platform.MacOS.NS.GetAddress;
             }
-            #endif
-
-            // Other platforms: still allow dummy contexts to be created (if no Loader is required)
-            return EmptyGetAddress;
+            else
+            {
+                // Other platforms: still allow dummy contexts to be created (if no Loader is required)
+                return EmptyGetAddress;
+            }
         }
 
         private static IntPtr EmptyGetAddress(string function)
@@ -218,17 +212,18 @@ namespace osuTK.Platform
         /// <returns>A new IWindowInfo instance.</returns>
         public static IWindowInfo CreateX11WindowInfo(IntPtr display, int screen, IntPtr windowHandle, IntPtr rootWindow, IntPtr visualInfo)
         {
-            #if X11
-            Platform.X11.X11WindowInfo window = new osuTK.Platform.X11.X11WindowInfo();
-            window.Display = display;
-            window.Screen = screen;
-            window.Handle = windowHandle;
-            window.RootWindow = rootWindow;
-            window.Visual = visualInfo;
-            return window;
-            #else
-            return new Dummy.DummyWindowInfo();
-            #endif
+            if (Configuration.RunningOnX11)
+            {
+                Platform.X11.X11WindowInfo window = new osuTK.Platform.X11.X11WindowInfo();
+                window.Display = display;
+                window.Screen = screen;
+                window.Handle = windowHandle;
+                window.RootWindow = rootWindow;
+                window.Visual = visualInfo;
+                return window;
+            }
+            else
+                return new Dummy.DummyWindowInfo();
         }
 
         /// <summary>
@@ -238,11 +233,10 @@ namespace osuTK.Platform
         /// <returns>A new IWindowInfo instance.</returns>
         public static IWindowInfo CreateWindowsWindowInfo(IntPtr windowHandle)
         {
-            #if WIN32
-            return new osuTK.Platform.Windows.WinWindowInfo(windowHandle, null);
-            #else
-            return new Dummy.DummyWindowInfo();
-            #endif
+            if (Configuration.RunningOnWindows)
+                return new osuTK.Platform.Windows.WinWindowInfo(windowHandle, null);
+            else
+                return new Dummy.DummyWindowInfo();
         }
 
         /// <summary>
@@ -254,13 +248,13 @@ namespace osuTK.Platform
         /// <returns>A new IWindowInfo instance.</returns>
         public static IWindowInfo CreateMacOSCarbonWindowInfo(IntPtr windowHandle, bool ownHandle, bool isControl)
         {
-            #if CARBON
-            return CreateMacOSCarbonWindowInfo(windowHandle, ownHandle, isControl, null, null);
-            #else
-            return new Dummy.DummyWindowInfo();
-            #endif
+            if (Configuration.RunningOnMacOS)
+                return CreateMacOSCarbonWindowInfo(windowHandle, ownHandle, isControl, null, null);
+            else
+                return new Dummy.DummyWindowInfo();
         }
 
+        //check if this can be deleted
         #if CARBON
         /// <summary>
         /// Creates an IWindowInfo instance for the Mac OS X platform with an X and Y offset for the GL viewport location.
@@ -286,11 +280,10 @@ namespace osuTK.Platform
         /// <returns>A new IWindowInfo instance.</returns>
         public static IWindowInfo CreateMacOSWindowInfo(IntPtr windowHandle)
         {
-            #if CARBON
-            return new osuTK.Platform.MacOS.CocoaWindowInfo(windowHandle);
-            #else
-            return new Dummy.DummyWindowInfo();
-            #endif
+            if (Configuration.RunningOnMacOS)
+                return new osuTK.Platform.MacOS.CocoaWindowInfo(windowHandle);
+            else
+                return new Dummy.DummyWindowInfo();
         }
 
         /// <summary>
@@ -301,11 +294,11 @@ namespace osuTK.Platform
         /// <returns>A new IWindowInfo instance.</returns>
         public static IWindowInfo CreateMacOSWindowInfo(IntPtr windowHandle, IntPtr viewHandle)
         {
-            #if CARBON
-            return new osuTK.Platform.MacOS.CocoaWindowInfo(windowHandle, viewHandle);
-            #else
-            return new Dummy.DummyWindowInfo();
-            #endif
+            if (Configuration.RunningOnMacOS)
+                return new osuTK.Platform.MacOS.CocoaWindowInfo(windowHandle, viewHandle);
+            else
+                return new Dummy.DummyWindowInfo();
+            
         }
 
         /// <summary>
@@ -324,15 +317,13 @@ namespace osuTK.Platform
         /// <returns>A new IWindowInfo instance.</returns>
         public static IWindowInfo CreateSdl2WindowInfo(IntPtr windowHandle)
         {
-            #if SDL2
-            return new osuTK.Platform.SDL2.Sdl2WindowInfo(
-                windowHandle, null);
-            #else
-            return new Dummy.DummyWindowInfo();
-            #endif
+            if (Configuration.RunningOnSdl2)
+                return new osuTK.Platform.SDL2.Sdl2WindowInfo(
+                    windowHandle, null);
+            else
+                return new Dummy.DummyWindowInfo();
         }
 
-        #if !__MOBILE__
         /// <summary>
         /// Creates an IWindowInfo instance for Angle rendering, based on
         /// supplied platform window (e.g. a window created with
@@ -344,7 +335,6 @@ namespace osuTK.Platform
         {
             return new Egl.AngleWindowInfo(platformWindow);
         }
-        #endif
 
         internal static bool RelaxGraphicsMode(ref GraphicsMode mode)
         {

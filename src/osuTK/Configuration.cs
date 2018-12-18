@@ -148,11 +148,11 @@ namespace osuTK
             return t != null;
         }
 
-        #if SDL2
         private static bool DetectSdl2()
         {
             bool supported = false;
-
+            //Can we dlete this #if?
+            #if SDL2
             // Detect whether SDL2 is supported
             // We require:
             // - SDL2 version 2.0.0 or higher (previous beta
@@ -202,10 +202,10 @@ namespace osuTK
                 Debug.Print("SDL2 is supported. Version is {0}.{1}.{2}",
                     version.Major, version.Minor, version.Patch);
             }
-
+            #endif
             return supported;
         }
-        #endif
+        
 
         private static void DetectUnix(out bool unix, out bool linux, out bool macos, out bool ios)
         {
@@ -249,13 +249,9 @@ namespace osuTK
 
         private static bool DetectX11()
         {
-            #if X11
             // Detect whether X is present.
             try { return osuTK.Platform.X11.API.DefaultDisplay != IntPtr.Zero; }
             catch { return false; }
-            #else
-            return false;
-            #endif
         }
 
         private static bool DetectAndroid()

@@ -81,6 +81,7 @@ namespace osuTK.Platform.Dummy
 
         public override void LoadAll()
         {
+            //investigate
             #if OPENGL
             new osuTK.Graphics.OpenGL.GL().LoadEntryPoints();
             new osuTK.Graphics.OpenGL4.GL().LoadEntryPoints();
