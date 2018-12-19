@@ -37,7 +37,7 @@ namespace osuTK.Platform.SDL2
 
     internal partial class SDL
     {
-        //stopped searching for better solution 'cause we use SDL only on LINUX
+        //Stopped searching for better solution 'cause we use SDL only on LINUX
         //private const string lib => Configuration.RunningOnAndroid ? "libSDL2.so" : (Configuration.RunningOnIOS ? "__Internal" : "libSDL2-2.0.so.0");
         private const string lib = "libSDL2-2.0.so.0";
 
