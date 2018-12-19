@@ -37,13 +37,9 @@ namespace osuTK.Platform.SDL2
 
     internal partial class SDL
     {
-        #if ANDROID
-        const string lib = "libSDL2.so";
-        #elif IPHONE
-        const string lib = "__Internal";
-        #else
+        //stopped searching for better solution 'cause we use SDL only on LINUX
+        //private const string lib => Configuration.RunningOnAndroid ? "libSDL2.so" : (Configuration.RunningOnIOS ? "__Internal" : "libSDL2-2.0.so.0");
         private const string lib = "libSDL2-2.0.so.0";
-        #endif
 
         public readonly static object Sync = new object();
         private static Nullable<Version> version;
