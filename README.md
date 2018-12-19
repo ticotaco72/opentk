@@ -27,7 +27,7 @@ Instructions
 ============
 
 The simplest way to use osuTK in your project is to install the NuGet package from https://www.nuget.org/packages/ppy.osuTK.NS20/ or https://www.nuget.org/packages/ppy.osuTK.Android/ or https://www.nuget.org/packages/ppy.osuTK.iOS/.
-If you want to try out the latest development build from the `netstandard` branch.
+If you want to try out the latest development commits, build from the `netstandard` branch.
 
 To build osuTK from source, enter the source directory and run `./build.cmd` on Windows and `./build.sh` on Linux and Mac OS.
 After this is done at least once, you can build osuTK normally through your IDE.
