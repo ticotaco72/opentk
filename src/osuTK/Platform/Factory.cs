@@ -48,25 +48,18 @@ namespace osuTK.Platform
             Toolkit.Init();
 
             // Create regular platform backend
-#if SDL2
             if (Configuration.RunningOnSdl2)
             {
                 Default = new SDL2.Sdl2Factory();
             }
-#endif
-#if WIN32
             else if (Configuration.RunningOnWindows)
             {
                 Default = new Windows.WinFactory();
             }
-#endif
-#if CARBON
             else if (Configuration.RunningOnMacOS)
             {
                 Default = new MacOS.MacOSFactory();
             }
-#endif
-#if X11
             else if (Configuration.RunningOnX11)
             {
                 Default = new X11.X11Factory();
@@ -75,7 +68,7 @@ namespace osuTK.Platform
             {
                 Default = new Linux.LinuxFactory();
             }
-#endif
+
             if (Default == null)
             {
                 Default = new UnsupportedPlatform();
@@ -101,24 +94,18 @@ namespace osuTK.Platform
                 {
                     Embedded = Default;
                 }
-#if X11
                 else if (Configuration.RunningOnX11)
                 {
                     Embedded = new Egl.EglX11PlatformFactory();
                 }
-#endif
-#if WIN32
                 else if (Configuration.RunningOnWindows)
                 {
                     Embedded = new Egl.EglWinPlatformFactory();
                 }
-#endif
-#if CARBON
                 else if (Configuration.RunningOnMacOS)
                 {
                     Embedded = new Egl.EglMacPlatformFactory();
                 }
-#endif
                 else if (Configuration.RunningOnAndroid)
                 {
                     Embedded = CreateFactoryForType("osuTK.Android.AndroidFactory");

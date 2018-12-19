@@ -431,6 +431,7 @@ namespace osuTK.iOS
             get {
                 AssertValid();
                 var c = GetViewController();
+//Propably will delete this if we aren't willing to target TVOS
 #if TVOS
                 if (c != null && (c.EdgesForExtendedLayout == UIRectEdge.None))
 #else

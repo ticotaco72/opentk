@@ -2706,8 +2706,6 @@ namespace osuTK.Platform.Windows
         public char dbcc_name;
     }
 
-#if ANDROID || IPHONE || MINIMAL
-
     internal class RegistryKey
     {
         IntPtr hkey;
@@ -2748,8 +2746,6 @@ namespace osuTK.Platform.Windows
         internal static readonly RegistryKey LocalMachine =
             new RegistryKey(Constants.HKEY_LOCAL_MACHINE);
     }
-
-#endif
 
     /// <summary>
     /// Contains information about the mouse's location in screen coordinates.

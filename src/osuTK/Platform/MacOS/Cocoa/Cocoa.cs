@@ -144,18 +144,19 @@ namespace osuTK.Platform.MacOS
 
         public static float SendFloat(IntPtr receiver, IntPtr selector)
         {
-            #if IOS
-            return SendFloat_ios(receiver, selector);
-            #else
-            if (IntPtr.Size == 4)
-            {
-                return SendFloat_i386(receiver, selector);
-            }
+            if (Configuration.RunningOnIOS)
+                return SendFloat_ios(receiver, selector);
             else
             {
-                return (float)SendFloat_x64(receiver, selector);
+                if (IntPtr.Size == 4)
+                {
+                    return SendFloat_i386(receiver, selector);
+                }
+                else
+                {
+                    return (float)SendFloat_x64(receiver, selector);
+                }
             }
-            #endif
         }
 
         [DllImport (LibObjC, EntryPoint="objc_msgSend")]

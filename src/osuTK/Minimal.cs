@@ -1,10 +1,4 @@
-﻿#if !MINIMAL
-
-using System.Drawing;
-
-#else
-
-using System;
+﻿using System;
 using System.Drawing;
 
 // Override a number of System.* classes when compiling for
@@ -175,4 +169,3 @@ namespace osuTK.Minimal
     }
 }
 
-#endif

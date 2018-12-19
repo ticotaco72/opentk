@@ -27,9 +27,6 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-#if !(ANDROID || IPHONE || MINIMAL)
-using Microsoft.Win32;
-#endif
 using osuTK.Input;
 using osuTK.Platform.Common;
 
