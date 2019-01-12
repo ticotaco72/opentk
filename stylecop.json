@@ -4,7 +4,7 @@
         "indentation" : {
             "indentationSize" : 4,
             "tabSize" : 4,
-            "useTabs" : false
+            "useTabs" : true
         },
         "spacingRules" : {
         },
@@ -35,7 +35,7 @@
             ]
         },
         "layoutRules" : {
-            "newlineAtEndOfFile" : "omit",
+            "newlineAtEndOfFile" : "require",
             "allowConsecutiveUsings" : false
         },
         "documentationRules" : {
