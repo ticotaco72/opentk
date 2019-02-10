@@ -850,10 +850,7 @@ namespace osuTK
         ///     Throws a <see cref="T:System.NotSupportedException" />.
         ///   </para>
         /// </remarks>
-        public event EventHandler<EventArgs> MouseEnter {
-            add { throw new NotSupportedException (); }
-            remove { throw new NotSupportedException (); }
-        }
+        public event EventHandler<EventArgs> MouseEnter;
 
         /// <summary>This member is not supported.</summary>
         /// <remarks>
@@ -861,10 +858,7 @@ namespace osuTK
         ///     Throws a <see cref="T:System.NotSupportedException" />.
         ///   </para>
         /// </remarks>
-        public event EventHandler<EventArgs> MouseLeave {
-            add { throw new NotSupportedException (); }
-            remove { throw new NotSupportedException (); }
-        }
+        public event EventHandler<EventArgs> MouseLeave;
 
         /// <summary>This member is not supported.</summary>
         /// <remarks>
@@ -1121,14 +1115,14 @@ namespace osuTK
 
         MouseCursor INativeWindow.Cursor
         {
-            get { throw new NotSupportedException(); }
-            set { throw new NotSupportedException(); }
+            get;
+            set;
         }
 
         bool INativeWindow.CursorVisible
         {
-            get { throw new NotSupportedException(); }
-            set { throw new NotSupportedException(); }
+            get;
+            set;
         }
 
         Icon INativeWindow.Icon
@@ -1145,17 +1139,9 @@ namespace osuTK
             remove { throw new NotSupportedException(); }
         }
 
-        event EventHandler<KeyboardKeyEventArgs> INativeWindow.KeyDown
-        {
-            add { throw new NotSupportedException(); }
-            remove { throw new NotSupportedException(); }
-        }
+        public event EventHandler<KeyboardKeyEventArgs> KeyDown;
 
-        event EventHandler<KeyboardKeyEventArgs> INativeWindow.KeyUp
-        {
-            add { throw new NotSupportedException(); }
-            remove { throw new NotSupportedException(); }
-        }
+        public event EventHandler<KeyboardKeyEventArgs> KeyUp;
 
         event EventHandler<MouseButtonEventArgs> INativeWindow.MouseDown
         {
