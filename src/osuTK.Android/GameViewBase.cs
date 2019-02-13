@@ -880,12 +880,12 @@ namespace osuTK
 
         public string Title {
             get {
-                Activity activity = (Activity)Context.ApplicationContext;
+                Activity activity = (Activity)Context;
                 return activity.Title;
             }
             set {
-                Activity activity = (Activity)Context.ApplicationContext;
-                activity.Title = value;
+                Activity activity = (Activity)Context;
+                activity.Window.SetTitle(value);
             }
         }
 
